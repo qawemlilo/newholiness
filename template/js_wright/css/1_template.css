@@ -1,0 +1,5 @@
+@charset "utf-8";
+
+#footer, .navbar-inverse .navbar-inner {
+  background-color: #07A0AD!important;
+}
