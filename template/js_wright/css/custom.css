@@ -1,3 +1,91 @@
-p {
-  color: red;
+body {
+  font:15px/1.3 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
+  line-height: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato',sans-serif;
+}
+
+/*
+   Header bar
+*/
+
+.navbar-inverse .navbar-inner {
+  background: #0094cb;
+  box-shadow: 1px 0px 5px #333;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#0094cb', endColorstr = '#0088bb');
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = '#0094cb', endColorstr = '#0088bb')";
+  background-image: -moz-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -ms-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -o-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#0094cb), to(#0088bb));
+  background-image: -webkit-linear-gradient(top, #0094cb, #0088bb);
+  background-image: linear-gradient(top, #0094cb, #0088bb);
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-bottom-color: #0094cb;
+  border-top-color: #0094cb;
+}
+
+
+.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+  color: #fff;
+}
+
+.navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover, .navbar-inverse .nav .active > a:focus {
+  background-color: #39AADE;
+  font-weight: bold;
+}
+
+/*
+  < Increse nav bar height
+*/
+.navbar-inner {
+  min-height: 60px;
+}
+
+.navbar .nav > li > a {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+/*
+  Increse nav bar height >
+*/
+
+#footer {
+  background-color: #0094cb;
+  background-image: -moz-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -ms-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -o-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#0094cb), to(#0088bb));
+  background-image: -webkit-linear-gradient(top, #0094cb, #0088bb);
+  background-image: linear-gradient(top, #0094cb, #0088bb);
+  border-bottom-color: #0094cb;
+  border-top-color: #0094cb;
+  padding-top: 20px;
+  text-align: center;
+}
+
+#toolbar a, #footer a {
+  color: #fff;
+}
+
+
+#footer ul, #footer ul li{
+  display: inline;
+}
+
+#footer ul li{
+  margin-right: 40px;
+}
+
+#footer a {
+  color: #fff;
+  font-size: 12px;
+}
+
+#footer ul li  a:hover {
+  color: #fefefe;
 }

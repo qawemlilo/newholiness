@@ -29,6 +29,7 @@ if ($this->countModules('toolbar')) {
 <head>
 	
 <w:head />
+<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 </head>
 <body<?php if ($bodyclass != "") :?> class="<?php echo $bodyclass?>"<?php endif; ?>>
     <?php if ($this->countModules('toolbar')) : ?>
@@ -36,13 +37,14 @@ if ($this->countModules('toolbar')) {
 	<w:nav containerClass="<?php echo $containerClass ?>" rowClass="<?php echo $gridMode;?>" wrapClass="navbar-fixed-top navbar-inverse" type="toolbar" name="toolbar" />
     <?php endif; ?>
     <div class="<?php echo $containerClass ?>">
-        <!-- header -->
+        <!-- header 
         <header id="header">
         	<div class="<?php echo $gridMode; ?> clearfix">
         		<w:logo name="top" />
         		<div class="clear"></div>
         	</div>
         </header>
+        -->
         <?php if ($this->countModules('menu')) : ?>
         <!-- menu -->
    		<w:nav name="menu" />
