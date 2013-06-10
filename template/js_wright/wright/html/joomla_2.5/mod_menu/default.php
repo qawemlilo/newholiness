@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 if (!function_exists("wright_joomla_nav")) :
 	function convert_ul_main($matches) {
-		return "<ul" . $matches[1] . "class" . $matches[2] . "\"nav " . $matches[3] . "\"" . $matches[4] . ">";
+		return "<ul" . $matches[1] . "class" . $matches[2] . "\"nav " . $matches[3] . "\"" . $matches[4] . "><li><a href=\""  . JURI::base() . "\" style=\"width: 200px; padding:5px\"><img src=\"templates/js_wright/images/logo-raw.png\" /></a></li>";
 	}
 
 	function convert_li($matches, $img) {

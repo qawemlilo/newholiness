@@ -37,7 +37,7 @@ if ($this->countModules('toolbar')) {
 	<w:nav containerClass="<?php echo $containerClass ?>" rowClass="<?php echo $gridMode;?>" wrapClass="navbar-fixed-top navbar-inverse" type="toolbar" name="toolbar" />
     <?php endif; ?>
     <div class="<?php echo $containerClass ?>">
-        <!-- header 
+        <!--
         <header id="header">
         	<div class="<?php echo $gridMode; ?> clearfix">
         		<w:logo name="top" />
@@ -45,6 +45,7 @@ if ($this->countModules('toolbar')) {
         	</div>
         </header>
         -->
+
         <?php if ($this->countModules('menu')) : ?>
         <!-- menu -->
    		<w:nav name="menu" />

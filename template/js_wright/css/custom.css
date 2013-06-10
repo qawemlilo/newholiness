@@ -29,6 +29,15 @@ h1, h2, h3, h4, h5, h6 {
   border-top-color: #0094cb;
 }
 
+.container-fluid {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.moduletable, .module {
+  margin-bottom: 0px;
+}
+
 
 .navbar-inverse .brand, .navbar-inverse .nav > li > a {
   color: #fff;
@@ -43,12 +52,12 @@ h1, h2, h3, h4, h5, h6 {
   < Increse nav bar height
 */
 .navbar-inner {
-  min-height: 60px;
+  min-height: 40px;
 }
 
 .navbar .nav > li > a {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 /*
   Increse nav bar height >
@@ -64,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
   background-image: linear-gradient(top, #0094cb, #0088bb);
   border-bottom-color: #0094cb;
   border-top-color: #0094cb;
-  padding-top: 20px;
+  padding-top: 10px;
   text-align: center;
 }
 
