@@ -88,7 +88,13 @@ if ($this->countModules('toolbar')) {
             	</div>
             	<?php endif; ?>
             	<!-- component -->
-            	<w:content />
+                
+                <!-- main content -->
+                <div class="container">
+            	  <w:content />
+                </div>
+                
+                
                 <?php if ($this->countModules('below-content')) : ?>
                 <!-- below-content -->
                 <div id="below-content">
