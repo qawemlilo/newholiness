@@ -1,20 +1,39 @@
 <?php 
 defined('_JEXEC') or die('Restricted access'); // no direct access 
 
+$user = JFactory::getUser();
 ?>
 
 <div class="row-fluid" style="padding: 15px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5;">
   <div class="span7">
     <div class="row-fluid">
       <div class="input-append">
-        <img src="/holliness/templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 10px">
-        <input class="span4" id="appendedInputButtons" placeholder="Search for your Christian friends" type="text">
+        <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 10px">
+        <input class="span4" id="search" name="search" placeholder="Search for your Christian friends" type="text">
         <button class="btn" type="button">Search</button>
       </div>
     </div>
   </div>
   
-  <div class="span4">
-  
+  <div class="span5">
+    <div class="btn-group pull-right" style="margin-right: 10px">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench icon-white"></i> My Account</a>
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="<?php echo JURI::base(); ?>#/users/<?php echo $user->id; ?>"><i class="icon-user"></i> My Profile</a></li>
+        <li><a href="<?php echo JURI::base(); ?>#/users/<?php echo $user->id; ?>/edit"><i class="icon-pencil"></i> Edit Account</a></li>
+         <li class="divider"></li>
+        <li><a href="<?php echo JURI::base(); ?>#/users/logout"><i class="icon-lock"></i> Logout</a></li>
+      </ul>
+    </div>
   </div>
 </div>
+<script type="text/javascript">
+(function ($) {
+  $(function () {
+    $('input#search').typeahead({
+      source: ['tim trueman', 'Jake Harding', 'vskarich']
+    });
+  });
+}(jQuery))
+</script>
