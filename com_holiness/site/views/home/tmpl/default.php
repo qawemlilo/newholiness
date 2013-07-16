@@ -6,19 +6,19 @@ defined('_JEXEC') or die('Restricted access');
   <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 20px;">
     <div class="row-fluid">
       <div class="span3">
-        <div class="row-fluid"><i class="icon-book"></i> Prayer Request</div>
+        <div class="row-fluid"><span style="color: blue;"><i class="icon-book"></i></span> Prayer Request</div>
         <div class="row-fluid"></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><i class="icon-bullhorn"></i> Testimony</div>
+        <div class="row-fluid"><span style="color: green;"><i class="icon-bullhorn"></i></span> Testimony</div>
         <div class="row-fluid"></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><i class="icon-hand-right"></i> Prophecy</div>
+        <div class="row-fluid"><span style="color: orange;"><i class="icon-hand-right"></i></span> Prophecy</div>
         <div class="row-fluid"></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><i class="icon-eye-open"></i> Revelation</div>
+        <div class="row-fluid"><span style="color: red;"><i class="icon-eye-open"></i></span> Revelation</div>
         <div class="row-fluid"></div>
       </div>
     </div>
