@@ -5,7 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 $user =& JFactory::getUser();
 
 if ($user->guest) {
- return;
+ return false;
 }
 ?>
 <div id="timeline" class="row-fluid">
