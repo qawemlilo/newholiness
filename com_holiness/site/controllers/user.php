@@ -73,6 +73,15 @@ class HolinessControllerUser extends JController
     }
     
     
+    public function logout() {
+        $application =& JFactory::getApplication();
+        $user =& JFactory::getUser();
+        
+        $application->logout($user->id);
+        $application->redirect(JURI::base());    
+    }
+    
+    
     
     public function changepassword() {
         JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));

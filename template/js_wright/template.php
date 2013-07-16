@@ -68,6 +68,21 @@ if ($this->countModules('toolbar')) {
             <w:module type="<?php echo $gridMode; ?>" name="grid-top2" chrome="wrightflexgrid" />
         </div>
         <?php endif; ?>
+        
+        <?php if ($this->countModules('above-content')) : ?>
+          <!-- above-content -->
+          <div id="above-content">
+            <w:module type="none" name="above-content" chrome="xhtml" />
+          </div>
+        <?php endif; ?>
+        
+        <?php if ($this->countModules('breadcrumbs')) : ?>
+          <!-- breadcrumbs -->
+          <div id="breadcrumbs">
+            <w:module type="single" name="breadcrumbs" chrome="none" />
+          </div>
+        <?php endif; ?>
+                
         <div id="main-content" class="<?php echo $gridMode; ?>">
             <!-- sidebar1 -->
             <aside id="sidebar1">
@@ -75,22 +90,10 @@ if ($this->countModules('toolbar')) {
             </aside>
             <!-- main -->
             <section id="main">
-                <?php if ($this->countModules('above-content')) : ?>
-                <!-- above-content -->
-                <div id="above-content">
-                    <w:module type="none" name="above-content" chrome="xhtml" />
-                </div>
-                <?php endif; ?>
-            	<?php if ($this->countModules('breadcrumbs')) : ?>
-                <!-- breadcrumbs -->
-            	<div id="breadcrumbs">
-            			<w:module type="single" name="breadcrumbs" chrome="none" />
-            	</div>
-            	<?php endif; ?>
             	<!-- component -->
                 
                 <!-- main content -->
-                <div class="container">
+                <div>
             	  <w:content />
                 </div>
                 
