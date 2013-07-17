@@ -1,0 +1,22 @@
+{
+  "name": "newholiness",
+  "version": "0.0.1",
+  "description": "Christian social network",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qawemlilo/newholiness.git"
+  },
+  "author": "Qawelesizwe Mlilo",
+  "license": "Proprietary",
+  "bugs": {
+    "url": "https://github.com/qawemlilo/newholiness/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-compress": "~0.5.2"
+  }
+}
