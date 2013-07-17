@@ -1,6 +1,16 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     compress: {
+        template: {
+            options: {
+                archive: '../extensions/js_wright.zip'
+            },
+            
+            files: [
+                {cwd: 'template/js_wright/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
+            ]
+        },
+        
         com_holiness: {
             options: {
                 archive: '../extensions/com_holiness.zip'
