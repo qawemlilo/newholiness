@@ -1,0 +1,13 @@
+*.zip
+*.psd
+*.js~
+*.md~
+*.json~
+*.html~
+*.ejs~
+*.css~
+Procfile~
+*.gitignore~
+node_modules/
+build/
+
