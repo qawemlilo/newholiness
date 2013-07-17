@@ -6,6 +6,7 @@
 *.html~
 *.ejs~
 *.css~
+*.docx
 Procfile~
 *.gitignore~
 node_modules/

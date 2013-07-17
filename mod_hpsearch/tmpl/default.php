@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access'); // no direct access
 $user = JFactory::getUser();
 ?>
 
-<div class="row-fluid" style="padding: 15px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5;">
+<div class="row-fluid affix" style="padding: 15px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5;">
   <div class="span7">
     <div class="row-fluid">
       <div class="input-append">

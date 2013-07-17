@@ -1,12 +1,6 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
-$user =& JFactory::getUser();
-
-if ($user->guest) {
- return;
-}
 ?>
 <div id="timeline" class="row-fluid">
   <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 20px;">
