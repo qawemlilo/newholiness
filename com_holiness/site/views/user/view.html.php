@@ -15,6 +15,12 @@ if ($user->guest) {
 class HolinessViewUser extends JView
 {
     function display($tpl = null) {
+        $application =& JFactory::getApplication();
+        $model =& $this->getModel();
+        
+        if ($model->hasProfile()) {
+            $application->redirect(JURI::base());
+        }
         parent::display($tpl);
     }
 }

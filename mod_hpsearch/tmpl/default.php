@@ -1,7 +1,6 @@
 <?php 
 defined('_JEXEC') or die('Restricted access'); // no direct access 
 
-$user = JFactory::getUser();
 ?>
 
 <div class="row-fluid affix" style="padding: 15px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5;">
@@ -17,8 +16,9 @@ $user = JFactory::getUser();
   
   <div class="span5">
     <div class="btn-group pull-right" style="margin-right: 10px">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> My Account</a>
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <img title="<?php echo $user->name; ?>" style="width:38px" alt="<?php echo $user->name; ?>" src="<?php echo $src; ?>" />
+
+      <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><i class="icon-user"></i> My Profile</a></li>
         <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><i class="icon-pencil"></i> Edit Account</a></li>

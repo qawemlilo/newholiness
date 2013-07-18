@@ -50,10 +50,24 @@ module.exports = function(grunt) {
                 {cwd: 'mod_regform/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
             ]
         }
+    },
+    
+    exec: {
+        minify: {
+            cmd: 'uglifyjs com_holiness/site/assets/js/uploader/jquery.knob.js \
+         com_holiness/site/assets/js/uploader/jquery.ui.widget.js \
+         com_holiness/site/assets/js/uploader/jquery.iframe-transport.js \
+         com_holiness/site/assets/js/uploader/jquery.fileupload.js \
+         com_holiness/site/assets/js/uploader/script.js \
+         -o com_holiness/site/assets/js/uploader/script.min.js'
+        }
     }
   });
   
   grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-exec');
+  
   grunt.registerTask('default', ['compress']);
+  grunt.registerTask('minify', ['exec:minify']);
 };
 

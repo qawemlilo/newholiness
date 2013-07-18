@@ -4,12 +4,14 @@ defined('_JEXEC') or die('Restricted access');
 
 // import Joomla controller library
 jimport('joomla.application.component.controller');
-
+jimport('joomla.filesystem.file');
+require_once(JPATH_COMPONENT . DS .'assets' . DS . 'includes' . DS .'resize-class.php');
 
 
 
 class HolinessControllerUser extends JController
 {
+
     public function create() {
 		$user = array();
 	    $user['fullname'] = JRequest::getVar('fullname', '', 'post', 'string');
@@ -39,6 +41,57 @@ class HolinessControllerUser extends JController
         else {   
 	        $this->response(500, 'Error. Account not created.');	
         }			
+    }
+    
+    
+    
+    public function createprofile() {
+        //JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+        $model =& $this->getModel('user');
+        $user =& JFactory::getUser();
+        $member = array();
+        $photoFolder = JPATH_SITE . DS . 'media' .  DS . 'com_holiness' . DS . 'images' . DS;
+        
+
+        
+        $photo = JRequest::getVar('photo', null, 'files', 'array');
+        $photofilename = JFile::makeSafe($photo['name']);
+        $ext = strtolower(JFile::getExt($photofilename));
+
+        $member['church'] = JRequest::getVar('church', '', 'post', 'string');
+        $member['userid'] = $user->id;
+        $member['imgext'] = $ext;
+        
+        $saved = $this->savePhoto($photo['tmp_name'], $photoFolder . $photofilename, $ext);
+        
+        if ($saved && $model->create($member)) {
+            $this->resizeImages($photoFolder . $photofilename, $photoFolder, $ext, $user->id);
+            $this->response(200, 'Profile created');    
+        }
+        else {
+            $this->response(500, 'Profile not created');  
+        }
+    }
+    
+    
+    
+    
+    private function savePhoto($src, $path, $extension) {
+        $allowed = array('png', 'jpg', 'gif','jpeg');
+    
+        if (!in_array(strtolower($extension), $allowed)) {
+            return false;
+        }
+       
+        $result = JFile::upload($src, $path);
+        
+        if ($result) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     
@@ -158,6 +211,22 @@ class HolinessControllerUser extends JController
         echo '{"code":"' . $code . '","message":"' . $msg . '"}';
         
         exit();
+    }
+    
+    
+    
+    private function resizeImages($imageUrl, $destinationFolder, $extension, $id) {
+        $thumbnail = new resize($imageUrl);
+        $icon = new resize($imageUrl);
+    
+        $thumbnail->resizeImage(200, 200, 'crop');
+        $thumbnail->saveImage($destinationFolder . 'user-' . $id . '-thumb.' . $extension);
+    
+    
+        $icon->resizeImage(50, 50, 'crop');
+        $icon->saveImage($destinationFolder . 'user-' . $id . '-icon.' . $extension);
+    
+        return true;    
     }
 }
 
