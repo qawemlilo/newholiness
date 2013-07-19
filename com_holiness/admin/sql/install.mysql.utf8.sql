@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `#__hpmembers` (
   `dob` date NULL,
   `gender` varchar(1) NULL,
   `church` varchar(200) NOT NULL,
+  `ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
    PRIMARY KEY  (`id`),
    KEY `#__users` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
