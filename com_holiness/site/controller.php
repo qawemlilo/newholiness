@@ -10,17 +10,13 @@ class HolinessController extends JController
         
         $hack = JRequest::getVar('hk', 0, 'get', 'int');
         $view = JRequest::getVar('view');
+        $homepage = JURI::base();
         
         $hasProfile = $model->hasProfile();
-
-        // Take all registered users to the home page
-        if ($hasProfile && !$user->guest) {
-            $application->redirect(JURI::base());
-        }
         
         // if the user is registered and does not have a profile
         // take them to the profile competion page
-        elseif (!$hasProfile && !$hack && !$user->guest) {
+        if (!$hasProfile && !$hack && !$user->guest) {
             $application->redirect('index.php?option=com_holiness&view=user&hk=1');
         }
         

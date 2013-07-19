@@ -2,11 +2,18 @@ jQuery.noConflict();
 
 (function ($) {
   $(function () {
-    var progressbar = $('#upload .progress-div');
+    var progressbar = $('#upload .progress-div'), activeupload = false;
+    
     
     $('#photo').on('click', function () {
-        if (!$('#church').val()) {
-            $('#church').focus();
+        var mychurch = $('#church').val();
+        
+        if (!mychurch || activeupload) {
+            
+            if (!mychurch) {
+                $('#church').focus();
+            }
+            
             return false;
         }
         else {
@@ -23,10 +30,11 @@ jQuery.noConflict();
         // This function is called when a file is added to the queue;
         // either via the browse button, or via drag/drop:
         add: function (e, data) {
-
-            var tpl = $('<div class="progress progress-striped"><div class="bar" style="width: 0%;"></div></div>');
+            activeupload = true;
             
-            $('#uploadbutton').attr('disabled', 'disabled');
+            var tpl = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>');
+            
+            $('.progress-cont').slideDown();
 
             data.context = tpl.appendTo(progressbar);
 
@@ -43,12 +51,16 @@ jQuery.noConflict();
             data.context.find('.bar').css('width', progress + '%');
 
             if (progress == 100) {
-                $('#upload .successful').slideDown();
+                setTimeout(function () {
+                    $('#upload .successful').slideDown();
+                    $('.progress').removeClass('active');
+                }, 1000);
             }
         },
 
         fail:function(e, data) {
             // Something has gone wrong!
+            activeupload = false;
             alert('An error occured! Reload page and try again.');
             location.reload(true); 
         }

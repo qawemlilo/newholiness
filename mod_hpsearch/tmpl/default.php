@@ -3,7 +3,7 @@ defined('_JEXEC') or die('Restricted access'); // no direct access
 
 ?>
 
-<div class="row-fluid affix" style="padding: 15px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5;">
+<div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333;">
   <div class="span7">
     <div class="row-fluid">
       <div class="input-append">
@@ -16,12 +16,12 @@ defined('_JEXEC') or die('Restricted access'); // no direct access
   
   <div class="span5">
     <div class="btn-group pull-right" style="margin-right: 10px">
-      <img title="<?php echo $user->name; ?>" style="width:38px" alt="<?php echo $user->name; ?>" src="<?php echo $src; ?>" />
+      <img title="<?php echo $user->name; ?>" style="width:38px; height: 38px" alt="<?php echo $user->name; ?>" <?php echo $src; ?> />
 
       <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><i class="icon-user"></i> My Profile</a></li>
-        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><i class="icon-pencil"></i> Edit Account</a></li>
+        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB"><i class="icon-user"></i></span> My Profile</a></li>
+        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: red;"><i class="icon-pencil"></i></span> Edit Account</a></li>
          <li class="divider"></li>
         <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><i class="icon-lock"></i> Logout</a></li>
       </ul>

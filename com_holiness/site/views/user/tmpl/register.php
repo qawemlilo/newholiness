@@ -2,7 +2,7 @@
 defined('_JEXEC') or die('Restricted access'); // no direct access 
 
 $doc = JFactory::getDocument();
-$doc->addStyleDeclaration('body {background-color: #F1F1F1; background-image: url(' . JRoute::_(JURI::base() . 'components/com_holiness/assets/images/body-bg.jpg') . ');-webkit-background-size: 100% auto;-moz-background-size: 100% auto;-o-background-size: 100% auto;background-size: 100% auto;background-repeat: no-repeat;}');
+$doc->addStyleDeclaration('body {background-color: #F1F1F1; background-image: url(' . JRoute::_(JURI::base() . 'components/com_holiness/assets/images/body-bg.jpg') . ');-webkit-background-size: 100% auto;-moz-background-size: 100% auto;-o-background-size: 100% auto;background-size: 100% auto;background-repeat: no-repeat;}#main-content {margin-top: 0px!important;}#main {border-left: 0px!important;; border-right:0px!important;}');
 ?>
 
 <div class="row-fluid" style="min-height: 100%; padding: 20px 0px 20px 0px;">
