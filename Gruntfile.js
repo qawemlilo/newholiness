@@ -39,16 +39,6 @@ module.exports = function(grunt) {
             files: [
                 {cwd: 'mod_devotions/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
             ]
-        },
-        
-        mod_regform: {
-            options: {
-                archive: '../extensions/mod_regform.zip'
-            },
-            
-            files: [
-                {cwd: 'mod_regform/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
-            ]
         }
     },
     

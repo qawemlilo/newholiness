@@ -9,15 +9,6 @@ jimport('joomla.application.component.view');
 class HolinessViewHome extends JView
 {
     function display($tpl = null) {
-        $application =& JFactory::getApplication();
-        $user =& JFactory::getUser();
-        $model =& $this->getModel();
-        $hack = JRequest::getVar('hk', 0, 'get', 'int');
-        
-        if (!$model->hasProfile() && !$hack && !$user->guest) {
-            $application->redirect('index.php?option=com_holiness&view=user&hk=1');
-        }
-        
         parent::display($tpl);
     }
 }

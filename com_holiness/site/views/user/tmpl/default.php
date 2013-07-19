@@ -1,7 +1,6 @@
 <?php
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-
 ?>
 <div class="row-fluid">
     <form class="form-horizontal well"  id="upload" name="upload" method="post" action="index.php?option=com_holiness&task=user.createprofile" enctype="multipart/form-data">
