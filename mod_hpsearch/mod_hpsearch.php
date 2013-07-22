@@ -9,7 +9,7 @@ if ($member) {
     $src = 'src="' . JURI::base() . 'media/com_holiness/images/user-' . $user->id . '-icon.' . $member->imgext . '"';
 }
 else {
-    $src = 'data-src="holder.js/38x38"';
+    $src = 'src="data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="';
 }
 
 require(JModuleHelper::getLayoutPath('mod_hpsearch'));

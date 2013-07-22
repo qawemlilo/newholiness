@@ -169,7 +169,7 @@ class Wright
 
 		if ($this->loadBootstrap)
 			// load bootstrap JS
-			$this->addJSScript($this->_urlBootstrap . '/js/bootstrap.js');
+			$this->addJSScript($this->_urlBootstrap . '/js/bootstrap.min.js');
 		
 		$this->addJSScript($this->_urlJS . '/utils.js');
 		if ($this->document->params->get('stickyFooter', 1)) {

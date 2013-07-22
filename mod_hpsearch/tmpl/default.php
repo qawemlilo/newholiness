@@ -1,16 +1,22 @@
 <?php 
 defined('_JEXEC') or die('Restricted access'); // no direct access 
 
+$document =& JFactory::getDocument();
+$document->addStyleSheet(JURI::base() . 'modules/mod_hpsearch/assets/css/typeahead.js-bootstrap.css');
+$document->addStyleDeclaration(
+'input, textarea, .uneditable-input {
+  width: 300px;
+}');
+$document->addScript(JURI::base() . 'modules/mod_hpsearch/assets/js/hogan.min.js');
 ?>
 
 <div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333;">
   <div class="span7">
     <div class="row-fluid">
-      <div class="input-append">
-        <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 10px">
-        <input class="span6" id="search" name="search" placeholder="Search for your Christian friends" type="text" >
-        <button class="btn" type="button">Search</button>
-      </div>
+    <form style="margin-bottom:0px">
+      <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 10px">
+      <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
+    </form>
     </div>
   </div>
   
@@ -28,12 +34,5 @@ defined('_JEXEC') or die('Restricted access'); // no direct access
     </div>
   </div>
 </div>
-<script type="text/javascript">
-(function ($) {
-  $(function () {
-    $('input#search').typeahead({
-      source: ['tim trueman', 'Jake Harding', 'vskarich']
-    });
-  });
-}(jQuery))
-</script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpsearch/assets/js/typeahead.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpsearch/assets/js/script.js'; ?>"></script>

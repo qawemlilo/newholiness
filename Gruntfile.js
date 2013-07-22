@@ -50,6 +50,16 @@ module.exports = function(grunt) {
          com_holiness/site/assets/js/uploader/jquery.fileupload.js \
          com_holiness/site/assets/js/uploader/script.js \
          -o com_holiness/site/assets/js/uploader/script.min.js'
+        },
+        
+        minify_tmp: {
+            cmd: 'uglifyjs template/js_wright/wright/js/bootstrap/transition.js \
+         template/js_wright/wright/js/bootstrap/dropdown.js \
+         template/js_wright/wright/js/bootstrap/tooltip.js \
+         template/js_wright/wright/js/bootstrap/popover.js \
+         template/js_wright/wright/js/bootstrap/affix.js \
+         template/js_wright/wright/js/bootstrap/alert.js \
+         -o template/js_wright/wright/js/bootstrap.min.js'
         }
     }
   });
@@ -59,5 +69,6 @@ module.exports = function(grunt) {
   
   grunt.registerTask('default', ['compress']);
   grunt.registerTask('minify', ['exec:minify']);
+  grunt.registerTask('minifytmp', ['exec:minify_tmp']);
 };
 

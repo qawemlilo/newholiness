@@ -34,6 +34,40 @@ class HolinessModelUser extends JModelItem
     }
     
     
+    public function getMembers()
+	{   
+        $db =& JFactory::getDBO();
+        
+        $query = "SELECT member.id, member.userid, member.church, member.imgext, user.name ";
+        $query .= "FROM #__hpmembers member ";
+        $query .= "INNER JOIN #__users user ON member.userid = user.id";
+        $db->setQuery($query); 
+
+		$result = $db->loadObjectList();
+        
+        return $result;
+    }
+    
+    
+    
+    public function getUser($name)
+	{   
+        $db =& JFactory::getDBO();
+        
+        $query = "SELECT member.id, member.userid, member.church, member.imgext, user.name ";
+        $query .= "FROM #__hpmembers member ";
+        $query .= "INNER JOIN #__users user ON member.userid = user.id ";
+        $query .= "WHERE user.name LIKE '{$name}%'";
+        
+        $db->setQuery($query); 
+
+		$result = $db->loadObjectList();
+        
+        return $result;
+    }
+    
+    
+    
     
     public function hasProfile()
 	{   
