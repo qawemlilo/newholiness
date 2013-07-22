@@ -9,8 +9,8 @@ jQuery.noConflict();
       prefetch: 'components/com_holiness/assets/data/users.json',
       template: [
         '<div class="row-fluid">',
-        '<div class="span3"><img src="media/com_holiness/images/user-{{userid}}-icon.{{imgext}}" /></div>',
-        '<div class="span9"><p><strong>{{name}}</strong></p><p><i>{{church}}</i></p></div>',
+        '<div class="span3"><img src="/holliness/media/com_holiness/images/user-{{userid}}-icon.{{imgext}}" /></div>',
+        '<div class="span9"><p><strong>{{name}}</strong></p><p><small>{{church}}</small></p></div>',
         '</div>'
       ].join(''),
       
@@ -18,6 +18,6 @@ jQuery.noConflict();
       
       engine: Hogan,
 
-      limit: 10 
+      limit: 10
     });
 }(jQuery));
