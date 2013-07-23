@@ -10,12 +10,18 @@ $document->addStyleDeclaration($style);
 ?>
 
 <div class="row-fluid">
-  <ul class="latestnews nav" style="margin-left: 10px;">
-	<li>
-      <a href="/holliness/index.php/how-does-it-work"><i class="icon-file icons-left"></i> How does it work?</a>
-	</li>
-    <li>
-      <a href="/holliness/index.php/learn-more"><i class="icon-file icons-left"></i>Learn More </a>
-    </li>
+  <ul class="latestnews nav" style="margin-left: 0px;">
+    <?php
+        $lists = '';
+        
+        if(is_array($devotions) && count($devotions) > 0 ) {
+            foreach ($devotions as $devotion) {
+                $lists .= '<li><a href="' . JURI::base() . '?option=com_holiness&view=devotion&id=' . $devotion->id . '">'; 
+                $lists .= '<i class="icon-file icons-left"></i> ' .$devotion->theme . '</a></li>';
+            }
+            
+            echo $lists;
+        }
+    ?>
   </ul>
 </div>

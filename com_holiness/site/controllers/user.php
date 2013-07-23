@@ -45,6 +45,9 @@ class HolinessControllerUser extends JController
         }
     }
     
+    
+    
+    
     public function getuser() {
         $model =& $this->getModel('user');
         $name = JRequest::getVar('name', '', 'get', 'string');

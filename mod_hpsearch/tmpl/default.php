@@ -14,7 +14,7 @@ $document->addScript(JURI::base() . 'modules/mod_hpsearch/assets/js/hogan.min.js
   <div class="span7">
     <div class="row-fluid">
     <form style="margin-bottom:0px">
-      <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 10px">
+      <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
       <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
     </form>
     </div>
@@ -35,4 +35,37 @@ $document->addScript(JURI::base() . 'modules/mod_hpsearch/assets/js/hogan.min.js
   </div>
 </div>
 <script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpsearch/assets/js/typeahead.min.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpsearch/assets/js/script.js'; ?>"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+
+(function ($, window) {
+    var search = $('input#search');
+    
+    search
+    .typeahead('destroy')
+    .typeahead({
+      name: 'search',
+      
+      //prefetch: 'components/com_holiness/assets/data/users.json',
+      
+      remote: '<?php echo JURI::base(); ?>?option=com_holiness&task=user.getuser&name=%QUERY',
+      
+      template: [
+        '<div class="row-fluid">',
+        '<div class="span3"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-{{userid}}-icon.{{imgext}}" /></div>',
+        '<div class="span9"><p><strong>{{name}}</strong></p><p><small>{{church}}</small></p></div>',
+        '</div>'
+      ].join(''),
+      
+      footer: '<hr style="margin: 10px 0px 5px 0px"><button class="btn btn-block btn-primary" type="button" style="margin-left: 2%; width: 96%;">See more results...</button>',
+      
+      engine: Hogan,
+
+      limit: 10
+    })
+    
+    .on('typeahead:selected', function (event, user) {
+      window.location = '<?php echo JURI::base(); ?>#/users/' + user.userid;
+    });
+}(jQuery, window));
+</script>
