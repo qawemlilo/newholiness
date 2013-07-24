@@ -4,6 +4,8 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 
-<h3>Devotion Page</h3>
+<div class="row-fluid">
+    <h3 style="margin-top: 0px"><?php echo $this->devotion->theme; ?></h3>
+</div>
   
 
