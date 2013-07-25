@@ -40,11 +40,13 @@ class HolinessModelDevotion extends JModelItem
         $db =& JFactory::getDBO();
         $query = $db->getQuery(true);
         
-        $query->select(array("devotions.id, devotions.id, members.iserid, members.church, members.imgext"))
-              ->from("#__devotions AS devotions")
-              ->join("INNER", "#__hpmembers AS members ON devotions.memberid = members.id")
-              ->where("devotions.id = $id");
-
+        $query = "SELECT devotions.*, members.userid, members.church, members.imgext, users.name, users.email ";
+        $query .= "FROM #__devotions AS devotions ";
+        $query .= "INNER JOIN #__hpmembers AS members ";
+        $query .= "ON devotions.memberid=members.id ";
+        $query .= "INNER JOIN #__users AS users ";
+        $query .= "ON members.userid=users.id ";
+        $query .= "WHERE  devotions.id={$id}";
         
         $db->setQuery($query);
         $result = $db->loadObject();
