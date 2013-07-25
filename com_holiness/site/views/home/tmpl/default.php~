@@ -2,7 +2,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-
+$session =& JFactory::getSession();
+$me = $session->get('me');
 ?>
 <div id="timeline" class="row-fluid">
   <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">

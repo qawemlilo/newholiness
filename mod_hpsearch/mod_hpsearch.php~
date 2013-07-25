@@ -2,8 +2,11 @@
 defined('_JEXEC') or die('Direct Access to this location is not allowed.');
 require_once(dirname(__FILE__).DS.'helper.php');
 
-$user = JFactory::getUser();
+$session =& JFactory::getSession();
+$user =& JFactory::getUser();
 $member = ModHPSearchHelper::getProfile();
+
+
 
 if ($member) {
     $src = 'src="' . JURI::base() . 'media/com_holiness/images/user-' . $user->id . '-icon.' . $member->imgext . '"';
@@ -11,5 +14,19 @@ if ($member) {
 else {
     $src = 'src="data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="';
 }
+ 
+$me = $session->get('me');
+
+
+  $object = new StdClass;
+  
+  $object->name = $user->name;
+  $object->userid = $user->id;
+  $object->memberid = $member->id;
+  $object->email = $user->email;
+  $object->src = $src;
+  $object->church = $member->church;
+  
+  $session->set('me', $object);
 
 require(JModuleHelper::getLayoutPath('mod_hpsearch'));

@@ -17,7 +17,7 @@ $document->addStyleDeclaration($style);
         if(is_array($devotions) && count($devotions) > 0 ) {
             foreach ($devotions as $devotion) {
                 $lists .= '<li><a href="' . JURI::base() . '?option=com_holiness&view=devotion&id=' . $devotion->id . '">'; 
-                $lists .= '<i class="icon-file icons-left"></i> ' . ucwords(strtolower($devotion->theme)) . '</a></li>';
+                $lists .= '<i class="icon-file icons-left"></i> ' . ucwords($devotion->theme) . '</a></li>';
             }
             
             echo $lists;
