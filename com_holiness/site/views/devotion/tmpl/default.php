@@ -2,6 +2,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+
 $src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
 $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
@@ -35,8 +36,8 @@ $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
 <div id="timeline" class="row-fluid">
   <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
     <div class="row-fluid">
-      <div class="span1">
-        <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="margin-top:5px" class="img-circle" />
+      <div class="span1" style="margin: 0px; padding: 0px">
+        <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="margin-top:3px" class="img-circle" />
       </div>
       <div class="span11">
         <div class="row-fluid">
@@ -51,5 +52,9 @@ $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/underscore-min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/backbone.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/comments.js'; ?>"></script>
   
 

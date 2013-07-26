@@ -38,9 +38,10 @@ class HolinessModelUser extends JModelItem
 	{   
         $db =& JFactory::getDBO();
         
-        $query = "SELECT member.id, member.userid, member.church, member.imgext, user.name ";
-        $query .= "FROM #__hpmembers member ";
-        $query .= "INNER JOIN #__users user ON member.userid = user.id";
+        $query = "SELECT member.id AS memberid, member.userid AS id, member.church, member.imgext, user.name AS value ";
+        $query .= "FROM #__hpmembers AS member ";
+        $query .= "INNER JOIN #__users AS user ";
+        $query .= "ON member.userid=user.id";
         $db->setQuery($query); 
 
 		$result = $db->loadObjectList();

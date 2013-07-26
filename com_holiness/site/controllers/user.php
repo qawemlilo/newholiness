@@ -12,37 +12,18 @@ require_once(JPATH_COMPONENT . DS .'assets' . DS . 'includes' . DS .'resize-clas
 class HolinessControllerUser extends JController
 {
     public function getusers() {
+        $user =& JFactory::getUser();
         $model =& $this->getModel('user');
         $members = $model->getMembers();
-        $members2 = array();
         
-        
-        if (count($members) > 0) {
-            foreach($members as $member) {
-               $object = new StdClass;
-               
-               $object->id = $member->id;
-               $object->userid = $member->userid;
-               $object->church = $member->church;
-               $object->imgext = $member->imgext;
-               $object->name = $member->name;
-               $object->value = $member->name;
-               $object->tokens = explode(" ", $member->name);
-               
-               $members2[] = $object;
-            }
-        }
-        
-        if ($members && count($members2) > 0) {
+        if ($members && count($members) > 0 && !$user->guest) {
             http_response_code(200);
             header('Content-type: application/json');
             
-            $file = JPATH_SITE . DS . 'components' .  DS . 'com_holiness' . DS . 'assets' . DS . 'data' . DS . 'users.json';
-            
-            @file_put_contents($file, json_encode($members2));
-            
-            exit();
+            echo json_encode($members);
         }
+        
+         exit();
     }
     
     

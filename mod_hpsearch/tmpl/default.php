@@ -44,18 +44,19 @@ jQuery.noConflict();
     search
     .typeahead('destroy')
     .typeahead({
-      //minLength: 3,
+      // minLength: 2,
       
       name: 'search',
       
-      prefetch: 'components/com_holiness/assets/data/users.json',
-      
-      //remote: '<?php echo JURI::base(); ?>?option=com_holiness&task=user.getuser&name=%QUERY',
+      prefetch: {
+        url: '<?php echo JURI::base(); ?>?option=com_holiness&task=user.getusers',
+        ttl: (1000 * 60) * 60
+      },
       
       template: [
         '<div class="row-fluid">',
-        '<div class="span3"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-{{userid}}-icon.{{imgext}}" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" /></div>',
-        '<div class="span9"><p><strong>{{name}}</strong></p><p><small>{{church}}</small></p></div>',
+        '<div class="span3"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-{{id}}-icon.{{imgext}}" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" /></div>',
+        '<div class="span9"><p><strong>{{value}}</strong></p><p><small>{{church}}</small></p></div>',
         '</div>'
       ].join(''),
       
@@ -67,7 +68,7 @@ jQuery.noConflict();
     })
     
     .on('typeahead:selected', function (event, user) {
-      window.location = '<?php echo JURI::base(); ?>#/users/' + user.userid;
+      window.location = '<?php echo JURI::base(); ?>#/users/' + user.id;
     });
 }(jQuery, window));
 </script>
