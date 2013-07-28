@@ -32,9 +32,7 @@ class HolinessControllerUser extends JController
     public function getcomments() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('user');
-        $id = JRequest::getVar('id', '', 'get', 'int');
-        
-        $comments = $model->getComments($id);
+        $comments = $model->getComments();
         
         if ($comments && count($comments) > 0 && !$user->guest) {
             http_response_code(200);

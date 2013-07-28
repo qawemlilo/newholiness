@@ -2,10 +2,13 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-
+$doc =& JFactory::getDocument();
 $src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
 $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
+$devotionid = JRequest::getVar('id', '', 'get', 'string');
+
+$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:10px!important}');
 ?>
 
 <div class="row-fluid">
@@ -35,6 +38,7 @@ $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
 
 <div id="timeline" class="row-fluid">
   <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
+  
     <div class="row-fluid">
       <div class="span1" style="margin: 0px; padding: 0px">
         <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="margin-top:3px" class="img-circle" />
@@ -50,11 +54,23 @@ $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
         </div>
       </div>
     </div>
+
+     <div class="row-fluid" id="commentscontainer">
+     </div>
   </div>
 </div>
 
 <script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/underscore-min.js'; ?>"></script>
 <script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/backbone.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/comments.js'; ?>"></script>
-  
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/moment.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/script.js'; ?>"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+
+(function ($) {
+    $(function () {
+        $.getComments('<?php echo $devotionid; ?>');
+    });
+}(jQuery));
+</script>  
 
