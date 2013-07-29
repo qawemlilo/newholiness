@@ -39,6 +39,16 @@ module.exports = function(grunt) {
             files: [
                 {cwd: 'mod_devotions/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
             ]
+        },
+        
+        mod_members: {
+            options: {
+                archive: '../extensions/mod_hpmembers.zip'
+            },
+            
+            files: [
+                {cwd: 'mod_hpmembers/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
+            ]
         }
     },
     

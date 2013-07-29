@@ -2,7 +2,12 @@
 jQuery.noConflict();
 
 (function ($) {
-
+    var commentHtml = '<div class="span1">';
+    commentHtml += '<a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></a>';
+    commentHtml += '</div><div class="span11"><div class="row-fluid"><strong><a href="#/users/<%= id %>"><%= name %></a></strong>';
+    commentHtml += '<span class="badge badge-info" style="margin-left:10px;"><a style="color: #fff;" class="amen-plus" href="#">Amens</a></span><br>';
+    commentHtml += '<small><%= ts %></small><br><%= comment %></div>';
+    
     var User = Backbone.Model.extend({
         defaults: {
             id: 0, 
@@ -21,7 +26,7 @@ jQuery.noConflict();
             comment: "", 
             imgext: "", 
             name: "",
-            
+            amens: ""
         }
     });
 
@@ -31,7 +36,7 @@ jQuery.noConflict();
         className: 'comment row-fluid',
 
 
-        template: _.template('<div class="span1"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></div><div class="span11"><div class="row-fluid"><div class="span9"><strong><%= name %></strong></div><div class="span3" style="text-align:right;"><%= ts %></div></div><div class="row-fluid"><%= comment %></div></div>'),
+        template: _.template(commentHtml),
 
         
         render: function () {
@@ -58,9 +63,8 @@ jQuery.noConflict();
     var CommentsView = Backbone.View.extend({
     
         el: $('#commentscontainer'),
-        
 
-     
+        
         initialize: function () {            
             this.listenTo(this.collection, 'add', this.render);
             this.listenTo(this.collection, 'reset', this.render);
@@ -69,19 +73,16 @@ jQuery.noConflict();
             
             return this;
         },
-        
-        
-        
+
         
         render: function () {
-            var fragment = document.createDocumentFragment(), commentView;
+            var fragment = document.createDocumentFragment(), commentView, hr;
             
             if (this.collection.length > 0) {
-                var hr = document.createElement('hr');
+                hr = document.createElement('hr');
                 
                 fragment.appendChild(hr);
             }
-
             
             this.collection.forEach(function (model) { 
                 commentView = new CommentView({
@@ -98,30 +99,22 @@ jQuery.noConflict();
     });
 
     
-    
-    
-    var Users = Backbone.Collection.extend({
+    var UsersCollection = Backbone.Collection.extend({
         model: User,
 
         url: 'index.php?option=com_holiness&task=user.getusers'        
     });
-    
-    
-    
+
     
     var CommentsCollection = Backbone.Collection.extend({
         model: Comment      
-    });
+    });   
     
     
-    
-    
-    //var members = new Users();
-    
+    //var members = new Users(); 
     
     
     //members.fetch({reset: true}); 
-    
     
 
     //$.getUser = function (id) {
@@ -129,10 +122,9 @@ jQuery.noConflict();
     //}; 
     
     
-    
-    $.getComments = function (devotionid) {
+    $.getComments = function (baseurl, devotionid) {
         var commentsCollection = new CommentsCollection();
-        commentsCollection.url = 'index.php?option=com_holiness&task=user.getcomments&id='+devotionid;
+        commentsCollection.url = baseurl + '?option=com_holiness&task=user.getcomments&id='+devotionid;
         
         var commentsView = new CommentsView({
             collection: commentsCollection

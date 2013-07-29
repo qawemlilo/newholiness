@@ -5,16 +5,18 @@ $document =& JFactory::getDocument();
 $document->addStyleSheet(JURI::base() . 'modules/mod_hpsearch/assets/css/typeahead.js-bootstrap.css');
 $document->addStyleDeclaration(
 'input, textarea, .uneditable-input {
-  width: 300px;
+  width: 400px;
 }');
 $document->addScript(JURI::base() . 'modules/mod_hpsearch/assets/js/hogan.min.js');
 ?>
 
-<div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #F1F1F1; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333;">
+<div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333;">
   <div class="span7">
     <div class="row-fluid">
     <form style="margin-bottom:0px">
-      <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
+      <a href="<?php echo JURI::base(); ?>">
+        <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
+      </a>
       <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
     </form>
     </div>

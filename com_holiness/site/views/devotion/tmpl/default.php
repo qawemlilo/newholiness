@@ -8,7 +8,7 @@ $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
 $devotionid = JRequest::getVar('id', '', 'get', 'string');
 
-$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:10px!important}');
+$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!important}');
 ?>
 
 <div class="row-fluid">
@@ -22,8 +22,29 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:10px!importan
     </div>
     <div class="span9">
         <h3 style="margin-top: 0px">Dear friend, hear the voice of the Lord today: <?php echo $this->devotion->scripture; ?></h3>
-        <p style="margin-top:0px; padding-top: 0px;"><small><?php echo $date->format("l d M Y"); ?></small></p>
-
+        <div class="row-fluid" style="margin-top:0px; padding-top: 0px;">
+          <div class="span10"><small><?php echo $date->format("l d M Y"); ?></small></div>
+          <div class="span2">
+            <?php 
+            $user =& JFactory::getUser();
+            
+            if ($user->authorize( 'com_content', 'edit', 'content', 'all' )) { ?>
+            <div class="btn-group">
+              <button class="btn btn-primary"><i class="icon-cog"></i></button>
+              <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=devotion.unpublish&id=' . $devotionid); ?>">
+                    <span style="color: #0094CB"><i class="icon-remove-circle"></i></span> Unpublish
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
         <blockquote>
           <p><?php echo $this->devotion->reading; ?></p>
           <small><?php echo $this->devotion->scripture; ?> <cite title="Source Title"><?php echo $this->devotion->bible; ?></cite></small>
@@ -36,6 +57,8 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:10px!importan
   <p><strong>Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
 </div>
 
+<hr />
+
 <div id="timeline" class="row-fluid">
   <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
   
@@ -45,12 +68,10 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:10px!importan
       </div>
       <div class="span11">
         <div class="row-fluid">
-          <form style="margin-bottom: 0px;">
+          <form style="margin-bottom: 0px; text-align:right">
             <textarea rows="2" cols="10" class="span12" placeholder="Write a comment..."></textarea>
+            <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
           </form>          
-        </div>
-        <div class="row-fluid" style="text-align:right">
-          <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
         </div>
       </div>
     </div>
@@ -69,7 +90,7 @@ jQuery.noConflict();
 
 (function ($) {
     $(function () {
-        $.getComments('<?php echo $devotionid; ?>');
+        $.getComments(<?php echo "'" . JURI::base() . "', " . "'" . $devotionid . "'"; ?>);
     });
 }(jQuery));
 </script>  

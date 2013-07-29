@@ -27,6 +27,42 @@ class HolinessModelDevotion extends JModelItem
     }
     
     
+    public function unpublish($id) {   
+        $db =& JFactory::getDBO();
+
+        if (!$id) {
+            return false;
+        }
+        
+        $query = "UPDATE #__devotions SET published=0 WHERE id=$id";
+        $db->setQuery($query); 
+
+        $result = $db->loadResult();
+        
+        return $result;
+    }
+    
+    
+    
+    public function getComments($id)
+	{   
+        $db =& JFactory::getDBO();
+        
+        $query = "SELECT comment.id AS commentid, comment.userid AS id, comment.txt AS comment, comment.ts, member.imgext, user.name ";
+        $query .= "FROM #__devotion_comments AS comment ";
+        $query .= "INNER JOIN #__hpmembers AS member ";
+        $query .= "ON member.userid=comment.userid ";
+        $query .= "INNER JOIN #__users AS user ";
+        $query .= "ON member.userid=user.id ";
+        $query .= "WHERE comment.devotionid=$id";
+
+        $db->setQuery($query);
+        $result = $db->loadObjectList();
+        
+        return $result;
+    }
+    
+    
     
     public function create($arr = array()) {
         

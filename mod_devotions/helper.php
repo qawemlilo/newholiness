@@ -8,7 +8,7 @@ class ModDevotionsHelper
         $db =& JFactory::getDBO();
         $user =& JFactory::getUser();
         
-        $query = "SELECT id, theme FROM #__devotions ORDER BY RAND() LIMIT 40";
+        $query = "SELECT id, theme FROM #__devotions WHERE published=1 ORDER BY RAND() LIMIT 40";
         $db->setQuery($query); 
 
 		$result = $db->loadObjectList();
