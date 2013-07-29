@@ -1,12 +1,9 @@
 <?php 
 defined('_JEXEC') or die('Restricted access'); // no direct access 
-/*
+
 $document =& JFactory::getDocument();
-$style = '.nav [class^="icon-"], .nav [class*=" icon-"] {
-  line-height: 1.2em!important;
-}';
+$style = '#members-list li {margin-bottom: 5px; padding-bottom: 5px;}';
 $document->addStyleDeclaration($style);
-*/
 ?>
 
 <div class="row-fluid members-container">
@@ -22,7 +19,7 @@ jQuery.noConflict();
 
 (function ($) {
     $(function () {
-        $.getUsers();
+        var members = $.getUsers();
     });
 }(jQuery));
 </script>  

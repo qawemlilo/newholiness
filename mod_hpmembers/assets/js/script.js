@@ -3,10 +3,10 @@ jQuery.noConflict();
 
 (function ($) {
     var memberHtml = '<div class="row-fluid fellow">';
-    memberHtml += '<div class="span3"><a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" class="img-polaroid" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></a></div>';
+    memberHtml += '<div class="span3"><img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></div>';
     memberHtml += '<div class="span9"><div class="row-fluid"><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>';
     memberHtml += '<small><%= church %></small><br>';
-    memberHtml += '<button class="btn btn-primary add-partner"><i class="icon-group"> Make devotion partner</button></div></div>';
+    memberHtml += '<button class="btn add-partner"><small>Make devotion partner</small></button></div></div>';
     
     var User = Backbone.Model.extend({
         defaults: {
@@ -30,6 +30,8 @@ jQuery.noConflict();
             var currentmodels = [], i;
             
             if (this.ogModels) this.models = this.ogModels;
+            
+            this.models = _.shuffle(this.models);
             
             for (i = 0; i < num; i++) {
                var model = this.pop();
