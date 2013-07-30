@@ -16,7 +16,7 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
       <a href="<?php echo JURI::base() . '#/users/' . $this->devotion->userid; ?>">
       <img src="<?php echo $src; ?>" style="width:150px; height:150px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" /></a><br>
       <blockquote>
-        <p><?php echo '<a href="' . JURI::base() . '#/users/' . $this->devotion->userid . '">' . $this->devotion->name; ?></a></p>
+        <p><?php echo '<a href="' . JURI::base() . '#/users/' . $this->devotion->userid . '">' . ucwords(strtolower($this->devotion->name)); ?></a></p>
         <small><?php echo $this->devotion->church; ?></small>
       </blockquote>
     </div>
@@ -30,14 +30,14 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
             
             if ($user->authorize( 'com_content', 'edit', 'content', 'all' )) { ?>
             <div class="btn-group">
-              <button class="btn btn-primary"><i class="icon-cog"></i></button>
-              <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
+              <button class="btn"><i class="icon-cog"></i></button>
+              <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu">
                 <li>
                   <a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=devotion.unpublish&id=' . $devotionid); ?>">
-                    <span style="color: #0094CB"><i class="icon-remove-circle"></i></span> Unpublish
+                    Unpublish
                   </a>
                 </li>
               </ul>
@@ -64,7 +64,7 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
   
     <div class="row-fluid">
       <div class="span1" style="margin: 0px; padding: 0px">
-        <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="margin-top:3px" class="img-circle" />
+        <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" />
       </div>
       <div class="span11">
         <div class="row-fluid">
@@ -81,9 +81,7 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
   </div>
 </div>
 
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/underscore-min.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/backbone.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/moment.min.js'; ?>"></script>
+
 <script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/script.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();

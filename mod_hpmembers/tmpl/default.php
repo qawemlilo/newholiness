@@ -2,7 +2,7 @@
 defined('_JEXEC') or die('Restricted access'); // no direct access 
 
 $document =& JFactory::getDocument();
-$style = '#members-list li {margin-bottom: 5px; padding-bottom: 5px;}';
+$style = '#members-list li {margin-bottom: 2px; padding-bottom: 2px;}';
 $document->addStyleDeclaration($style);
 ?>
 
@@ -11,8 +11,6 @@ $document->addStyleDeclaration($style);
   </ul>
 </div>
 
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/underscore-min.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/backbone.js'; ?>"></script>
 <script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpmembers/assets/js/script.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();

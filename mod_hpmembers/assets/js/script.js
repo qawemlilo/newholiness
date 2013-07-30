@@ -2,11 +2,22 @@
 jQuery.noConflict();
 
 (function ($) {
+    $.toUpperFirst= function(txt) {
+        var txtArr = txt.split(" "),
+        words = [];
+	    
+        _.each(txtArr, function (word) {
+            words.push(word.charAt(0).toUpperCase() + word.slice(1))  
+        });
+        
+        return words.join(" ");
+    };
+    
     var memberHtml = '<div class="row-fluid fellow">';
-    memberHtml += '<div class="span3"><img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></div>';
-    memberHtml += '<div class="span9"><div class="row-fluid"><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>';
-    memberHtml += '<small><%= church %></small><br>';
-    memberHtml += '<button class="btn add-partner"><small>Make devotion partner</small></button></div></div>';
+    memberHtml += '<div class="span3"><img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src=\'modules/mod_hpmembers/assets/images/none.jpg\'" /></div>';
+    memberHtml += '<div class="span9"><div class="row-fluid"><p><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>';
+    memberHtml += '<small><%= church %></small></p>';
+    memberHtml += '<p><button class="btn add-partner"><small>Make devotion partner</small></button></p></div></div>';
     
     var User = Backbone.Model.extend({
         defaults: {
@@ -19,29 +30,24 @@ jQuery.noConflict();
     });
     
     
+    Backbone.Collection.prototype.getUsers = function (num) {
+
+        if (!this.ogModels) {
+            this.models = _.shuffle(this.models);
+            this.ogModels = this.clone().models;
+        }
+            
+        var currentmodels = this.ogModels.splice(0, num);
+            
+            
+        this.reset(currentmodels);    
+    }; 
+    
+    
     var UsersCollection = Backbone.Collection.extend({
         model: User,
 
-        url: 'index.php?option=com_holiness&task=user.getusers',
-        
-        ogModels: false,
-
-        getUsers: function (num) {
-            var currentmodels = [], i;
-            
-            if (this.ogModels) this.models = this.ogModels;
-            
-            this.models = _.shuffle(this.models);
-            
-            for (i = 0; i < num; i++) {
-               var model = this.pop();
-               currentmodels.push(model);
-            }
-            
-            this.ogModels = this.clone().models;
-            
-            this.reset(currentmodels);
-        }        
+        url: 'index.php?option=com_holiness&task=user.getusers'       
     });
 
 
@@ -55,6 +61,8 @@ jQuery.noConflict();
         
         render: function () {
             var template, data = this.model.toJSON();
+            
+            data.value = $.toUpperFirst(data.value);
 
             template = this.template(data);
  
@@ -65,9 +73,6 @@ jQuery.noConflict();
             return this;
         }       
     });
-    
-    
-
     
     
     

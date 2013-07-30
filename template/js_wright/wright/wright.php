@@ -166,6 +166,9 @@ class Wright
             // ensure that jQuery loads in noConflict mode to avoid mootools conflicts
             $this->document->addScriptDeclaration('jQuery.noConflict();');
 		}
+        
+        // Qhawe's addition
+        $this->document->addScript($this->_urlJS . '/underscore-backbone-moment.js');
 
 		if ($this->loadBootstrap)
 			// load bootstrap JS

@@ -7,10 +7,9 @@ $document->addStyleDeclaration(
 'input, textarea, .uneditable-input {
   width: 400px;
 }');
-$document->addScript(JURI::base() . 'modules/mod_hpsearch/assets/js/hogan.min.js');
 ?>
 
-<div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333;">
+<div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333; z-index:9999">
   <div class="span7">
     <div class="row-fluid">
     <form style="margin-bottom:0px">
@@ -57,14 +56,25 @@ jQuery.noConflict();
       
       template: [
         '<div class="row-fluid">',
-        '<div class="span3"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-{{id}}-icon.{{imgext}}" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" /></div>',
-        '<div class="span9"><p><strong>{{value}}</strong></p><p><small>{{church}}</small></p></div>',
+        '<div class="span2"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" /></div>',
+        '<div class="span10"><p><strong><%= value %></strong></p><p><small><%= church %></small></p></div>',
         '</div>'
       ].join(''),
       
       //footer: '<hr style="margin: 10px 0px 5px 0px"><button class="btn btn-block btn-primary" type="button" style="margin-left: 2%; width: 96%;">See more results...</button>',
       
-      engine: Hogan,
+
+      engine: {
+        compile: function(template) {
+          var compiled = _.template(template);
+            
+          return {
+            render: function(context) { 
+              return compiled(context);
+            }
+          }
+        }
+      },
 
       limit: 10
     })
