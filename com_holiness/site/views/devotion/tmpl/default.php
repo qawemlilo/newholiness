@@ -3,12 +3,13 @@
 defined('_JEXEC') or die('Restricted access');
 
 $doc =& JFactory::getDocument();
+$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!important}');
+
 $src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
 $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
 $devotionid = JRequest::getVar('id', '', 'get', 'string');
 
-$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!important}');
 ?>
 
 <div class="row-fluid">
@@ -82,7 +83,7 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
 </div>
 
 
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/script.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/devotion.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();
 

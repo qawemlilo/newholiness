@@ -1,3 +1,5 @@
 # mod_devotions
+This is a module for displaying random devotions, the default limit being 40.
 
-mod_devotions is a module for listing random devotions, the default limit being 40. It is displayed on the left side panel.
+### Database
+#__devotions

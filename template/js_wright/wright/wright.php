@@ -345,13 +345,14 @@ class Wright
 	        	$cssFound = true;
 
 	            $styles['wright'][] = 'joomla'.$version.'.css';
-
+                
+                /* //Qhawe's comment out
 				if ($this->document->params->get('responsive',1) && is_file(JPATH_THEMES . '/' . $this->document->template .'/wright/css/joomla'.$version.'.responsive.css')) {
-		            $styles['wright'][] = 'joomla'.$version.'.responsive.css';
+		            //$styles['wright'][] = 'joomla'.$version.'.responsive.css'; 
 				}
 				if ($this->document->params->get('responsive',1) && is_file(JPATH_THEMES . '/' . $this->document->template .'/css/responsive.css')) {
-		            $styles['template'][] = 'responsive.css';
-				}
+		            //$styles['template'][] = 'responsive.css'; // Qhawe's comment out
+				} */
 
 	        }
 	        else {
@@ -363,12 +364,13 @@ class Wright
 		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.bootstrap.min.css'))
 			$styles['bootstrap'][0] = 'style-' . $this->document->params->get('style') . '.bootstrap.min.css';
 
-		// Load up a specific style if set
+		// Load up a specific style if set //Qhawe's comment out
+        /*
 		if (is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.css'))
 			$styles['template'][] = 'style-' . $this->document->params->get('style') . '.css';
 		if ($this->document->params->get('responsive',1) && is_file(JPATH_THEMES . '/' . $this->document->template . '/css/' . 'style-' . $this->document->params->get('style') . '.responsive.css')) {
             $styles['template'][] = 'style-' . $this->document->params->get('style') . '.responsive.css';
-		}
+		}*/
 
 		// Add some stuff for lovely IE if needed
 		if ($browser->getBrowser() == 'msie')

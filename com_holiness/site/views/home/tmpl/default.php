@@ -2,9 +2,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-
 ?>
-<div id="timeline" class="row-fluid">
+<div id="timeline" class="row-fluid content-display hide">
   <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
     <div class="row-fluid">
       <div class="span3">
@@ -37,5 +36,48 @@ defined('_JEXEC') or die('Restricted access');
       </div>
     </div>
   </div>
-  
 </div>
+
+<script type="text/html" id="user-tpl">
+<div class="row-fluid">
+  <div class="span3">
+    <img style="width:150px; height:150px" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" class="img-polaroid" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" />
+    <br>
+    <blockquote>
+      <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong></p>
+      <small><%= church %></small>
+    </blockquote>
+  </div>
+  <div class="span9">
+    <h3 style="margin-top: 0px">The Divine Profile for <%= value %> who is born of God</h3>
+    
+    <blockquote>
+      My name is <%= value %> and I am Born-Again by God's Love & Grace. I go to <%= church %> and I love my Church so much.
+    </blockquote>
+    <p><button class="btn btn-info">Make <%= value %> your devotion partner</button></p>
+    <br>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#"><i class="icon-book"> </i> Devotions</a>
+      </li>
+      <li>
+        <a href="#"><i class="icon-user"> </i> Devotion Partners</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</script>
+
+<div id="user-content" class="row-fluid content-display hide">
+</div>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/home.js'; ?>"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+
+(function ($) {
+    $(function () {
+        $.initApp('<?php echo JURI::base(); ?>?option=com_holiness&task=user.getusers');
+    });
+}(jQuery));
+</script> 
