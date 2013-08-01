@@ -58,6 +58,23 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
   <p><strong>Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
 </div>
 
+<script type="text/html" id="comment-tpl">
+  <div class="span1">
+    <a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></a>
+  </div>
+  
+  <div class="span11">
+    <strong><a href="#/users/<%= id %>"><%= name %></a></strong>
+    <span class="badge badge-info" style="margin-left:10px;">
+      <a style="color: #fff;" class="amen-plus" href="#">Amen</a>
+    </span>
+    <br>
+    <small><%= ts %></small>
+    <br>
+    <%= comment %>
+  </div>
+</script>
+
 <hr />
 
 <div id="timeline" class="row-fluid">

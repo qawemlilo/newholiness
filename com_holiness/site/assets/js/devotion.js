@@ -15,12 +15,6 @@ jQuery.noConflict();
         return words.join(" ");
     };
     
-    var commentHtml = '<div class="span1">';
-    commentHtml += '<a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" /></a>';
-    commentHtml += '</div><div class="span11"><div class="row-fluid"><strong><a href="#/users/<%= id %>"><%= name %></a></strong>';
-    commentHtml += '<span class="badge badge-info" style="margin-left:10px;"><a style="color: #fff;" class="amen-plus" href="#">Amen</a></span><br>';
-    commentHtml += '<small><%= ts %></small><br><%= comment %></div>';
-    
     
     var Comment = Backbone.Model.extend({
         defaults: {
@@ -43,7 +37,7 @@ jQuery.noConflict();
 
         className: 'comment row-fluid',
 
-        template: _.template(commentHtml),
+        template: _.template($('#comment-tpl').text()),
         
         render: function () {
             var template, data = this.model.toJSON();

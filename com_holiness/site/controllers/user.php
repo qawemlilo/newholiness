@@ -29,6 +29,24 @@ class HolinessControllerUser extends JController
     
     
     
+    public function getprofiles() {
+        $user =& JFactory::getUser();
+        $model =& $this->getModel('user');
+        $members = $model->getProfiles();
+        
+        if ($members && count($members) > 0 && !$user->guest) {
+            http_response_code(200);
+            header('Content-type: application/json');
+            
+            echo json_encode($members);
+        }
+        
+         exit();
+    }
+    
+    
+    
+    
     public function getcomments() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('user');

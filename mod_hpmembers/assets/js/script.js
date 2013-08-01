@@ -2,7 +2,7 @@
 jQuery.noConflict();
 
 (function ($) {
-    $.toUpperFirst= function(txt) {
+    $.toUpperFirst = function(txt) {
         var txtArr = txt.split(" "),
         words = [];
 	    
@@ -13,11 +13,7 @@ jQuery.noConflict();
         return words.join(" ");
     };
     
-    var memberHtml = '<div class="row-fluid fellow">';
-    memberHtml += '<div class="span3"><img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src=\'modules/mod_hpmembers/assets/images/none.jpg\'" /></div>';
-    memberHtml += '<div class="span9"><div class="row-fluid"><p><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>';
-    memberHtml += '<small><%= church %></small></p>';
-    memberHtml += '<p><button class="btn add-partner"><small>Make devotion partner</small></button></p></div></div>';
+
     
     var User = Backbone.Model.extend({
         defaults: {
@@ -56,13 +52,13 @@ jQuery.noConflict();
         tagName: 'li',
 
 
-        template: _.template(memberHtml),
+        template: _.template($('#member-tpl').text()),
 
         
         render: function () {
             var template, data = this.model.toJSON();
             
-            data.value = $.toUpperFirst(data.value);
+            //data.value = $.toUpperFirst(data.value);
 
             template = this.template(data);
  

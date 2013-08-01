@@ -28,6 +28,25 @@ class HolinessControllerDevotion extends JController
     
     
     
+    public function getdevotions() {
+        $user =& JFactory::getUser();
+        $model =& $this->getModel('devotion');
+        $id = JRequest::getVar('id', '', 'get', 'int');
+        
+        $devotions = $model->getDevotions($id);
+        
+        if ($devotions && count($devotions) > 0 && !$user->guest) {
+            http_response_code(200);
+            header('Content-type: application/json');
+            
+            echo json_encode($devotions);
+        }
+        
+         exit();
+    }
+    
+    
+    
     public function unpublish() {
         $user =& JFactory::getUser();
         $application =& JFactory::getApplication();

@@ -58,12 +58,18 @@ defined('_JEXEC') or die('Restricted access');
     <br>
     <ul class="nav nav-tabs">
       <li class="active">
-        <a href="#"><i class="icon-book"> </i> Devotions</a>
+        <a href="#devotionstab"><i class="icon-book"> </i> Devotions</a>
       </li>
       <li>
-        <a href="#"><i class="icon-user"> </i> Devotion Partners</a>
+        <a href="#devotionpartnerstab"><i class="icon-user"> </i> Devotion Partners</a>
       </li>
     </ul>
+    
+    <div class="tab-content">
+      <div class="tab-pane active" id="devotionstab"> Devotions</div>
+      <div class="tab-pane" id="devotionpartnerstab"> Devotion Partners</div>
+    </div>    
+
   </div>
 </div>
 </script>

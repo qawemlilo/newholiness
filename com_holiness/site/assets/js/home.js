@@ -5,7 +5,7 @@ jQuery.noConflict();
 (function ($) {
 
     $.toUpperFirst = function(txt) {
-        var txtArr = txt.split(" "),
+        var txtArr = txt.toLowerCase().split(" "),
         words = [];
 	    
         _.each(txtArr, function (word) {
@@ -64,6 +64,24 @@ jQuery.noConflict();
     
     UsersCollection = Backbone.Collection.extend({
         model: User      
+    }),
+    
+    
+    Devotion = Backbone.Model.extend({
+        defaults: {
+            id: 0, 
+            theme: ""
+        }
+    }),
+    
+    
+    DevotionCollection = Backbone.Collection.extend({
+        model: Devotion      
+    }),
+    
+    
+    UsersCollection = Backbone.Collection.extend({
+        model: User      
     }), 
 
 
@@ -84,13 +102,23 @@ jQuery.noConflict();
     
         el: '#user-content',
         
+        
+        events: {
+            'click ul.nav-tabs li a': 'renderDevotions'
+        },
+        
+        
         template: _.template($("#user-tpl").text()),
+        
         
         render: function (id) {
             var template, model, self = this;
             
             if (self.collection && this.collection.length > 0) {
                 model = self.collection.get(id);
+                
+                model.value = $.toUpperFirst(model.value);
+                
                 template = self.template(model.toJSON());
                 self.$el.html(template);
                 self.$el.removeClass('hide');
@@ -98,6 +126,9 @@ jQuery.noConflict();
             else {
                 self.collection.on('render', function () {
                     model = self.collection.get(id);
+                    
+                    model.value = $.toUpperFirst(model.value);
+                     
                     template = self.template(model.toJSON());
                     self.$el.html(template);
                     self.$el.removeClass('hide');
@@ -106,6 +137,23 @@ jQuery.noConflict();
                 });
             }
             
+            return self;
+        },
+        
+        
+        renderDevotions: function (e) {
+            $(e.currentTarget).tab('show')
+        }       
+    });
+    
+    
+    DevotionsView = Backbone.View.extend({
+    
+        el: '#devotionstab',
+        
+        render: function (id) {
+            var template, model, self = this;
+  
             return self;
         }        
     });
@@ -125,12 +173,10 @@ jQuery.noConflict();
             prefill: true,
             
             prefillSuccess: function () {
-                users.trigger('render');
-                console.log('prefillSuccess')                
+                users.trigger('render');               
             },
             success: function () {
                 users.trigger('render'); 
-                console.log('Success'); 
             }            
         });
         
