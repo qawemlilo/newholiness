@@ -5,7 +5,7 @@ jQuery.noConflict();
 (function ($) {
 
     $.toUpperFirst= function(txt) {
-        var txtArr = txt.split(" "),
+        var txtArr = txt.toLowerCase().split(" "),
         words = [];
 	    
         _.each(txtArr, function (word) {

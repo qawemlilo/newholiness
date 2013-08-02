@@ -12,6 +12,8 @@ $document->addStyleDeclaration($style);
 </div>
 
 
+<!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
+
 <script type="text/html" id="member-tpl">
   <div class="row-fluid fellow">
     <div class="span3">
@@ -26,6 +28,7 @@ $document->addStyleDeclaration($style);
   </div>
 </script>
 
+<!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
 <script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpmembers/assets/js/script.js'; ?>"></script>
 <script type="text/javascript">

@@ -105,12 +105,11 @@ class HolinessModelDevotion extends JModelItem
     
     public function getDevotions($id)
     {
-        $id = JRequest::getVar('id', 0, 'get', 'int');
         $db =& JFactory::getDBO();
         
-        $query = "SELECT devotions.id, devotion.theme ";
-        $query .= "FROM #__devotions AS devotions ";
-        $query .= "WHERE  devotions.memberid={$id}";
+        $query = "SELECT id, theme, memberid ";
+        $query .= "FROM #__devotions ";
+        $query .= "WHERE memberid=$id";
         
         $db->setQuery($query);
         $result = $db->loadObjectList();

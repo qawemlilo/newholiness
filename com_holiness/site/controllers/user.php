@@ -28,6 +28,25 @@ class HolinessControllerUser extends JController
     
     
     
+    public function getpartners() {
+        $user =& JFactory::getUser();
+        $model =& $this->getModel('user');
+        $id = JRequest::getVar('id', '', 'get', 'int');
+        
+        $partners = $model->getParners($id);
+        
+        if ($partners && count($partners) > 0 && !$user->guest) {
+            http_response_code(200);
+            header('Content-type: application/json');
+            
+            echo json_encode($partners);
+        }
+        
+         exit();
+    }
+    
+    
+    
     
     public function getprofiles() {
         $user =& JFactory::getUser();

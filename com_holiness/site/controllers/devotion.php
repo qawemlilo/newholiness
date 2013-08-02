@@ -42,7 +42,7 @@ class HolinessControllerDevotion extends JController
             echo json_encode($devotions);
         }
         
-         exit();
+        exit();
     }
     
     

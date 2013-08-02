@@ -89,6 +89,19 @@ class HolinessModelUser extends JModelItem
     }
     
     
+    function getParners($id)
+    {
+        $db =& JFactory::getDBO();
+        
+        $query = "SELECT * FROM #__devotion_partners WHERE (firstpartner=$id OR secondpartner=$id) AND active=1";  
+        $db->setQuery($query); 
+
+        $data = $db->loadObjectList();
+
+        return $data;
+    }
+    
+    
     
     
     public function hasProfile()
