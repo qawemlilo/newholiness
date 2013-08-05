@@ -13,7 +13,8 @@ Holiness.com is build on top of Joomla! 2.5.x CMS. All the extensions used are c
 ### Databases
  - #__devotions - for all devotions
  - #__hpmembers - for holding members data
- - #__devotion_comments - holds comments on devotions 
+ - #__devotion_comments - holds comments on devotions
+ - #__devotion_partners - holds relationships for devotion partners
 
 ### Technologies used
  - Twitter bootstrap 2.3.x - UI framework
