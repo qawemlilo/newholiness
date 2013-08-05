@@ -3,7 +3,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 $doc =& JFactory::getDocument();
-$doc->addStyleDeclaration('#showdevotions ul {margin-left:10px;}');
+$doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px;};');
 ?>
 <div id="timeline" class="row-fluid content-display hide">
   <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
@@ -71,10 +71,8 @@ $doc->addStyleDeclaration('#showdevotions ul {margin-left:10px;}');
     
     <div class="tab-content" style="margin-top: 0px; padding: 20px 0px 10px 0px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">
       <div class="tab-pane active" id="showdevotions">
-        <div style="margin-left:10px"><img src="<?php echo JURI::base(); ?>components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></div>
       </div>
       <div class="tab-pane" id="showpartners">
-        <div style="margin-left:10px"><img src="<?php echo JURI::base(); ?>components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></div>
       </div>
     </div>    
   </div>
@@ -84,10 +82,10 @@ $doc->addStyleDeclaration('#showdevotions ul {margin-left:10px;}');
 <script type="text/html" id="partners-tpl">
   <div class="row-fluid fellow">
     <div class="span3">
-      <img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
+      <img src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" style="width:82px" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
     </div>
     
-    <div class="span9"><div class="row-fluid">
+    <div class="span9">
       <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
       <small><%= church %></small></p>
       <p><button class="btn add-partner"><small>Make devotion partner</small></button></p>
@@ -99,8 +97,9 @@ $doc->addStyleDeclaration('#showdevotions ul {margin-left:10px;}');
 
 <div id="user-content" class="row-fluid content-display hide">
 </div>
+
 <script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/home.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/home2.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();
 

@@ -11,6 +11,10 @@ require_once(JPATH_COMPONENT . DS .'assets' . DS . 'includes' . DS .'resize-clas
 
 class HolinessControllerUser extends JController
 {
+    /*
+        Fetches all registered holiness page members
+        First Checks if the user is logged
+    */
     public function getusers() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('user');
@@ -22,12 +26,24 @@ class HolinessControllerUser extends JController
             
             echo json_encode($members);
         }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
+        }
         
          exit();
     }
     
     
-    
+
+    /*
+        Fetches a user's devotion partners
+        Checks if the user is logged
+        Extracts the user's id from the url
+    */
     public function getpartners() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('user');
@@ -41,13 +57,23 @@ class HolinessControllerUser extends JController
             
             echo json_encode($partners);
         }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
+        }
         
          exit();
     }
     
     
     
-    
+    /*
+        Fetches all registered holiness page members
+        First Checks if the user is logged
+    */    
     public function getprofiles() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('user');
@@ -58,6 +84,13 @@ class HolinessControllerUser extends JController
             header('Content-type: application/json');
             
             echo json_encode($members);
+        }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
         }
         
          exit();

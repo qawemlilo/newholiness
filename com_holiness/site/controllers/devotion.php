@@ -22,6 +22,13 @@ class HolinessControllerDevotion extends JController
             
             echo json_encode($comments);
         }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
+        }
         
          exit();
     }
@@ -40,6 +47,13 @@ class HolinessControllerDevotion extends JController
             header('Content-type: application/json');
             
             echo json_encode($devotions);
+        }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
         }
         
         exit();
@@ -78,7 +92,7 @@ class HolinessControllerDevotion extends JController
             exit();
         }
         else {
-            http_response_code(500);
+            http_response_code(404);
             header('Content-type: application/json');
             
             echo '[]';

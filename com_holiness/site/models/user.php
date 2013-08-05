@@ -93,7 +93,12 @@ class HolinessModelUser extends JModelItem
     {
         $db =& JFactory::getDBO();
         
-        $query = "SELECT * FROM #__devotion_partners WHERE (firstpartner=$id OR secondpartner=$id) AND active=1";  
+        $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
+        $query .= "FROM #__devotion_partners AS partner ";
+        $query .= "INNER JOIN #__hpmembers AS member ON partner.partnerid = member.id ";
+        $query .= "INNER JOIN #__users AS user ON member.userid = user.id ";
+        $query .= "WHERE partner.userid = $id AND partner.active = 1";
+        
         $db->setQuery($query); 
 
         $data = $db->loadObjectList();

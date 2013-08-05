@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `#__hpmembers` (
   `church` varchar(200) NOT NULL,
   `ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
    PRIMARY KEY  (`id`),
-   KEY `#__users` (`userid`)
+   FOREIGN KEY (`userid`) REFERENCES `#__users`(`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS `#__devotions` (
   `prayer` text NOT NULL,
   `ts` timestamp NOT NULL default CURRENT_TIMESTAMP,
    PRIMARY KEY  (`id`),
-   KEY `#__hpmembers` (`memberid`)
+   FOREIGN KEY (`memberid`) REFERENCES `#__hpmembers`(`memberid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
