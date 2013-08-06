@@ -74,38 +74,53 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
       </div>
       <div class="tab-pane" id="showpartners">
       </div>
+      
+      <ul id="devpager" class="pager">
+      </ul>
     </div>    
   </div>
 </div>
 </script>
 
 <script type="text/html" id="partners-tpl">
-  <div class="row-fluid fellow" style="margin-bottom:5px">
+  <div class="row-fluid fellow" style="margin-bottom:10px;">
     <div class="span2">
       <img class="img-polaroid" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
     </div>
     
-    <div class="span10">
+    <div class="span9" style="margin-bottom:10px; margin-left:20px">
       <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
-      <small><%= church %></small></p>
-      <p><button class="btn add-partner"><small>Make devotion partner</small></button></p>
+      <small><%= church %></small><br>
+      <button class="btn add-partner" style="margin-top:5px;"><small>Make devotion partner</small></button></p>
     </div>
   </div>
 </script>
+
+<script type="text/html" id="pagination-tpl">
+<% if (prev) { %>
+<li class="previous">
+<a href="#">&larr; Prev</a>
+</li>
+<% }if (nxt) { %>
+<li class="next">
+<a href="#">Next &rarr;</a>
+</li>
+<% } %>
+</script>
+
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
 
 <div id="user-content" class="row-fluid content-display hide">
 </div>
 
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js'; ?>"></script>
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/home2.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/main.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();
 
 (function ($) {
     $(function () {
-        $.initApp('<?php echo JURI::base(); ?>?option=com_holiness&task=user.getusers');
+        $.initApp();
     });
 }(jQuery));
 </script> 

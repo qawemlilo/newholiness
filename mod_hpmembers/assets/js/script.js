@@ -2,8 +2,8 @@
 jQuery.noConflict();
 
 (function ($) {
-    $.toUpperFirst = function(txt) {
-        var txtArr = txt.split(" "),
+    $.toUpperFirst = $.toUpperFirst || function(txt) {
+        var txtArr = txt.toLowerCase().split(" "),
         words = [];
 	    
         _.each(txtArr, function (word) {
@@ -58,7 +58,7 @@ jQuery.noConflict();
         render: function () {
             var template, data = this.model.toJSON();
             
-            //data.value = $.toUpperFirst(data.value);
+            data.value = $.toUpperFirst(data.value);
 
             template = this.template(data);
  
@@ -83,6 +83,10 @@ jQuery.noConflict();
             self.listenTo(self.collection, 'reset', self.render);
             
             self.collection.fetch({
+                cache: true, 
+                
+                expires: (1000 * 60) * 60 * 24 * 2,
+                
                 success: function (collection, response, options) {
                     self.collection.getUsers(5);
                 }

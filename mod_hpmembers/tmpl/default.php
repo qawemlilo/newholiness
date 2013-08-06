@@ -30,6 +30,7 @@ $document->addStyleDeclaration($style);
 
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
+
 <script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpmembers/assets/js/script.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();

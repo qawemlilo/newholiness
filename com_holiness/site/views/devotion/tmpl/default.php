@@ -58,6 +58,8 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
   <p><strong>Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
 </div>
 
+
+<!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
 <script type="text/html" id="comment-tpl">
   <div class="span1">
     <a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
@@ -74,6 +76,8 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
     <%= comment %>
   </div>
 </script>
+<!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
+
 
 <hr />
 
@@ -106,7 +110,7 @@ jQuery.noConflict();
 
 (function ($) {
     $(function () {
-        $.getComments(<?php echo "'" . JURI::base() . "', " . "'" . $devotionid . "'"; ?>);
+        $.getComments('<?php echo $devotionid; ?>');
     });
 }(jQuery));
 </script>  

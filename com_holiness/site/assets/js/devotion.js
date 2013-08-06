@@ -4,7 +4,7 @@ jQuery.noConflict();
 
 (function ($) {
 
-    $.toUpperFirst= function(txt) {
+    $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),
         words = [];
 	    
@@ -64,17 +64,26 @@ jQuery.noConflict();
     
         el: $('#commentscontainer'),
         
-        initialize: function () {            
-            this.listenTo(this.collection, 'add', this.render);
-            this.listenTo(this.collection, 'reset', this.render);
-            
-            this.collection.fetch({reset: true});
+        initialize: function () {
+            var self = this;
+                       
+            this.collection.fetch({
+                cache: true, 
+                
+                expires: (1000 * 60) * 60 * 24 * 2,
+                
+                success: function () {
+                    self.render();                    
+                }
+            });
             
             return this;
         },
         
         render: function () {
             var fragment = document.createDocumentFragment(), commentView, hr;
+            
+            this.$el.empty();
             
             if (this.collection.length > 0) {
                 hr = document.createElement('hr');
@@ -99,9 +108,9 @@ jQuery.noConflict();
     
     
     
-    $.getComments = function (baseurl, devotionid) {
+    $.getComments = function (devotionid) {
         var commentsCollection = new CommentsCollection();
-        commentsCollection.url = baseurl + '?option=com_holiness&task=user.getcomments&id='+devotionid;
+        commentsCollection.url = 'index.php?option=com_holiness&task=user.getcomments&id=' + devotionid;
         
         var commentsView = new CommentsView({
             collection: commentsCollection

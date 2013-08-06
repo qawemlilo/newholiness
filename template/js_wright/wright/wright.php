@@ -169,6 +169,7 @@ class Wright
         
         // Qhawe's addition
         $this->document->addScript($this->_urlJS . '/underscore-backbone-moment.js');
+        $this->document->addScript(JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js');
 
 		if ($this->loadBootstrap)
 			// load bootstrap JS

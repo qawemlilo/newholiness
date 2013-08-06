@@ -35,48 +35,56 @@ $document->addStyleDeclaration(
     </div>
   </div>
 </div>
+
+
+
+<script type="text/html" id="search-tpl">
+  <div class="row-fluid">
+    <div class="span2">
+      <img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" />
+    </div>
+    <div class="span10">
+      <p><strong><%= value %></strong></p>
+      <p><small><%= church %></small></p>
+    </div>
+  </div>
+</script>
+
+
+
 <script type="text/javascript" src="<?php echo JURI::base() . 'modules/mod_hpsearch/assets/js/typeahead.min.js'; ?>"></script>
 <script type="text/javascript">
 jQuery.noConflict();
 
 (function ($, window) {
-    var search = $('input#search');
     
-    search
+    $('input#search')
     .typeahead('destroy')
     .typeahead({
-      // minLength: 2,
+        //minLength: 2,
       
-      name: 'search',
+        name: 'search',
       
-      prefetch: {
-        url: '<?php echo JURI::base(); ?>?option=com_holiness&task=user.getusers',
-        ttl: (1000 * 60) * 60
-      },
+        prefetch: {
+            url: '<?php echo JURI::base(); ?>?option=com_holiness&task=user.getusers',
+            ttl: (1000 * 60) * 60
+        },
       
-      template: [
-        '<div class="row-fluid">',
-        '<div class="span2"><img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" /></div>',
-        '<div class="span10"><p><strong><%= value %></strong></p><p><small><%= church %></small></p></div>',
-        '</div>'
-      ].join(''),
-      
-      //footer: '<hr style="margin: 10px 0px 5px 0px"><button class="btn btn-block btn-primary" type="button" style="margin-left: 2%; width: 96%;">See more results...</button>',
-      
+        template: $('#search-tpl').text(),
 
-      engine: {
-        compile: function(template) {
-          var compiled = _.template(template);
+        engine: {
+            compile: function(template) {
+                var compiled = _.template(template);
             
-          return {
-            render: function(context) { 
-              return compiled(context);
+                return {
+                    render: function(context) { 
+                        return compiled(context);
+                    }
+                }
             }
-          }
-        }
-      },
+        },
 
-      limit: 10
+        limit: 10
     })
     
     .on('typeahead:selected', function (event, user) {
