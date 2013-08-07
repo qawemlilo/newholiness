@@ -80,17 +80,12 @@ jQuery.noConflict();
             id: 0, 
             theme: ""
         }
-    }),
+    });
     
-    
-    DevotionsCollection = Backbone.Collection.extend({
-        model: Devotion,
+ 
+    Backbone.DBase = Backbone.Collection.extend({
 
-        
-        url: 'index.php?option=com_holiness&task=devotion.getdevotions',
-
-        
-        perPage: 10,
+        perPage: 20,
 
         
         next: false,
@@ -107,13 +102,10 @@ jQuery.noConflict();
         
         
         init: function () {
-            if (!this.ogModels) {
-                this.ogModels = this.clone().models;
-            }
-            
+
             var counter = 0, page = 0, self = this;
             
-            _.each(this.ogModels, function (model) {
+            _.each(this.models, function (model) {
                 
  
                 if (counter >= self.perPage) {
@@ -130,14 +122,12 @@ jQuery.noConflict();
                 counter++;
             });
             
-            this.getPage();
+            this.pager();
         },
 
         
         
-        getPage: function (num) {
-           
-
+        pager: function (num) {
             if (num && num < this.pages.length) {
                 this.currentPage = num;
             }
@@ -164,7 +154,7 @@ jQuery.noConflict();
 
             this.currentPage += 1;
 
-            this.getPage();            
+            this.pager();            
         },
         
         
@@ -175,8 +165,15 @@ jQuery.noConflict();
 
             this.currentPage -= 1;
 
-            this.getPage();          
+            this.pager();          
         }   
+    });
+
+    
+    var DevotionsCollection = Backbone.Collection.extend({
+        model: Devotion,
+        
+        url: 'index.php?option=com_holiness&task=devotion.getdevotions' 
     }),
     
     
@@ -214,6 +211,7 @@ jQuery.noConflict();
             this.$el.html('<li><img src="components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></li>');
             
             this.listenTo(this.parent, 'showdevotions', this.fetchDevotions);
+            //this.listenTo(this.collection, 'reset', this.renderPage);
             
             return this;
         },
@@ -228,7 +226,7 @@ jQuery.noConflict();
                 return;
             }
             
-            this.collection.init();
+            //this.collection.init();
             
             this.collection.forEach(function (model) {
                 view = new DevotionView({
@@ -242,6 +240,26 @@ jQuery.noConflict();
   
             return this;
         },
+        
+        
+        renderPage: function () {
+            var fragment = document.createDocumentFragment(), view;
+            
+            if (!(this.collection.length > 0)) return;
+            
+            this.collection.forEach(function (model) {
+                view = new DevotionView({
+                    model: model
+                });
+                
+                fragment.appendChild(view.render().el);
+            });
+            
+            this.$el.empty().append(fragment);
+  
+            return this;
+        },
+        
 
         
         fetchDevotions: function (id) {
@@ -383,7 +401,11 @@ jQuery.noConflict();
     
     PaginationView = Backbone.View.extend({
     
-        el: '#devpager',
+        tagName: 'ul',
+        
+        
+        className: 'pager',
+        
 
         template: _.template($('#pagination-tpl').text()),
 
@@ -398,16 +420,12 @@ jQuery.noConflict();
         
         
         render: function () {
-            var template,
-                prev = this.parent.collection.prev,
-                next = this.parent.collection.next;
+            var prev = this.parent.collection.prev
+            var next = this.parent.collection.next;
             
-            console.log(prev);
-            console.log(next);
-            template = this.template({prev: prev, nxt: next});
-            console.log(template);
+            var template = this.template({prev: prev, nxt: next});
             
-            this.$el.empty().append(template);
+            this.$el.empty().html(template);
             
             return this;
         }       
@@ -500,9 +518,8 @@ jQuery.noConflict();
             this.$el.html(this.template(data));
             this.$el.removeClass('hide');
             
-            this.$('#showdevotions').empty().append(this.devotionsView.el);
+            this.$('#showdevotions').empty().append(this.devotionsView.el); //.append(this.paginationView.el);
             this.$('#showpartners').empty().append(this.partnersView.el);
-            this.$('#devpager').empty().append(this.paginationView.el);
                 
             this.trigger('showdevotions', data.memberid);        
         },
@@ -519,7 +536,19 @@ jQuery.noConflict();
 
 
             return false;
-        }      
+        },
+        
+        
+        nextPage: function (event) {
+            this.paginationView.parent.collection.nextPage();
+            return false;            
+        },
+        
+        
+        prevPage: function (event) {
+            this.paginationView.parent.collection.prevPage();
+            return false;            
+        },        
     });
     
     

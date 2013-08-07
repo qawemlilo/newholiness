@@ -53,7 +53,7 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
   </div>
   
   <div class="span9">
-    <h3 style="margin-top: 0px">The Divine Profile for <%= value %> who is born of God</h3>
+    <h3 style="margin-top: 0px">The Divinee Profile for <%= value %> who is born of God</h3>
     
     <blockquote>
       My name is <%= value %> and I am Born-Again by God's Love & Grace. I go to <%= church %> and I love my Church so much.
@@ -69,14 +69,11 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
       </li>
     </ul>
     
-    <div class="tab-content" style="margin-top: 0px; padding: 20px 0px 10px 0px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+    <div class="tab-content" style="margin-top: 0px; padding: 20px 0px 0px 0px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">
       <div class="tab-pane active" id="showdevotions">
       </div>
       <div class="tab-pane" id="showpartners">
       </div>
-      
-      <ul id="devpager" class="pager">
-      </ul>
     </div>    
   </div>
 </div>
@@ -99,11 +96,11 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
 <script type="text/html" id="pagination-tpl">
 <% if (prev) { %>
 <li class="previous">
-<a href="#">&larr; Prev</a>
+<a href="#" style="margin-left: 10px">&larr; Prev</a>
 </li>
 <% }if (nxt) { %>
 <li class="next">
-<a href="#">Next &rarr;</a>
+<a href="#" style="margin-right: 10px">Next &rarr;</a>
 </li>
 <% } %>
 </script>
