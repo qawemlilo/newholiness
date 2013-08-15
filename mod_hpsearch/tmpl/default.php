@@ -6,33 +6,40 @@ $document->addStyleSheet(JURI::base() . 'modules/mod_hpsearch/assets/css/typeahe
 $document->addStyleDeclaration(
 'input, textarea, .uneditable-input {
   width: 400px;
-}');
+};
+ul.topNav li a:hover, ul.nav li a:hover,ul.nav-pills li a:hover {
+ color: #0088cc!important;
+};
+');
 ?>
 
 <div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333; z-index:9999">
-  <div class="span7">
-    <div class="row-fluid">
-    <form style="margin-bottom:0px">
+  <div class="row-fluid">
+    <form style="margin-bottom:0px" class="pull-left">
       <a href="<?php echo JURI::base(); ?>">
         <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
       </a>
       <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
     </form>
-    </div>
-  </div>
-  
-  <div class="span5">
-    <div class="btn-group pull-right" style="margin-right: 10px">
-      <img title="<?php echo $user->name; ?>" style="width:38px; height: 38px" alt="<?php echo $user->name; ?>" <?php echo $src; ?> />
+    
+    <ul class="topNav nav nav-pills pull-left" style="margin-left: 50px; margin-bottom: 0px">
+       <li><a href="#" id="requestnotices" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'" data-content="No requests" data-placement="bottom" data-toggle="popover" href="#" data-original-title="Devotion parnter requests"><i class="icon-user icon-large"></i></a></li>
+       <li><a href="#" id="notifications" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'" data-content="No notifications" data-placement="bottom" data-toggle="popover" href="#" data-original-title="Notifications"><i class="icon-flag icon-large"></i></a></li>
+       <li><a href="#" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'">Home</a></li>
+       <li>
+       <div class="btn-group pull-left" style="padding-top: 3px; margin-left: 10px">
+         <img title="<?php echo $user->name; ?>" style="width:28px; height: 28px" alt="<?php echo $user->name; ?>" <?php echo $src; ?> />
 
-      <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB"><i class="icon-user"></i></span> My Profile</a></li>
-        <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: red;"><i class="icon-pencil"></i></span> Edit Account</a></li>
-         <li class="divider"></li>
-        <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><i class="icon-lock"></i> Logout</a></li>
-      </ul>
-    </div>
+         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+         <ul class="dropdown-menu">
+          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB"><i class="icon-user"></i></span> My Profile</a></li>
+          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: red;"><i class="icon-pencil"></i></span> Edit Account</a></li>
+          <li class="divider"></li>
+          <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><i class="icon-lock"></i> Logout</a></li>
+         </ul>
+       </div>
+       </li>
+    </ul>
   </div>
 </div>
 
@@ -57,6 +64,7 @@ $document->addStyleDeclaration(
 jQuery.noConflict();
 
 (function ($, window) {
+    //$('#requestnotices, #notifications').popover();
     
     $('input#search')
     .typeahead('destroy')
