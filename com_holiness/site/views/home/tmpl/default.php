@@ -3,39 +3,40 @@
 defined('_JEXEC') or die('Restricted access');
 
 $doc =& JFactory::getDocument();
-$doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px;};');
+$doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px;}; .row-fluid a.active {color:#414141!important}');
 ?>
 <div id="timeline" class="row-fluid content-display hide">
-  <div class="timeline-item" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
-    <div class="row-fluid">
+  <div class="timeline-item " style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
+    <div class="row-fluid post-actions" style="margin-bottom: 0px;">
       <div class="span3">
-        <div class="row-fluid"><span style="color: #000;"><i class="icon-book"></i></span> Prayer Request</div>
-        <div class="row-fluid"></div>
+        <div class="row-fluid"><span style="color: #000;"><i class="icon-book"></i></span> <a href="#" class="active" style="color:#414141">Prayer Request</a></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><span style="color: green;"><i class="icon-bullhorn"></i></span> Testimony</div>
-        <div class="row-fluid"></div>
+        <div class="row-fluid"><span style="color: green;"><i class="icon-bullhorn"></i></span> <a href="#">Testimony</a></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><span style="color: orange;"><i class="icon-hand-right"></i></span> Prophecy</div>
-        <div class="row-fluid"></div>
+        <div class="row-fluid"><span style="color: orange;"><i class="icon-hand-right"></i></span> <a href="#">Prophecy</a></div>
       </div>
       <div class="span3">
-        <div class="row-fluid"><span style="color: red;"><i class="icon-eye-open"></i></span> Revelation</div>
-        <div class="row-fluid"></div>
+        <div class="row-fluid"><span style="color: red;"><i class="icon-eye-open"></i></span> <a href="#">Revelation</a></div>
       </div>
     </div>
-    <div class="row-fluid">
+    
+    <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#fff; margin:-15px 0px 0px 20px; z-index:999;"></div>
+    
+    <div class="row-fluid" style="margin-top: 13px;">
       <form style="margin-bottom: 0px;">
-        <textarea rows="2" cols="10" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
+        <textarea rows="2" cols="10" name="sharebox" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
+        <input type="hidden" name="sharetype" id="sharetype" value="prayer" >
+        <div class="row-fluid">
+            <div class="span9">
+               <strong>Characters: <span id="chars">150</span></strong>
+            </div>
+            <div class="span3" style="text-align:right">
+                <button style="padding-right: 40px; padding-left: 40px;" class="btn btn-large btn-primary" type="submit">Share</button>
+            </div>
+        </div>
       </form>
-    </div>
-    <div class="row-fluid">
-      <div class="span9">
-      </div>
-      <div class="span3" style="text-align:right">
-        <button style="padding-right: 40px; padding-left: 40px;" class="btn btn-large btn-primary" type="button">Share</button>
-      </div>
     </div>
   </div>
 </div>
@@ -59,7 +60,9 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
       My name is <%= value %> and I am Born-Again by God's Love & Grace. I go to <%= church %> and I love my Church so much.
     </blockquote>
     <p><button class="btn btn-info">Make <%= value.split(" ")[0] %> your devotion partner</button></p>
-    <br>
+    
+    <br />
+    
     <ul class="nav nav-tabs" style="margin-bottom: 0px">
       <li class="active">
         <a href="#showdevotions"><i class="icon-book"> </i> Devotions</a>
@@ -100,7 +103,7 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
 </li>
 <% }if (nxt) { %>
 <li class="next">
-<a href="#" style="margin-right: 10px">Next &rarr;</a>
+ <a href="#" style="margin-right: 10px">Next &rarr;</a>
 </li>
 <% } %>
 </script>
@@ -118,6 +121,122 @@ jQuery.noConflict();
 (function ($) {
     $(function () {
         $.initApp();
+        var links = $('.post-actions a'), sharebox = $('#sharebox');
+        
+        links.on('click', function () {
+            var tab = $(this).text();
+            
+            $('.post-actions a.active').removeClass('active').css('color', '#08c');
+            $(this).addClass('active').css('color', '#414141');
+            
+            showTab(tab);
+            
+            return false;
+        });
+        
+        
+        sharebox.on('keyup', function (e) {
+            var len = sharebox.val().length, diff = 150 - parseInt(len, 10);
+                     
+            if (diff < 0) {
+                sharebox.val(sharebox.val().substring(0, 150));
+                diff = 0;
+            }
+            
+            $('#chars').html(diff);
+        });
+        
+        
+        function showTab(tab) {
+            var marginleft = '20px', plcHolder = 'Share your Prayer Request, your Devotion Partners will pray with you!';
+
+            
+            if (tab === 'Testimony') {
+               marginleft = '200px';
+               plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
+            }
+            if (tab === 'Prophecy') {
+               marginleft = '370px';
+               plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
+            }
+            if (tab === 'Revelation') {
+               marginleft = '550px';
+               plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
+            }
+            
+            $('#pointer').animate({
+                marginLeft: marginleft
+            }, 500, function () {
+                sharebox.val('').attr('placeholder', plcHolder).focus();
+                $('#chars').html('150');
+            });         
+        }
+        
+/*
+        
+        var PostBox =  Backbone.View.extend({
+            el: '#postbox',
+            
+            
+            sharebox: $('#chars'),
+            
+            
+            events: {
+                'click a': 'changeTab',
+                'keyup #sharebox': 'countLength'
+            },
+            
+            
+            changeTab: function (e) {
+                var marginleft = '20px', 
+                    self = this,
+                    plcHolder = 'Share your Prayer Request, your Devotion Partners will pray with you!',
+                    tab = $(e.currentTarget).text();
+
+                $('.postbox a.active').removeClass('active').css('color', '#08c');
+                $(e.currentTarget).addClass('active').css('color', '#414141');
+            
+                if (tab === 'Testimony') {
+                   marginleft = '200px';
+                   plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
+                }
+                if (tab === 'Prophecy') {
+                   marginleft = '370px';
+                   plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
+                }
+                if (tab === 'Revelation') {
+                   marginleft = '550px';
+                   plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
+                }
+            
+                $('#pointer').animate({
+                    marginLeft: marginleft
+                }, 500, function () {
+                    $('#chars').val('').attr('placeholder', plcHolder).focus();
+                    $('#chars').html('150');
+                });  
+                
+                return false;
+            },
+            
+            
+            countLength: function (e) {
+                var len = $('#chars').val().length, diff = 150 - parseInt(len, 10);
+                     
+                if (diff < 0) {
+                    $('#chars').val($('#chars').val().substring(0, 150));
+                    diff = 0;
+                }
+            
+                $('#chars').html(diff);
+                
+                return false;
+            }
+        });
+        
+        new PostBox();*/
+        
+        
     });
 }(jQuery));
 </script> 
