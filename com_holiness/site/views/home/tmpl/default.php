@@ -6,7 +6,7 @@ $doc =& JFactory::getDocument();
 $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px;}; .row-fluid a.active {color:#414141!important}');
 ?>
 <div id="timeline" class="row-fluid content-display hide">
-  <div class="timeline-item " style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
+  <div class="timeline-item" id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
     <div class="row-fluid post-actions" style="margin-bottom: 0px;">
       <div class="span3">
         <div class="row-fluid"><span style="color: #000;"><i class="icon-book"></i></span> <a href="#" class="active" style="color:#414141">Prayer Request</a></div>
@@ -25,7 +25,7 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
     <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#fff; margin:-15px 0px 0px 20px; z-index:999;"></div>
     
     <div class="row-fluid" style="margin-top: 13px;">
-      <form style="margin-bottom: 0px;">
+      <form style="margin-bottom: 0px;" id="postform">
         <textarea rows="2" cols="10" name="sharebox" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
         <input type="hidden" name="sharetype" id="sharetype" value="prayer" >
         <div class="row-fluid">
@@ -120,123 +120,92 @@ jQuery.noConflict();
 
 (function ($) {
     $(function () {
+    
         $.initApp();
-        var links = $('.post-actions a'), sharebox = $('#sharebox');
         
-        links.on('click', function () {
-            var tab = $(this).text();
-            
-            $('.post-actions a.active').removeClass('active').css('color', '#08c');
-            $(this).addClass('active').css('color', '#414141');
-            
-            showTab(tab);
-            
-            return false;
-        });
-        
-        
-        sharebox.on('keyup', function (e) {
-            var len = sharebox.val().length, diff = 150 - parseInt(len, 10);
-                     
-            if (diff < 0) {
-                sharebox.val(sharebox.val().substring(0, 150));
-                diff = 0;
-            }
-            
-            $('#chars').html(diff);
-        });
-        
-        
-        function showTab(tab) {
-            var marginleft = '20px', plcHolder = 'Share your Prayer Request, your Devotion Partners will pray with you!';
-
-            
-            if (tab === 'Testimony') {
-               marginleft = '200px';
-               plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
-            }
-            if (tab === 'Prophecy') {
-               marginleft = '370px';
-               plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
-            }
-            if (tab === 'Revelation') {
-               marginleft = '550px';
-               plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
-            }
-            
-            $('#pointer').animate({
-                marginLeft: marginleft
-            }, 500, function () {
-                sharebox.val('').attr('placeholder', plcHolder).focus();
-                $('#chars').html('150');
-            });         
-        }
-        
-/*
         
         var PostBox =  Backbone.View.extend({
+        
             el: '#postbox',
             
             
-            sharebox: $('#chars'),
+            sharebox: $('#sharebox'),
+            
+            
+            charsDiv: $('#chars'),
+            
+            
+            form: $('#postform'),
             
             
             events: {
-                'click a': 'changeTab',
-                'keyup #sharebox': 'countLength'
+                'click .post-actions a': 'changeTab',
+                
+                'keyup #sharebox': 'countLength',
+                
+                'submit #postform': 'submitPost'
             },
             
             
-            changeTab: function (e) {
+            changeTab: function (event) {
                 var marginleft = '20px', 
                     self = this,
                     plcHolder = 'Share your Prayer Request, your Devotion Partners will pray with you!',
-                    tab = $(e.currentTarget).text();
+                    tab = $(event.currentTarget).text();
 
-                $('.postbox a.active').removeClass('active').css('color', '#08c');
-                $(e.currentTarget).addClass('active').css('color', '#414141');
+                self.$('.post-actions a.active').removeClass('active').css('color', '#08c');
+                $(event.currentTarget).addClass('active').css('color', '#414141');
             
                 if (tab === 'Testimony') {
                    marginleft = '200px';
                    plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
                 }
+                
                 if (tab === 'Prophecy') {
                    marginleft = '370px';
                    plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
                 }
+                
                 if (tab === 'Revelation') {
                    marginleft = '550px';
                    plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
                 }
             
-                $('#pointer').animate({
+                self.$('#pointer').animate({
                     marginLeft: marginleft
                 }, 500, function () {
-                    $('#chars').val('').attr('placeholder', plcHolder).focus();
-                    $('#chars').html('150');
+                    self.sharebox.val('').attr('placeholder', plcHolder).focus();
+                    self.charsDiv.html('150');
                 });  
                 
                 return false;
             },
             
             
-            countLength: function (e) {
-                var len = $('#chars').val().length, diff = 150 - parseInt(len, 10);
+            countLength: function (event) {
+                var self = this,
+                    len = self.sharebox.val().length, 
+                    diff = 150 - parseInt(len, 10);
                      
                 if (diff < 0) {
-                    $('#chars').val($('#chars').val().substring(0, 150));
+                    self.sharebox.val(self.sharebox.val().substring(0, 150));
                     diff = 0;
                 }
             
-                $('#chars').html(diff);
+                self.charsDiv.html(diff);
                 
+                return false;
+            },
+            
+            
+            submitPost: function (event) {
+                this.sharebox.val('');
+                this.charsDiv.html('150');
                 return false;
             }
         });
         
-        new PostBox();*/
-        
-        
+        new PostBox();
     });
 }(jQuery));
 </script> 
