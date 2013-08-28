@@ -3,7 +3,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 $doc =& JFactory::getDocument();
-$doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px;}; .row-fluid a.active {color:#414141!important}');
+$doc->addStyleDeclaration('
+#showdevotions ul, #showpartners ul {margin-left:10px;}; 
+.row-fluid a.active {color:#414141!important}; 
+.timeline-item {border: 1px solid #E5E5E5!important};
+');
 ?>
 <div id="timeline" class="row-fluid content-display hide">
   <div class="timeline-item" id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
@@ -25,9 +29,9 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
     <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#fff; margin:-15px 0px 0px 20px; z-index:999;"></div>
     
     <div class="row-fluid" style="margin-top: 13px;">
-      <form style="margin-bottom: 0px;" id="postform">
-        <textarea rows="2" cols="10" name="sharebox" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
-        <input type="hidden" name="sharetype" id="sharetype" value="prayer" >
+      <form style="margin-bottom: 0px;" action="" id="postform">
+        <textarea rows="2" cols="10" name="message" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
+        <input type="hidden" name="sharetype" id="sharetype" value="Prayer Request" >
         <div class="row-fluid">
             <div class="span9">
                <strong>Characters: <span id="chars">150</span></strong>
@@ -85,7 +89,7 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
 <script type="text/html" id="partners-tpl">
   <div class="row-fluid fellow" style="margin-bottom:10px;">
     <div class="span2">
-      <img class="img-polaroid" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
+      <img class="img-polaroid" src="<?php echo JURI::base() ?>media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
     </div>
     
     <div class="span9" style="margin-bottom:10px; margin-left:20px">
@@ -108,6 +112,26 @@ $doc->addStyleDeclaration('#showdevotions ul, #showpartners ul {margin-left:10px
 <% } %>
 </script>
 
+
+<script type="text/html" id="timeline-item-tpl">
+  <div class="span1">
+    <a href="#/users/<%= id %>">
+    <img src="<?php echo JURI::base() ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='">
+    </a>
+  </div>
+  
+  <div class="span11">
+    <strong><a href="#/users/<%= id %>"><%= name %></a></strong>
+    <span class="badge badge-<%= label %>" style="margin-left:10px;">
+      <a class="timeline-item-read" style="color:#fff;" href="<%= url %>">#<%= sharetype %></a>
+    </span>
+    <br>
+    <small><%= ts %></small>
+    <br>
+    <%= message %>
+  </div>
+</script>
+
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
 
@@ -124,6 +148,53 @@ jQuery.noConflict();
         $.initApp();
         
         
+        var TimelineItem = Backbone.Model.extend({
+            defaults: {
+                id: 0,
+                name: '',
+                message: '',
+                imgext: 'jpg',
+                sharetype: 'Prayer Request',
+                url: '#',
+                ts: new Date().getTime()
+            }
+        });
+        
+        
+        var TimelineItemView =  Backbone.View.extend({
+        
+            className: 'timeline-item row-fluid well-small',
+            
+            
+            labelColor: {
+                'Prayer Request': 'important',
+                
+                'Prophecy': 'inverse',
+                
+                'Revelation': 'info',
+                
+                'Testimony': 'success'
+            },
+            
+        
+            template: _.template($('#timeline-item-tpl').text()),
+            
+            
+            render: function () {
+                var data = this.model.toJSON(),
+                    template;
+                    
+                data.ts = moment(data.ts).fromNow();
+                data.label = this.labelColor[data.sharetype];
+                template = this.template(data);
+                
+                this.$el.append(template);
+
+                return this;                
+            }
+        });
+        
+        
         var PostBox =  Backbone.View.extend({
         
             el: '#postbox',
@@ -133,9 +204,6 @@ jQuery.noConflict();
             
             
             charsDiv: $('#chars'),
-            
-            
-            form: $('#postform'),
             
             
             events: {
@@ -174,6 +242,7 @@ jQuery.noConflict();
                 self.$('#pointer').animate({
                     marginLeft: marginleft
                 }, 500, function () {
+                    $('#sharetype').val(tab);
                     self.sharebox.val('').attr('placeholder', plcHolder).focus();
                     self.charsDiv.html('150');
                 });  
@@ -198,10 +267,44 @@ jQuery.noConflict();
             },
             
             
+            
+            
             submitPost: function (event) {
+            
+                event.preventDefault();
+            
+                <?php 
+                    //smart use of php inside javascript
+                    $user =& JFactory::getUser(); 
+                ?>
+                var data = this.formToObject();
+                
+                data.id = <?php echo $user->id; ?>;
+                data.name = '<?php echo $user->name; ?>';
+                
+                var view = new TimelineItemView({
+                    model: new TimelineItem(data)
+                });
+                
                 this.sharebox.val('');
                 this.charsDiv.html('150');
+                
+                $('#timeline').append(view.render().el);
+                
                 return false;
+            },
+            
+       
+            formToObject: function () {
+                var formObj = {}, arr = $('#postform').serializeArray();
+            
+                _.each(arr, function (fieldObj) {
+                    if (fieldObj.name !== 'submit') {
+                        formObj[fieldObj.name] = fieldObj.value;
+                    }
+                });
+            
+                return formObj;
             }
         });
         

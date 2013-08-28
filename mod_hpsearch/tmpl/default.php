@@ -48,7 +48,7 @@ ul.topNav li a:hover, ul.nav li a:hover,ul.nav-pills li a:hover {
 <script type="text/html" id="search-tpl">
   <div class="row-fluid">
     <div class="span2">
-      <img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src=\'data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==\'" style="width:50px; height:50px;" />
+      <img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="width:50px; height:50px;" />
     </div>
     <div class="span10">
       <p><strong><%= value %></strong></p>
