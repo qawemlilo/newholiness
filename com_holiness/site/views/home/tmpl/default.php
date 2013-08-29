@@ -2,12 +2,6 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-$doc =& JFactory::getDocument();
-$doc->addStyleDeclaration('
-#showdevotions ul, #showpartners ul {margin-left:10px;}; 
-.row-fluid a.active {color:#414141!important}; 
-.timeline-item {border: 1px solid #E5E5E5!important};
-');
 ?>
 <div id="timeline" class="row-fluid content-display hide">
   <div class="timeline-item" id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
@@ -47,7 +41,7 @@ $doc->addStyleDeclaration('
 
 <!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
 <script type="text/html" id="user-tpl">
-<div class="row-fluid">
+<div class="row-fluid" id="memberprofile">
   <div class="span3">
     <img style="width:150px; height:150px" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" class="img-polaroid" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" />
     <br>
@@ -114,6 +108,7 @@ $doc->addStyleDeclaration('
 
 
 <script type="text/html" id="timeline-item-tpl">
+<div  class="row-fluid">
   <div class="span1">
     <a href="#/users/<%= id %>">
     <img src="<?php echo JURI::base() ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='">
@@ -130,6 +125,7 @@ $doc->addStyleDeclaration('
     <br>
     <%= message %>
   </div>
+</div>
 </script>
 
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
@@ -163,7 +159,7 @@ jQuery.noConflict();
         
         var TimelineItemView =  Backbone.View.extend({
         
-            className: 'timeline-item row-fluid well-small',
+            className: 'timeline-item',
             
             
             labelColor: {

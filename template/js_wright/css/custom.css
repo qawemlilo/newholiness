@@ -45,8 +45,8 @@ h3 {
 
 #main {
   min-height: 1000px;
-  border-left: 1px solid #0088CC;
-  border-right: 1px solid #0088CC;
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;
   padding: 20px;
   margin-left: 1.28%!important
 }
@@ -101,6 +101,29 @@ h3 {
 .navbar .nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+/*
+  timeline
+*/
+.tab-content  #showdevotions ul, .tab-content #showpartners ul {
+  margin-left:10px;
+}
+#postbox .row-fluid a.active {
+  color:#414141!important;
+} 
+
+
+#timeline .timeline-item {
+  border: 1px solid #E5E5E5!important;
+  margin: 20px 0px 20px 0px;
+  padding: 10px;
+}
+
+#timeline .timeline-item  span.badge {
+-moz-border-radius: 0px!important;
+-webkit-border-radius: 0px!important;
+border-radius: 0px!important;
 }
 
 /*
