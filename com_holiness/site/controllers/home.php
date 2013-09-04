@@ -8,7 +8,22 @@ jimport('joomla.application.component.controller');
 
 class HolinessControllerHome extends JController
 {
-	function display() {
-        parent::display();
+    public function handlepost() {
+        
     }
+    
+    
+    public function handleget() {
+    
+    }
+
+
+    public function handleput() {
+    
+    }
+
+
+    public function handledelete() {
+    
+    }    
 }

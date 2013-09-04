@@ -146,13 +146,35 @@ jQuery.noConflict();
         
         var TimelineItem = Backbone.Model.extend({
             defaults: {
-                id: 0,
                 name: '',
                 message: '',
                 imgext: 'jpg',
                 sharetype: 'Prayer Request',
                 url: '#',
                 ts: new Date().getTime()
+            }
+        });
+        
+        
+        var TimelineCollection = Backbone.Collection.extend({
+            model: TimelineItem,
+            
+            sync: function (method, model, options) {
+            
+                options || (options = {});
+                switch (method) {
+                    case 'create':
+                    break;
+                
+                    case 'update':
+                    break;
+                
+                    case 'delete':
+                    break;
+                
+                    case 'read':
+                    break;
+                }
             }
         });
         
@@ -178,9 +200,10 @@ jQuery.noConflict();
             
             render: function () {
                 var data = this.model.toJSON(),
-                    template;
+                    template,
+                    time = new Date().getTime();
                     
-                data.ts = moment(data.ts).fromNow();
+                data.ts = moment(time).fromNow();
                 data.label = this.labelColor[data.sharetype];
                 template = this.template(data);
                 

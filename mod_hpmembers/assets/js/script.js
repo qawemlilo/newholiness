@@ -88,7 +88,7 @@ jQuery.noConflict();
                 expires: (1000 * 60) * 60 * 24 * 2,
                 
                 success: function (collection, response, options) {
-                    self.collection.getUsers(5);
+                    self.collection.getUsers(12);
                 }
             });
             
