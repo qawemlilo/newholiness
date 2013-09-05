@@ -95,7 +95,7 @@ jQuery.noConflict();
     
     
     $(function () {
-        $('.ddowns').on('click', function(e) {
+        $('.ddowns').on('click', function(){
             $('.ddowns').not(this).popover('hide'); //all but this
             return false;
         }).popover({

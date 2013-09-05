@@ -279,17 +279,17 @@ jQuery.noConflict();
                 $(event.currentTarget).addClass('active').css('color', '#414141');
             
                 if (tab === 'Testimony') {
-                   marginleft = '13%';
+                   marginleft = '200px';
                    plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
                 }
                 
                 if (tab === 'Prophecy') {
-                   marginleft = '24%';
+                   marginleft = '370px';
                    plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
                 }
                 
                 if (tab === 'Revelation') {
-                   marginleft = '35%';
+                   marginleft = '550px';
                    plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
                 }
             
