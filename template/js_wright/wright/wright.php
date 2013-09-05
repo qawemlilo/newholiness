@@ -171,9 +171,11 @@ class Wright
         $this->document->addScript($this->_urlJS . '/underscore-backbone-moment.js');
         $this->document->addScript(JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js');
 
-		if ($this->loadBootstrap)
+		if ($this->loadBootstrap) {
 			// load bootstrap JS
-			$this->addJSScript($this->_urlBootstrap . '/js/bootstrap.min.js');
+			//$this->addJSScript($this->_urlBootstrap . '/js/bootstrap.min.js');
+            $this->addJSScript($this->_urlBootstrap . '/js/bootstrapper.min.js');
+        }
 		
 		$this->addJSScript($this->_urlJS . '/utils.js');
 		if ($this->document->params->get('stickyFooter', 1)) {

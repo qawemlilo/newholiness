@@ -24,8 +24,8 @@ defined('_JEXEC') or die('Restricted access');
     
     <div class="row-fluid" style="margin-top: 13px;">
       <form style="margin-bottom: 0px;" action="" id="postform">
-        <textarea rows="2" cols="10" name="message" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
-        <input type="hidden" name="sharetype" id="sharetype" value="Prayer Request" >
+        <textarea rows="2" cols="10" name="post" id="sharebox" class="span12" placeholder="Share your Prayer Request, your Devotion Partners will pray with you!"></textarea>
+        <input type="hidden" name="posttype" id="sharetype" value="Prayer Request" >
         <div class="row-fluid">
             <div class="span9">
                <strong>Characters: <span id="chars">150</span></strong>
@@ -110,20 +110,20 @@ defined('_JEXEC') or die('Restricted access');
 <script type="text/html" id="timeline-item-tpl">
 <div  class="row-fluid">
   <div class="span1">
-    <a href="#/users/<%= id %>">
-    <img src="<?php echo JURI::base() ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='">
+    <a href="#/users/<%= userid %>">
+    <img src="<?php echo JURI::base() ?>media/com_holiness/images/user-<%= userid %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='">
     </a>
   </div>
   
   <div class="span11">
-    <strong><a href="#/users/<%= id %>"><%= name %></a></strong>
+    <strong><a href="#/users/<%= userid %>"><%= name %></a></strong>
     <span class="badge badge-<%= label %>" style="margin-left:10px;">
-      <a class="timeline-item-read" style="color:#fff;" href="<%= url %>">#<%= sharetype %></a>
+      <a class="timeline-item-read" style="color:#fff;" href="#<%= id %>">#<%= posttype %></a>
     </span>
     <br>
     <small><%= ts %></small>
     <br>
-    <%= message %>
+    <%= post %>
   </div>
 </div>
 </script>
@@ -143,39 +143,27 @@ jQuery.noConflict();
     
         $.initApp();
         
+        Backbone.emulateHTTP = true; 
         
         var TimelineItem = Backbone.Model.extend({
             defaults: {
+                id: 0,
+                userid: '',
                 name: '',
-                message: '',
+                post: '',
                 imgext: 'jpg',
-                sharetype: 'Prayer Request',
-                url: '#',
+                posttype: 'prayerrequest',
                 ts: new Date().getTime()
-            }
+            },
+            
+            urlRoot: 'index.php?option=com_holiness&task=home.handlepost'
         });
         
         
         var TimelineCollection = Backbone.Collection.extend({
             model: TimelineItem,
             
-            sync: function (method, model, options) {
-            
-                options || (options = {});
-                switch (method) {
-                    case 'create':
-                    break;
-                
-                    case 'update':
-                    break;
-                
-                    case 'delete':
-                    break;
-                
-                    case 'read':
-                    break;
-                }
-            }
+            url: 'index.php?option=com_holiness&task=home.handleget'
         });
         
         
@@ -210,6 +198,40 @@ jQuery.noConflict();
                 this.$el.append(template);
 
                 return this;                
+            }
+        });
+        
+        
+        
+        var TimelineCollectionView =  Backbone.View.extend({
+        
+            el: '#timeline',
+            
+            
+            initialize: function () {
+                this.listenTo(this.collection, "reset", this.render);
+            },
+            
+            
+            render: function () {
+                var fragment = this.viewAll();
+                
+                this.$el.append(fragment);
+                
+                return this;                
+            },
+            
+            
+            viewAll: function () {
+                var fragment = document.createDocumentFragment();
+            
+                this.collection.forEach(function (postModel) { 
+                    var postView = new TimelineItemView({model: postModel});
+                    //console.log(postModel);
+                    fragment.appendChild(postView.render().el);
+                });
+                
+                return fragment;
             }
         });
         
@@ -298,12 +320,15 @@ jQuery.noConflict();
                 ?>
                 var data = this.formToObject();
                 
-                data.id = <?php echo $user->id; ?>;
+                data.userid = <?php echo $user->id; ?>;
                 data.name = '<?php echo $user->name; ?>';
+                data.posttype = data.posttype.toLowerCase().replace(/ /g, '');
                 
                 var view = new TimelineItemView({
                     model: new TimelineItem(data)
                 });
+                
+                view.model.save();
                 
                 this.sharebox.val('');
                 this.charsDiv.html('150');
@@ -327,7 +352,11 @@ jQuery.noConflict();
             }
         });
         
-        new PostBox();
+        var pb = new PostBox();
+        var tlView = new TimelineCollectionView({
+            collection: new TimelineCollection()
+        });
+        tlView.collection.fetch({reset: true});
     });
 }(jQuery));
 </script> 

@@ -6,15 +6,11 @@ $document->addStyleSheet(JURI::base() . 'modules/mod_hpsearch/assets/css/typeahe
 $document->addStyleDeclaration(
 'input, textarea, .uneditable-input {
   width: 400px;
-};
-ul.topNav li a:hover, ul.nav li a:hover,ul.nav-pills li a:hover {
- color: #0088cc!important;
-};
-');
+}');
 ?>
 
 <div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333; z-index:9999">
-  <div class="row-fluid">
+  <div class="row-fluid" id="toppannel">
     <form style="margin-bottom:0px" class="pull-left">
       <a href="<?php echo JURI::base(); ?>">
         <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
@@ -23,9 +19,9 @@ ul.topNav li a:hover, ul.nav li a:hover,ul.nav-pills li a:hover {
     </form>
     
     <ul class="topNav nav nav-pills pull-left" style="margin-left: 50px; margin-bottom: 0px">
-       <li><a href="#" id="requestnotices" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'" data-content="No requests" data-placement="bottom" data-toggle="popover" href="#" data-original-title="Devotion parnter requests"><i class="icon-user icon-large"></i></a></li>
-       <li><a href="#" id="notifications" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'" data-content="No notifications" data-placement="bottom" data-toggle="popover" href="#" data-original-title="Notifications"><i class="icon-flag icon-large"></i></a></li>
-       <li><a href="#" style="color: #ddd" onmouseover="this.style.color='#0088cc'" onmouseout="this.style.color='#ddd'">Home</a></li>
+       <li><a href="#" title="" id="requestnotices" class="ddowns" data-content="No requests" data-placement="bottom" data-toggle="popover" data-original-title="Devotion Partner Requests"><i class="icon-user icon-large"></i></a></li>
+       <li><a href="#" title="" id="notifications" class="ddowns" data-content="No notifications" data-placement="bottom" data-toggle="popover" data-original-title="Notifications"><i class="icon-flag icon-large"></i></a></li>
+       <li><a href="#">Home</a></li>
        <li>
        <div class="btn-group pull-left" style="padding-top: 3px; margin-left: 10px">
          <img title="<?php echo $user->name; ?>" style="width:28px; height: 28px" alt="<?php echo $user->name; ?>" <?php echo $src; ?> />
@@ -64,10 +60,8 @@ ul.topNav li a:hover, ul.nav li a:hover,ul.nav-pills li a:hover {
 jQuery.noConflict();
 
 (function ($, window) {
-    //$('#requestnotices, #notifications').popover();
-    
-    $('input#search')
-    .typeahead('destroy')
+
+    $('input#search').typeahead('destroy')
     .typeahead({
         //minLength: 2,
       
@@ -97,6 +91,15 @@ jQuery.noConflict();
     
     .on('typeahead:selected', function (event, user) {
       window.location = '<?php echo JURI::base(); ?>#/users/' + user.id;
+    });
+    
+    
+    $(function () {
+        $('.ddowns').on('click', function(){
+            $('.ddowns').not(this).popover('hide'); //all but this
+        }).popover({
+            'trigger': 'click'
+        });
     });
 }(jQuery, window));
 </script>
