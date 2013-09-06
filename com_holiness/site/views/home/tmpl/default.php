@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <div id="timeline" class="row-fluid content-display hide">
-  <div class="timeline-item" id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
+  <div id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
     <div class="row-fluid post-actions" style="margin-bottom: 0px;">
       <div class="span3">
         <div class="row-fluid"><span style="color: #000;"><i class="icon-book"></i></span> <a href="#" class="active" style="color:#414141">Prayer Request</a></div>
@@ -160,9 +160,48 @@ jQuery.noConflict();
         
         
         var TimelineCollection = Backbone.Collection.extend({
+        
             model: TimelineItem,
             
-            url: 'index.php?option=com_holiness&task=home.handleget'
+            
+            ogModels: [],
+            
+            
+            displayLimit: 2,
+            
+            
+            currentDisplayed: 0,
+            
+            
+            url: 'index.php?option=com_holiness&task=home.handleget',
+            
+            
+            initialize: function () {
+                this.currentDisplayed = 0;
+                this.ogModels = [];
+            },
+            
+            
+            getMore: function () {
+                if (!(this.ogModels.length > 0)) {
+                    this.ogModels = this.clone().models;
+                }
+                else {
+                    this.models = this.ogModels;
+                }
+                
+                var limit = (this.currentDisplayed + this.displayLimit);
+                
+                if (limit >= this.ogModels.length) {
+                    limit = this.ogModels.length;
+                }
+                
+                this.currentDisplayed = limit;
+
+                var currentModels = this.models.slice(0, limit);
+	    
+	            this.reset(currentModels);
+            }
         });
         
         
@@ -237,6 +276,11 @@ jQuery.noConflict();
             el: '#timeline',
             
             
+            events: {
+                "click .btn-block": "loadMore"
+            },
+            
+            
             initialize: function () {
                 this.listenTo(this.collection, "reset", this.render);
             },
@@ -245,14 +289,17 @@ jQuery.noConflict();
             render: function () {
                 var fragment = this.viewAll();
                 
+                $('.timeline-item, .btn-block').remove();
                 this.$el.append(fragment);
                 
                 return this;                
             },
             
             
+            
+            
             viewAll: function () {
-                var fragment = document.createDocumentFragment();
+                var fragment = document.createDocumentFragment(), button = document.createElement('button');
             
                 this.collection.forEach(function (postModel) { 
                     var postView = new TimelineItemView({model: postModel});
@@ -260,7 +307,17 @@ jQuery.noConflict();
                     fragment.appendChild(postView.render().el);
                 });
                 
+                button.className = "btn btn-block";
+                button.innerHTML = "Load More";
+                fragment.appendChild(button);
+                
                 return fragment;
+            },
+            
+            
+            
+            loadMore: function (e) {
+                this.collection.getMore();
             }
         });
         
