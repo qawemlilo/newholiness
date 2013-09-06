@@ -181,6 +181,17 @@ jQuery.noConflict();
                 'testimony': 'success'
             },
             
+            
+            postLabel: {
+                'prayerrequest': 'Prayer Request',
+                
+                'prophecy': 'Prophecy',
+                
+                'revelation': 'Revelation',
+                
+                'testimony': 'Testimony'
+            },
+            
         
             template: _.template($('#timeline-item-tpl').text()),
             
@@ -189,9 +200,14 @@ jQuery.noConflict();
                 var data = this.model.toJSON(),
                     template;
                     
-                if(!data.id) data.id = 0;  
+                if (!data.id) {
+                    data.id = 0; 
+                }
+                
+                
                 data.ts = this.timeAgo(data.ts);
                 data.label = this.labelColor[data.posttype];
+                data.posttype = this.postLabel[data.posttype];
                 template = this.template(data);
                 
                 this.$el.append(template);

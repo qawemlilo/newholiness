@@ -22,7 +22,7 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
       </blockquote>
     </div>
     <div class="span9">
-        <h3 style="margin-top: 0px">Dear friend, hear the voice of the Lord today: <?php echo $this->devotion->scripture; ?></h3>
+        <h3 style="margin-top: 0px"><?php echo ucwords($this->devotion->theme); ?></h3>
         <div class="row-fluid" style="margin-top:0px; padding-top: 0px;">
           <div class="span10"><small><?php echo $date->format("l d M Y"); ?></small></div>
           <div class="span2">
@@ -53,9 +53,8 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
     </div>
 </div>
 <div class="row-fluid">
-  <h3 style="margin-top: 0px"><?php echo $this->devotion->theme; ?></h3>
-  <p><strong>Today's devotion:</strong> <?php echo $devotion; ?></p>
-  <p><strong>Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
+  <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
+  <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
 </div>
 
 
