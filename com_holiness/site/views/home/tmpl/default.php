@@ -49,6 +49,8 @@ defined('_JEXEC') or die('Restricted access');
       <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong></p>
       <small><%= church %></small>
     </blockquote>
+    
+    <p><button class="btn btn-info">Make devotion partner</button></p>
   </div>
   
   <div class="span9">
@@ -56,8 +58,7 @@ defined('_JEXEC') or die('Restricted access');
     
     <blockquote>
       My name is <%= value %> and I am Born-Again by God's Love & Grace. I go to <%= church %> and I love my Church so much.
-    </blockquote>
-    <p><button class="btn btn-info">Make <%= value.split(" ")[0] %> your devotion partner</button></p>
+    </blockquote> 
     
     <br />
     
