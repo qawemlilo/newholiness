@@ -19,8 +19,18 @@ $document->addStyleDeclaration(
     </form>
     
     <ul class="topNav nav nav-pills pull-left" style="margin-left: 50px; margin-bottom: 0px">
-       <li><a href="#" title="" id="requestnotices" class="ddowns" data-content="No requests" data-placement="bottom" data-toggle="popover" data-original-title="Devotion Partner Requests"><i class="icon-user icon-large"></i></a></li>
-       <li><a href="#" title="" id="notifications" class="ddowns" data-content="No notifications" data-placement="bottom" data-toggle="popover" data-original-title="Notifications"><i class="icon-flag icon-large"></i></a></li>
+       <li>
+         <a href="#" title="" id="requestnotices" class="ddowns" data-content="No requests" data-placement="bottom" data-toggle="popover" data-original-title="Devotion Partner Requests">
+           <i class="icon-user icon-large"></i> 
+           <span class="badge badge-important noti-indicator">1</span>
+         </a>
+       </li>
+       <li>
+         <a href="#" title="" id="notifications" class="ddowns" data-content="No notifications" data-placement="bottom" data-toggle="popover" data-original-title="Notifications">
+          <i class="icon-flag icon-large"></i> 
+          <span class="badge badge-important noti-indicator">1</span>
+        </a>
+      </li>
        <li><a href="#">Home</a></li>
        <li>
        <div class="btn-group pull-left" style="padding-top: 3px; margin-left: 10px">
@@ -97,6 +107,7 @@ jQuery.noConflict();
     $(function () {
         $('.ddowns').on('click', function(e) {
             $('.ddowns').not(this).popover('hide'); //all but this
+            $(this).find("span.noti-indicator").remove();
             return false;
         }).popover({
             'trigger': 'click'
