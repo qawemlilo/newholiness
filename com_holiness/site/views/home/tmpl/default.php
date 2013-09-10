@@ -440,10 +440,14 @@ jQuery.noConflict();
         });
         
         var pb = new PostBox();
-        var tlView = new TimelineCollectionView({
+        var timelineView = new TimelineCollectionView({
             collection: new TimelineCollection()
         });
-        tlView.collection.fetch({reset: true});
+        timelineView.collection.fetch({
+            success: function (collection, response, options) {
+                timelineView.loadMore();
+            }
+        });
     });
 }(jQuery));
 </script> 
