@@ -4,7 +4,7 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <div id="timeline" class="row-fluid content-display hide">
-  <div id="postbox" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
+  <div id="postbox" style="background-color: #fff; border: 1px solid #E5E5E5; padding: 10px 20px 10px 20px;">
     <div class="row-fluid post-actions" style="margin-bottom: 0px;">
       <div class="span3">
         <div class="row-fluid"><span style="color: #000;"><i class="icon-book"></i></span> <a href="#" class="active" style="color:#414141">Prayer Request</a></div>
@@ -20,7 +20,7 @@ defined('_JEXEC') or die('Restricted access');
       </div>
     </div>
     
-    <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#fff; margin:-15px 0px 0px 20px; z-index:999;"></div>
+    <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#dddddd; margin:-15px 0px 0px 20px; z-index:999;"></div>
     
     <div class="row-fluid" style="margin-top: 13px;">
       <form style="margin-bottom: 0px;" action="" id="postform">
@@ -50,7 +50,7 @@ defined('_JEXEC') or die('Restricted access');
       <small><%= church %></small>
     </blockquote>
     
-    <p><button class="btn btn-info">Make devotion partner</button></p>
+    <p><button class="btn btn-primary">Make devotion partner</button></p>
   </div>
   
   <div class="span9">
@@ -88,9 +88,11 @@ defined('_JEXEC') or die('Restricted access');
     </div>
     
     <div class="span9" style="margin-bottom:10px; margin-left:20px">
-      <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
-      <small><%= church %></small><br>
-      <button class="btn add-partner" style="margin-top:5px;"><small>Make devotion partner</small></button></p>
+      <p>
+        <strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
+        <small><%= church %></small><br>
+        <button class="btn add-partner" style="margin-top:5px;">Make devotion partner</button>
+      </p>
     </div>
   </div>
 </script>
@@ -122,7 +124,7 @@ defined('_JEXEC') or die('Restricted access');
       <a class="timeline-item-read" style="color:#fff;" href="#<%= id %>"><%= posttype %></a>
     </span>
     <br>
-    <small><%= ts %></small>
+    <small><%= ts %> <i class="icon-comments" style="margin-left:5px"></i> <span id="timeline-item-comments-count">0</span> </small>
     <br>
     <%= post %>
   </div>
@@ -132,7 +134,7 @@ defined('_JEXEC') or die('Restricted access');
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
 
-<div id="user-content" class="row-fluid content-display hide">
+<div id="user-content" class="content-display hide" style="padding:20px; background-color:#fff;">
 </div>
 
 <script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/main.js'; ?>"></script>
@@ -308,7 +310,7 @@ jQuery.noConflict();
                     fragment.appendChild(postView.render().el);
                 });
                 
-                button.className = "btn btn-block";
+                button.className = "btn btn-block btn-success";
                 button.innerHTML = "Load More";
                 fragment.appendChild(button);
                 
@@ -358,12 +360,12 @@ jQuery.noConflict();
                 }
                 
                 if (tab === 'Prophecy') {
-                   marginleft = '24%';
+                   marginleft = '25%';
                    plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
                 }
                 
                 if (tab === 'Revelation') {
-                   marginleft = '35%';
+                   marginleft = '38%';
                    plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
                 }
             

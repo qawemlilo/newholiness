@@ -31,24 +31,20 @@ h3 {
   font-weight: 200;
 }
 
-#sidebar1 h3, #sidebar2 h3 {
-  color: #414141;
-  border-bottom: 1px solid #F1F1F1;
-}
-
-
 
 #main-content {
   margin-top: 60px;
+  background-color: #F1F1F1;
 }
 
 
 #main {
-  min-height: 1000px;
+  min-height: 960px;/*
   border-left: 1px solid #E5E5E5;
-  border-right: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;*/
   padding: 20px;
-  margin-left: 1.28%!important
+  margin-left: 0%!important;
+  width: 51.777948717948715%;
 }
 
 #sidebar1 {
@@ -56,8 +52,56 @@ h3 {
 }
 
 #sidebar2 {
-  margin-left: 1.28%!important;
+  margin-left: 0%!important;
 }
+
+.btn [class^="icon-"], .nav [class^="icon-"], .btn [class*=" icon-"], .nav [class*=" icon-"] {
+  line-height: 1.1em!important;
+}
+
+#main-content .module {
+  padding-top: 20px;
+}
+
+#main-content .module .moduletable {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #E5E5E5!important;
+}
+
+#main-content .module .moduletable h3 {
+  margin-top: 0px;
+  color: #414141;
+  border-bottom: 1px solid #F1F1F1;
+}
+
+
+.btn-primary {
+  background-color: #0074cc;
+  background-image: -moz-linear-gradient(top, #00aaff, #006699);
+  background-image: -ms-linear-gradient(top, #00aaff, #006699);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00aaff), to(#006699));
+  background-image: -webkit-linear-gradient(top, #00aaff, #006699);
+  background-image: -o-linear-gradient(top, #00aaff, #006699);
+  background-image: linear-gradient(top, #00aaff, #006699);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00aaff', endColorstr='#006699', GradientType=0);
+  border-color: #006699 #006699 #003580;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: #006699;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #0099e6 \9;
+}
+
 
 /*
    Header bar
@@ -124,8 +168,9 @@ h3 {
 
 #timeline .timeline-item {
   border: 1px solid #E5E5E5!important;
-  margin: 20px 0px 20px 0px;
+  margin: 10px 0px 10px 0px;
   padding: 10px;
+  background-color: #fff;
 }
 
 #timeline .timeline-item  span.badge {

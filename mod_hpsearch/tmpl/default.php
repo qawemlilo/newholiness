@@ -12,7 +12,7 @@ $document->addStyleDeclaration(
 <div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333; z-index:9999">
   <div class="row-fluid" id="toppannel">
     <form style="margin-bottom:0px" class="pull-left">
-      <a href="<?php echo JURI::base(); ?>">
+      <a href="<?php echo JURI::base(); ?>#">
         <img src="<?php echo JURI::base(); ?>templates/js_wright/images/logo-raw.png" style="width: 192px; margin: 2px 10px 0px 25px">
       </a>
       <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
@@ -38,10 +38,10 @@ $document->addStyleDeclaration(
 
          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB"><i class="icon-user"></i></span> My Profile</a></li>
-          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: red;"><i class="icon-pencil"></i></span> Edit Account</a></li>
+          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-user"></i></span> My Profile</a></li>
+          <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-pencil"></i></span> Edit Account</a></li>
           <li class="divider"></li>
-          <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><i class="icon-lock"></i> Logout</a></li>
+          <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-lock"></i></span> Logout</a></li>
          </ul>
        </div>
        </li>

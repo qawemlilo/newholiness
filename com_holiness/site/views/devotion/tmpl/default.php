@@ -12,7 +12,8 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
 
 ?>
 
-<div class="row-fluid">
+<div style="padding:20px; background-color:#fff;">
+  <div class="row-fluid">
     <div class="span3">
       <a href="<?php echo JURI::base() . '#/users/' . $this->devotion->userid; ?>">
       <img src="<?php echo $src; ?>" style="width:150px; height:150px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" /></a><br>
@@ -51,11 +52,11 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
           <small><?php echo $this->devotion->scripture; ?> <cite title="Source Title"><?php echo $this->devotion->bible; ?></cite></small>
         </blockquote>
     </div>
-</div>
-<div class="row-fluid">
-  <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
-  <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
-</div>
+  </div>
+  <div class="row-fluid">
+    <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
+    <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
+  </div>
 
 
 <!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
@@ -78,11 +79,9 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
 <!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
 
 
-<hr />
 
-<div id="timeline" class="row-fluid">
-  <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
-  
+  <div id="timeline" class="row-fluid" style="margin-top:20px">
+   <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
     <div class="row-fluid">
       <div class="span1" style="margin: 0px; padding: 0px">
         <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" />
@@ -99,6 +98,7 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
 
      <div class="row-fluid" id="commentscontainer">
      </div>
+   </div>
   </div>
 </div>
 

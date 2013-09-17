@@ -221,7 +221,7 @@ jQuery.noConflict();
             var fragment = document.createDocumentFragment(), view;
             
             if (error) {
-                this.$el.parent().html('<div style="margin-left:10px">Devotions not found.</div>');
+                this.$el.parent().html('<div style="margin:0px 0px 10px 10px">Devotions not found.</div>');
                 
                 return;
             }
@@ -357,7 +357,7 @@ jQuery.noConflict();
             var fragment = document.createDocumentFragment(), pView;
 
             if (error) {
-                this.$el.parent().html('<div style="margin-left:10px">Devotion partners not found.</div>');
+                this.$el.parent().html('<div style="margin:0px 0px 10px 10px">Devotion partners not found.</div>');
                 
                 return;
             }
