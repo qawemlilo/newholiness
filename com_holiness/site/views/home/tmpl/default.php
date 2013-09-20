@@ -119,14 +119,25 @@ defined('_JEXEC') or die('Restricted access');
   </div>
   
   <div class="span11">
-    <strong><a href="#/users/<%= userid %>"><%= name %></a></strong>
-    <span class="badge badge-<%= label %>" style="margin-left:10px;">
-      <a class="timeline-item-read" style="color:#fff;" href="#<%= id %>"><%= posttype %></a>
-    </span>
-    <br>
-    <small><%= ts %> <i class="icon-comments" style="margin-left:5px"></i> <span id="timeline-item-comments-count">0</span> </small>
-    <br>
-    <%= post %>
+    <div  class="row-fluid">
+      <strong><a href="#/users/<%= userid %>"><%= name %></a></strong>
+      <span class="badge badge-<%= label %>" style="margin-left:10px;">
+        <a class="timeline-item-read" style="color:#fff;" href="#<%= id %>"><%= posttype %></a>
+      </span>
+      <div class="dropdown pull-right">
+        <a href="#" class="edit-timeline-item dropdown-toggle" data-toggle="dropdown">
+          <i class="icon-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu" style="min-width:90px">
+          <li><a href="#">Edit</a></li>
+          <li><a href="#">Delete</a></li>
+        </ul>
+      </div>
+    </div>
+    <div  class="row-fluid">
+      <small><%= ts %> <i class="icon-comments" style="margin-left:5px"></i> <span id="timeline-item-comments-count">0</span> </small><br>
+      <%= post %>
+    </div>
   </div>
 </div>
 </script>
@@ -286,6 +297,7 @@ jQuery.noConflict();
             
             initialize: function () {
                 this.listenTo(this.collection, "reset", this.render);
+                this.$('.dropdown-toggle').dropdown();
             },
             
             

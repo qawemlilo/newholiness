@@ -2,7 +2,7 @@
 jQuery.noConflict();
 
 
-(function ($) {
+(function ($, window) {
 
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),
@@ -459,6 +459,8 @@ jQuery.noConflict();
         initialize: function () {
             var self = this;
             
+            //window.scrollTo(0, 0);
+
             this.collection = new UsersCollection();
             
             this.collection.fetch({
@@ -567,4 +569,4 @@ jQuery.noConflict();
         
         return App;
     };
-}(jQuery));
+}(jQuery, window));
