@@ -55,25 +55,7 @@ class HolinessControllerHome extends JController
 
 
     public function handledelete() {
-        $model =& $this->getModel('home');
-        $post = array();
-        $data = $this->get_post_data();
-        
-        if (is_object($data)) {
-            $id = $data->id;
-        }
-        elseif (is_array($data)) {
-            $id = $data['id'];
-        }
-        
-        if (!$id || !$result = $model->remove($id)) {
-            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item deleted'))); 
-        }
-        else {
-            $this->response(200, json_encode($result));
-        }
-        
-        exit();     
+    
     }
     
     

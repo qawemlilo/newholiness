@@ -57,6 +57,11 @@ class HolinessModelHome extends JModelItem
 
     public function remove($id) {
         $table =& $this->getTable();
+        $user =& JFactory::getUser();
+        
+        if ($table->userid != $user->id) {
+            return false;
+        }
 
         if (!$table->delete($id)) {
             return false;

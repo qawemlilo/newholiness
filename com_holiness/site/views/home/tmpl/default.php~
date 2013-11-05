@@ -291,6 +291,8 @@ jQuery.noConflict();
             
             
             editItem: function (e) {
+                this.model.getMore();
+                
                 return false;
             },
             
