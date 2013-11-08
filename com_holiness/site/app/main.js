@@ -43,6 +43,9 @@ require(["jquery", "app"], function($, App) {
         "use strict";
         
         App = new App();
-        App.socketConnect();
+        
+        $.initApp = function () {
+            return App;
+        };
     });
 });
