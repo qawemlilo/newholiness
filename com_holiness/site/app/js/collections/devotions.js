@@ -1,5 +1,5 @@
 
-require(["underscore", "backbone", "../models/devotion"], function(_, Backbone, Devotion) {
+define(["backbone", "models/devotion"], function(Backbone, Devotion) {
     Devotions = Backbone.Collection.extend({
         model: Devotion,
         

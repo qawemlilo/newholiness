@@ -1,14 +1,13 @@
 requirejs.config({
-    appDir: '../',
-    
-    baseUrl: 'js',
+    baseUrl: 'components/com_holiness/app/js',
    
     paths: {
-        jquery : 'libs/jquery',
+        jquery: 'libs/jquery',
         underscore: 'libs/underscore',
         backbone: 'libs/backbone',
         bootstrap: 'libs/bootstrap',
         backboneCache: 'libs/backbone.fetch-cache.min',
+        typeahead: 'libs/typeahead.min',
         moment: 'libs/moment',
         text: 'libs/text'
     },
@@ -20,6 +19,10 @@ requirejs.config({
         
         jquery: {
             exports: '$'
+        },
+        
+        typeahead: {
+            deps: ['jquery']
         },
         
         backbone: {
@@ -34,18 +37,16 @@ requirejs.config({
         
         bootstrap: {
             deps: ['jquery']
+        },
+        
+        app: {
+            deps: ['jquery', 'underscore', 'backbone', 'typeahead']
         }
     }
 });
 
-require(["jquery", "app"], function($, App) {  
-    $(function() {
-        "use strict";
-        
-        App = new App();
-        
-        $.initApp = function () {
-            return App;
-        };
-    });
+require(["jquery", "app"], function($, App) { 
+    "use strict";
+    
+    App.init();
 });

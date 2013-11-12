@@ -148,40 +148,6 @@ class Wright
 			JHtml::_('behavior.framework', true);
 		}
 
-		// load jQuery ?
-		if ($this->loadBootstrap && $loadJquery = $this->document->params->get('jquery', 0))
-		{
-            switch ($loadJquery) {
-                // load jQuery locally
-                case 1:
-                    $jquery = $this->_urlJS . '/jquery-1.9.1.min.js';
-                    break;
-                // load jQuery from Google
-                default:
-                    $jquery = 'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js';
-                    break;
-            }
-            
-            $this->document->addScript($jquery);
-            // ensure that jQuery loads in noConflict mode to avoid mootools conflicts
-            $this->document->addScriptDeclaration('jQuery.noConflict();');
-		}
-        
-        // Qhawe's addition
-        $this->document->addScript($this->_urlJS . '/underscore-backbone-moment.js');
-        $this->document->addScript(JURI::base() . 'components/com_holiness/assets/js/libs/backbone.fetch-cache.js');
-
-		if ($this->loadBootstrap) {
-			// load bootstrap JS
-			//$this->addJSScript($this->_urlBootstrap . '/js/bootstrap.min.js');
-            $this->addJSScript($this->_urlBootstrap . '/js/bootstrapper.min.js');
-        }
-		
-		$this->addJSScript($this->_urlJS . '/utils.js');
-		if ($this->document->params->get('stickyFooter', 1)) {
-			$this->addJSScript($this->_urlJS . '/stickyfooter.js');
-		}
-
 		// Add header script if set
 		if (trim($this->document->params->get('headerscript', '')) !== '')
 		{

@@ -1,13 +1,14 @@
 
-require([
+define([
     "jquery",
     "underscore", 
     "backbone", 
-    "../collections/users", 
-    "../views/devotions", 
-    "../views/partners",
-    "../views/pagination"
-], function ($, _, Backbone, Users, DevotionsView, PartnersView, PaginationView) {
+    "collections/users",
+    "collections/partners",    
+    "views/devotions", 
+    "views/partners",
+    "views/pagination"
+], function ($, _, Backbone, Users, PartnersCollection, DevotionsView, PartnersView, PaginationView) {
     var UserView = Backbone.View.extend({
     
         el: '#user-content',
@@ -18,16 +19,15 @@ require([
         },
         
         
-        waiting: false,
-        
-        
         template: _.template($("#user-tpl").text()),
         
         
         initialize: function () {
             var self = this;
+            
+            //window.scrollTo(0, 0);
 
-            this.collection = new Users();
+            //this.collection = new UsersCollection();
             
             this.collection.fetch({
                 cache: true, 
@@ -40,6 +40,41 @@ require([
                     }                        
                 }            
             });
+        },
+        
+        
+        render: function (id) {
+            var self = this;
+
+            self.$el.empty();
+            
+            self.devotionsView = new DevotionsView({
+                parent: self
+            });
+            
+            self.partnersView = new PartnersView({
+                collection: new PartnersCollection(),
+                parent: self
+            });
+
+            self.paginationView = new PaginationView({parent: self.devotionsView });
+            
+            if (self.collection && self.collection.length > 0) {
+                self.showView(id);
+            }
+            else {
+                self.collection.fetch({
+                    cache: true, 
+                    
+                    expires: (1000 * 60) * 60 * 24 * 2,
+                
+                    success: function () {
+                        self.showView(id);                       
+                    }            
+                });
+            }
+            
+            return self;
         },
         
         

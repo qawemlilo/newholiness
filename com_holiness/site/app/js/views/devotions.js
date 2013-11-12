@@ -1,10 +1,10 @@
 
-require([
+define([
     "jquery", 
     "underscore", 
     "backbone", 
-    "../collections/devotions", 
-    "../views/devotion"
+    "collections/devotions", 
+    "views/devotion"
 ], function($, _, Backbone, Devotions, DevotionView) {
     var DevotionsView = Backbone.View.extend({
     

@@ -101,16 +101,3 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
    </div>
   </div>
 </div>
-
-
-<script type="text/javascript" src="<?php echo JURI::base() . 'components/com_holiness/assets/js/devotion.js'; ?>"></script>
-<script type="text/javascript">
-jQuery.noConflict();
-
-(function ($) {
-    $(function () {
-        $.getComments('<?php echo $devotionid; ?>');
-    });
-}(jQuery));
-</script>  
-

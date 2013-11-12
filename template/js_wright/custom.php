@@ -29,7 +29,8 @@ if ($this->countModules('toolbar')) {
 <head>
 	
 <w:head />
-<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">>
+<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="components/com_holiness/app/js/libs/require.js" data-main="components/com_holiness/app/js/main"></script>
 </head>
 <body<?php if ($bodyclass != "") :?> class="<?php echo $bodyclass?>"<?php endif; ?>>
     <?php if ($this->countModules('toolbar')) : ?>

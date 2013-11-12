@@ -1,5 +1,5 @@
 
-require(["underscore", "backbone"], function(_, Backbone) {
+define(["backbone"], function(Backbone) {
     var User = Backbone.Model.extend({
         defaults: {
             id: 0, 

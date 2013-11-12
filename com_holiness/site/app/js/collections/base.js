@@ -1,5 +1,5 @@
 
-require(["underscore", "backbone"], function(_, Backbone) {
+define(["underscore", "backbone"], function(_, Backbone) {
     var DBase = Backbone.DBase = Backbone.Collection.extend({
 
         perPage: 20,

@@ -1,5 +1,5 @@
     
-require(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
     var PartnerView = Backbone.View.extend({
     
         tagName: 'li',

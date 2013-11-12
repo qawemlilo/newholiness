@@ -1,5 +1,5 @@
 
-require(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone", "views/partner"], function($, _, Backbone, PartnerView) {
     var PartnersView = Backbone.View.extend({
     
         tagName: 'ul',
