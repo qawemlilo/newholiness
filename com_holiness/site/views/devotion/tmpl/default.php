@@ -8,7 +8,7 @@ $doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!importan
 $src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
 $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
-$devotionid = JRequest::getVar('id', '', 'get', 'string');
+$devotionid = JRequest::getVar('id', '', 'get', 'int');
 
 ?>
 
@@ -91,6 +91,7 @@ $devotionid = JRequest::getVar('id', '', 'get', 'string');
           <form style="margin-bottom: 0px; text-align:right">
             <textarea rows="2" cols="10" class="span12" placeholder="Write a comment..."></textarea>
             <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
+            <input type="hidden" id="devotionid" value="<?php echo $devotionid; ?>" />
           </form>          
         </div>
       </div>

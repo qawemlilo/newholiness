@@ -47,6 +47,11 @@ requirejs.config({
 
 require(["jquery", "app"], function($, App) { 
     "use strict";
+    $(function () {
+        var devotion = $('#devotionid'), 
+            devotionid = devotion.length ? devotion.val() : false;
+
+        App.init(devotionid);
+    });
     
-    App.init();
 });

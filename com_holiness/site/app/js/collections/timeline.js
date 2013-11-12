@@ -1,5 +1,5 @@
 
-define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
+define(["underscore", "backbone", "models/timeline"], function(_, Backbone, TimelineItem) {
     var Timeline = Backbone.Collection.extend({
         
         model: TimelineItem,

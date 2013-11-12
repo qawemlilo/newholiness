@@ -4,7 +4,7 @@ define([
     "underscore", 
     "backbone",
     "models/timeline",
-    "views/timeline",
+    "views/timelineitem",
     "moment"
 ], function ($, _, Backbone, TimelineItem, TimelineItemView) {
     "use strict";
@@ -91,16 +91,15 @@ define([
 
             data.posttype = data.posttype.toLowerCase().replace(/ /g, '');
             
-            var view = new TimelineItemView({
-                model: new TimelineItem(data)
-            });
             
-            view.model.save();
+            var model = new TimelineItem(data);
+            
+            model.save();
             
             this.sharebox.val('');
             this.charsDiv.html('150');
             
-            $('#timeline').append(view.render().el);
+            this.collection.add(model);
             
             return false;
         },

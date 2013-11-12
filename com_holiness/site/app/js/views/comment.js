@@ -40,18 +40,7 @@ define([
             var ago = moment(ts, "YYYY-MM-DD HH:mm:ss").fromNow();
             
             return ago;
-        },
-
-
-        getComments: function (devotionid) {
-            var commentsCollection = new CommentsCollection();
-            commentsCollection.url = 'index.php?option=com_holiness&task=user.getcomments&id=' + devotionid;
-            
-            var commentsView = new CommentsView({
-                collection: commentsCollection
-            });
-            
-        }         
+        }        
     });
     
     return CommentView;
