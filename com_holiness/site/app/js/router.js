@@ -1,5 +1,5 @@
 
-define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone", "views/user", "views/home"], function($, _, Backbone, User, Home) {
     var Router = Backbone.Router.extend({
     
         routes: {
@@ -14,13 +14,27 @@ define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
         
         home: function () {
             $('.content-display:not(.hide)').addClass('hide');
-            this.app.views.home.render();
+           
+            var home;
+            
+            if (this.app.views.home) {
+                home = this.app.views.home; 
+            }
+            else {
+                home = new Home();
+                this.app.views.home = home;
+            }
+            
+            home.render();
         },
         
         
         loadUser: function (id) {
             $('.content-display:not(.hide)').addClass('hide');
-            this.app.views.user.render(id);
+            
+            var user = new User({collection: this.app.collections.users});
+            
+            user.render(id);
         }
     });
     

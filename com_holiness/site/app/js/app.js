@@ -10,13 +10,11 @@ define([
     "views/comments",
     "views/timeline",
     "views/postbox",
-    "views/home",
     "views/members",
     "views/search",
-    "views/user",
     "router",
     "bootstrap"
-], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, CommentsView, TimelineView, PostBox, Home, MembersView, Search, User, Router) {
+], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, CommentsView, TimelineView, PostBox, MembersView, Search, Router) {
     "use strict";
     
     var App = {
@@ -29,35 +27,34 @@ define([
                 'trigger': 'click'
             });
             
-            var search = App.views.search = new Search(); 
             
-            var home = App.views.home = new Home();
+            // Collections
+            var usersCollection = App.collections.users = new UsersCollection();
             
-            var members = App.collections.members = new UsersCollection();
-            var membersView = App.views.members = new MembersView({collection: members});
+            // Views
+            App.views.search = new Search({collection: usersCollection}); 
+            App.views.members = new MembersView({collection: usersCollection});
             
+            // if id not defined (which means we are on the home page)
             if (!id) {
-                var timelineView = new TimelineView({
-                    collection: new TimelineCollection()
-                });
+                var timelineCollection =  App.collections.timeline = new TimelineCollection();
+                var timelineView = new TimelineView({collection: timelineCollection});
+                
                 timelineView.collection.fetch({
                     success: function (collection, response, options) {
                         timelineView.loadMore();
                     }
                 });
             
-                var postBox = App.views.postBox = new PostBox({collection: timelineView.collection});
-
-                var user = App.views.user = new User({collection: members});
+                App.views.postBox = new PostBox({collection: timelineCollection});
             }
+            
+            // if id id defined (which means we are on the devotion page)
             else {
-                console.log('devotion view');
-                var commentsCollection = new CommentsCollection();
+                var commentsCollection =  App.collections.comments = new CommentsCollection();
                 commentsCollection.url = 'index.php?option=com_holiness&task=user.getcomments&id=' + id;
             
-                var comments = new CommentsView({
-                    collection: commentsCollection
-                });                 
+                App.views.comments = new CommentsView({collection: commentsCollection});                 
             }            
             
             App.router = new Router(App);

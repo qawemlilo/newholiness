@@ -11,6 +11,9 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+$myUser =& JFactory::getUser();
+$myview = JRequest::getVar('view');
+
 // get the bootstrap row mode ( row / row-fluid )
 $gridMode = $this->params->get('bs_rowmode','row-fluid');
 $containerClass = 'container';
@@ -30,7 +33,12 @@ if ($this->countModules('toolbar')) {
 	
 <w:head />
 <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+
+<?php if (!$myUser->guest || $myview == 'devotion' || !$myview) { ?>
 <script type="text/javascript" src="components/com_holiness/app/js/libs/require.js" data-main="components/com_holiness/app/js/main"></script>
+<?php } else {?>
+<script type="text/javascript" src="components/com_holiness/app/js/libs/jquery.js"></script>
+<?php } ?>
 </head>
 <body<?php if ($bodyclass != "") :?> class="<?php echo $bodyclass?>"<?php endif; ?>>
     <?php if ($this->countModules('toolbar')) : ?>
