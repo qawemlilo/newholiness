@@ -1,16 +1,12 @@
 
-define(["backbone", "models/user"], function(Backbone, User) {
+define(["underscore", "backbone", "models/user"], function(_, Backbone, User) {
     Backbone.Collection.prototype.getUsers = function (num) {
 
-        if (!this.ogModels) {
-            this.models = _.shuffle(this.models);
-            this.ogModels = this.clone().models;
-        }
+        this.models = _.shuffle(this.models);
             
-        var currentmodels = this.ogModels.splice(0, num);
-            
-            
-        this.reset(currentmodels);    
+        var currentmodels = this.models.slice(0, num || 12); 
+        
+        return currentmodels;  
     }; 
     
     var Users = Backbone.Collection.extend({

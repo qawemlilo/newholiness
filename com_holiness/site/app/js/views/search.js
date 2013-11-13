@@ -6,10 +6,10 @@ define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbon
         
         
         initialize: function (opts) {
-            var self = this;
+          var self = this;
             
-            console.log(self.collection.clone().models)
-            
+          self.collection.once('complete', function () {
+             
             self.$el.typeahead('destroy')
             .typeahead({
               
@@ -21,7 +21,7 @@ define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbon
                     ttl: (1000 * 60) * 60
                 },*/
                 
-                local: self.collection.clone().models,
+                local: self.collection.toJSON(),
               
                 template: $('#search-tpl').text(),
             
@@ -43,6 +43,7 @@ define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbon
             .on('typeahead:selected', function (event, user) {
                 window.location.hash = '#/users/' + user.id;
             });
+          });
         }      
     });
     

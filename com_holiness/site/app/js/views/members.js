@@ -14,15 +14,14 @@ define([
         initialize: function () { 
             var self = this;
             
-            self.listenTo(self.collection, 'reset', self.render);
-            
             self.collection.fetch({
                 cache: true, 
                 
                 expires: (1000 * 60) * 60 * 24 * 2,
                 
                 success: function (collection, response, options) {
-                    self.collection.getUsers(12);
+                   self.render(self.collection.getUsers(12));
+                   self.collection.trigger('complete');
                 }
             });
             
@@ -30,11 +29,11 @@ define([
         },
 
         
-        render: function () {
-            var fragment = document.createDocumentFragment(), userView;
+        render: function (itemlist) {
+            var fragment = document.createDocumentFragment(), userView, counter = 0;
 
             
-            this.collection.forEach(function (model) { 
+            itemlist.forEach(function (model) {
                 userView = new UserView({
                     model: model
                 });
