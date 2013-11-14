@@ -3,8 +3,9 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
+    "text!tmpl/timelineitem.html",
     "moment"
-], function ($, _, Backbone) {
+], function ($, _, Backbone, Template) {
     "use strict";
     
     var TimelineItemView =  Backbone.View.extend({
@@ -31,26 +32,21 @@ define([
         
         postLabel: {
             'prayerrequest': 'Prayer Request',
-            
             'prophecy': 'Prophecy',
-            
             'revelation': 'Revelation',
-            
             'testimony': 'Testimony'
         },
         
     
-        template: _.template($('#timeline-item-tpl').text()),
+        template: _.template(Template),
         
         
         render: function () {
-            var data = this.model.toJSON(),
-                template;
+            var data = this.model.toJSON(), template;
                 
             if (!data.id) {
                 data.id = 0; 
             }
-            
             
             data.ts = this.timeAgo(data.ts);
             data.label = this.labelColor[data.posttype];

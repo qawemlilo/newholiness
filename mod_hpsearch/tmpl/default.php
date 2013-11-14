@@ -18,7 +18,7 @@ $document->addStyleDeclaration(
       <input id="search" name="search" placeholder="Search for your Christian friends" type="text" >
     </form>
     
-    <ul class="topNav nav nav-pills pull-left" style="margin-left: 50px; margin-bottom: 0px">
+    <ul class="topNav nav nav-pills pull-left" id="mainNavigation" style="margin-left: 50px; margin-bottom: 0px">
        <li>
          <a href="#" title="" id="requestnotices" class="ddowns" data-content="No requests" data-placement="bottom" data-toggle="popover" data-original-title="Devotion Partner Requests">
            <i class="icon-user icon-large"></i> 
@@ -48,17 +48,3 @@ $document->addStyleDeclaration(
     </ul>
   </div>
 </div>
-
-
-
-<script type="text/html" id="search-tpl">
-  <div class="row-fluid">
-    <div class="span2">
-      <img src="<?php echo JURI::base(); ?>media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="width:50px; height:50px;" />
-    </div>
-    <div class="span10">
-      <p><strong><%= value %></strong></p>
-      <p><small><%= church %></small></p>
-    </div>
-  </div>
-</script>

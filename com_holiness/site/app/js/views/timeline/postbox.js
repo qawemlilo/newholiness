@@ -4,9 +4,8 @@ define([
     "underscore", 
     "backbone",
     "models/timeline",
-    "views/timelineitem",
     "moment"
-], function ($, _, Backbone, TimelineItem, TimelineItemView) {
+], function ($, _, Backbone, TimelineItem) {
     "use strict";
 
     var PostBox =  Backbone.View.extend({
@@ -40,17 +39,17 @@ define([
         
             if (tab === 'Testimony') {
                marginleft = '13%';
-               plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!'
+               plcHolder = 'Share your Testimony! Share with your Devotion Partners what the Lord has done for you!';
             }
             
             if (tab === 'Prophecy') {
                marginleft = '25%';
-               plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...'
+               plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...';
             }
             
             if (tab === 'Revelation') {
                marginleft = '38%';
-               plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!'
+               plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!';
             }
         
             self.$('#pointer').animate({

@@ -1,0 +1,39 @@
+
+<div class="row-fluid" id="memberprofile">
+  <div class="span3">
+    <img style="width:150px; height:150px" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" class="img-polaroid" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" />
+    <br>
+    <blockquote>
+      <p><strong><a href="#/users/<%= id %>"><%= value %></a></strong></p>
+      <small><%= church %></small>
+    </blockquote>
+    
+    <p><button class="btn btn-primary">Make devotion partner</button></p>
+  </div>
+  
+  <div class="span9">
+    <h3 style="margin-top: 0px">The Divinee Profile for <%= value %> who is born of God</h3>
+    
+    <blockquote>
+      My name is <%= value %> and I am Born-Again by God's Love & Grace. I go to <%= church %> and I love my Church so much.
+    </blockquote> 
+    
+    <br />
+    
+    <ul class="nav nav-tabs" style="margin-bottom: 0px">
+      <li class="active">
+        <a href="#showdevotions"><i class="icon-book"> </i> Devotions</a>
+      </li>
+      <li>
+        <a href="#showpartners"><i class="icon-user"> </i> Devotion Partners</a>
+      </li>
+    </ul>
+    
+    <div class="tab-content" style="margin-top: 0px; padding: 20px 0px 0px 0px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd;">
+      <div class="tab-pane active" id="showdevotions">
+      </div>
+      <div class="tab-pane" id="showpartners">
+      </div>
+    </div>    
+  </div>
+</div>

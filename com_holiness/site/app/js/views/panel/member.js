@@ -2,14 +2,15 @@
 define([
     "jquery",
     "underscore", 
-    "backbone"
-], function ($, _, Backbone) {
+    "backbone",
+    "text!tmpl/member-side.html"
+], function ($, _, Backbone, Template) {
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),
         words = [];
-	    
+
         _.each(txtArr, function (word) {
-            words.push(word.charAt(0).toUpperCase() + word.slice(1))  
+            words.push(word.charAt(0).toUpperCase() + word.slice(1));  
         });
         
         return words.join(" ");
@@ -20,7 +21,7 @@ define([
         tagName: 'li',
 
 
-        template: _.template($('#member-tpl').text()),
+        template: _.template(Template),
 
         
         render: function () {

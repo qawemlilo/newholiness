@@ -3,15 +3,15 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
-    "views/comment"
+    "views/devotions/comment"
 ], function ($, _, Backbone, CommentView) {
 
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),
         words = [];
-	    
+
         _.each(txtArr, function (word) {
-            words.push(word.charAt(0).toUpperCase() + word.slice(1))  
+            words.push(word.charAt(0).toUpperCase() + word.slice(1));  
         });
         
         return words.join(" ");

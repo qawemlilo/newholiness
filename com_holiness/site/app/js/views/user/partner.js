@@ -2,14 +2,15 @@
 define([
     "jquery",
     "underscore", 
-    "backbone"
-], function ($, _, Backbone) {
+    "backbone",
+    "text!tmpl/partner.html"
+], function ($, _, Backbone, Template) {
     var PartnerView = Backbone.View.extend({
     
         tagName: 'li',
 
 
-        template: _.template($('#partners-tpl').text()),
+        template: _.template(Template),
 
         
         render: function () {

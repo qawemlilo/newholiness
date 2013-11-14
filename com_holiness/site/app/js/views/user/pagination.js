@@ -1,5 +1,5 @@
     
-define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone", "text!tmpl/pagination.html"], function($, _, Backbone, Template) {
     var Pagination = Backbone.View.extend({
     
         tagName: 'ul',
@@ -8,7 +8,7 @@ define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
         className: 'pager',
         
 
-        template: _.template($('#pagination-tpl').text()),
+        template: _.template(Template),
 
         
         initialize: function (options) {
@@ -21,7 +21,7 @@ define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
         
         
         render: function () {
-            var prev = this.parent.collection.prev
+            var prev = this.parent.collection.prev;
             var next = this.parent.collection.next;
             
             var template = this.template({prev: prev, nxt: next});

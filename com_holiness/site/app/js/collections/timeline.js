@@ -24,7 +24,7 @@ define(["underscore", "backbone", "models/timeline"], function(_, Backbone, Time
         
         
         getMore: function () {
-            if (!(this.ogModels.length > 0)) {
+            if (!this.ogModels.length) {
                 this.ogModels = this.clone().models;
             }
             else {
@@ -40,8 +40,8 @@ define(["underscore", "backbone", "models/timeline"], function(_, Backbone, Time
             this.currentDisplayed = limit;
 
             var currentModels = this.models.slice(0, limit);
-	    
-	        this.reset(currentModels);
+
+            this.reset(currentModels);
         }
     });
       

@@ -11,25 +11,3 @@ $document->addStyleDeclaration($style);
   </ul>
 </div>
 
-
-<!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
-
-<script type="text/html" id="member-tpl">
-  <div class="row-fluid fellow">
-    <div class="span3">
-      <img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="width:50px; height:50px;" class="img-polaroid" />
-    </div>
-    
-    <div class="span9"><div class="row-fluid">
-      <p>
-        <strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
-        <small><%= church %></small>
-        <br />
-        <button class="btn btn-mini add-partner"><small>Make devotion partner</small></button>
-      </p>
-    </div>
-  </div>
-</script>
-
-<!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
-

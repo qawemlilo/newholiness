@@ -4,7 +4,7 @@ define([
     "underscore", 
     "backbone", 
     "collections/devotions", 
-    "views/devotion"
+    "views/user/devotion"
 ], function($, _, Backbone, Devotions, DevotionView) {
     var DevotionsView = Backbone.View.extend({
     
@@ -21,7 +21,6 @@ define([
             this.$el.html('<li><img src="components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></li>');
             
             this.listenTo(this.parent, 'showdevotions', this.fetchDevotions);
-            //this.listenTo(this.collection, 'reset', this.renderPage);
             
             return this;
         },
@@ -35,8 +34,6 @@ define([
                 
                 return;
             }
-            
-            //this.collection.init();
             
             this.collection.forEach(function (model) {
                 view = new DevotionView({
@@ -55,7 +52,9 @@ define([
         renderPage: function () {
             var fragment = document.createDocumentFragment(), view;
             
-            if (!(this.collection.length > 0)) return;
+            if (!this.collection.length) {
+                return;
+            }
             
             this.collection.forEach(function (model) {
                 view = new DevotionView({

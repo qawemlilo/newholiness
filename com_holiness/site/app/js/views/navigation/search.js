@@ -1,29 +1,33 @@
     
-define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbone) {
+define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typeahead"], function($, _, Backbone, Template) {
+    "use strict";
+    
     var Search = Backbone.View.extend({
 
         el: '#search',
         
         
         initialize: function (opts) {
-          var self = this;
+            var self = this;
             
-          self.collection.once('complete', function () {
-             
+            self.collection.once('complete', function () {
+                var suggestions = self.collection.toJSON();
+                self.activateSearch(suggestions);
+            });
+        },
+
+
+        activateSearch: function (suggestions) {
+            var self = this;
+            
             self.$el.typeahead('destroy')
             .typeahead({
               
                 name: 'search',
                 
-                /*
-                prefetch: {
-                    url: 'index.php?option=com_holiness&task=user.getusers',
-                    ttl: (1000 * 60) * 60
-                },*/
-                
-                local: self.collection.toJSON(),
+                local: suggestions,
               
-                template: $('#search-tpl').text(),
+                template: Template,
             
                 engine: {
                     compile: function(template) {
@@ -33,7 +37,7 @@ define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbon
                             render: function(context) { 
                                 return compiled(context);
                             }
-                        }
+                        };
                     }
                 },
             
@@ -42,9 +46,8 @@ define(["jquery", "underscore", "backbone", "typeahead"], function($, _, Backbon
             
             .on('typeahead:selected', function (event, user) {
                 window.location.hash = '#/users/' + user.id;
-            });
-          });
-        }      
+            });     
+        }        
     });
     
     return Search;

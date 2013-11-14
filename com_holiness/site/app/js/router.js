@@ -1,5 +1,5 @@
 
-define(["jquery", "underscore", "backbone", "views/user", "views/home"], function($, _, Backbone, User, Home) {
+define(["jquery", "underscore", "backbone", "views/user/user", "views/home"], function($, _, Backbone, User, Home) {
     var Router = Backbone.Router.extend({
     
         routes: {

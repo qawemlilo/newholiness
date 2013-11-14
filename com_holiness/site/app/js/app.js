@@ -1,5 +1,4 @@
 
-
 define([
     "jquery", 
     "underscore", 
@@ -7,31 +6,23 @@ define([
     "collections/users",
     "collections/timeline",
     "collections/comments",
-    "views/comments",
-    "views/timeline",
-    "views/postbox",
-    "views/members",
-    "views/search",
-    "router",
-    "bootstrap"
-], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, CommentsView, TimelineView, PostBox, MembersView, Search, Router) {
+    "views/navigation/nav",
+    "views/navigation/search",
+    "views/devotions/comments",
+    "views/timeline/timeline",
+    "views/timeline/postbox",
+    "views/panel/members",
+    "router"
+], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
     "use strict";
     
     var App = {
         init: function (id) {
-            $('.ddowns').on('click', function(e) {
-                $('.ddowns').not(this).popover('hide'); //all but this
-                $(this).find("span.noti-indicator").remove();
-                return false;
-            }).popover({
-                'trigger': 'click'
-            });
-            
-            
             // Collections
             var usersCollection = App.collections.users = new UsersCollection();
             
             // Views
+            App.views.nav = new Nav();
             App.views.search = new Search({collection: usersCollection}); 
             App.views.members = new MembersView({collection: usersCollection});
             

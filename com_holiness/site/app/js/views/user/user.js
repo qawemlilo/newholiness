@@ -5,10 +5,13 @@ define([
     "backbone", 
     "collections/users",
     "collections/partners",    
-    "views/devotions", 
-    "views/partners",
-    "views/pagination"
-], function ($, _, Backbone, Users, PartnersCollection, DevotionsView, PartnersView, PaginationView) {
+    "views/user/devotions", 
+    "views/user/partners",
+    "views/user/pagination",
+    "text!tmpl/profile.html"
+], function ($, _, Backbone, Users, PartnersCollection, DevotionsView, PartnersView, PaginationView, Template) {
+    "use strict";
+    
     var UserView = Backbone.View.extend({
     
         el: '#user-content',
@@ -19,15 +22,11 @@ define([
         },
         
         
-        template: _.template($("#user-tpl").text()),
+        template: _.template(Template),
         
         
         initialize: function () {
             var self = this;
-            
-            //window.scrollTo(0, 0);
-
-            //this.collection = new UsersCollection();
             
             this.collection.fetch({
                 cache: true, 
@@ -63,44 +62,9 @@ define([
                 self.showView(id);
             }
             else {
-                self.collection.fetch({
-                    cache: true, 
-                    
-                    expires: (1000 * 60) * 60 * 24 * 2,
+                self.waiting = true;
                 
-                    success: function () {
-                        self.showView(id);                       
-                    }            
-                });
-            }
-            
-            return self;
-        },
-        
-        
-        render: function (id) {
-            var self = this;
-
-            this.$el.empty();
-            
-            this.devotionsView = new DevotionsView({
-                parent: self
-            });
-            
-            this.partnersView = new PartnersView({
-                collection: new PartnersCollection(),
-                parent: self
-            });
-
-            this.paginationView = new PaginationView({parent: this.devotionsView });
-            
-            if (this.collection && this.collection.length > 0) {
-                this.showView(id);
-            }
-            else {
-                this.waiting = true;
-                
-                this.collection.on('render', function () {
+                self.collection.on('render', function () {
                     self.showView(id);
                     self.collection.off('render');
                     self.waiting = false;
@@ -134,6 +98,7 @@ define([
             
             nav.tab('show');
             
+            // the partners and devotions views are listening for these actions
             this.trigger(opentab, this.model.get('memberid'));
 
 

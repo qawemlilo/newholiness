@@ -59,26 +59,6 @@ $devotionid = JRequest::getVar('id', '', 'get', 'int');
   </div>
 
 
-<!------------------------------------------------------- JavaScript Templates  ------------------------------------------>
-<script type="text/html" id="comment-tpl">
-  <div class="span1">
-    <a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
-  </div>
-  
-  <div class="span11">
-    <strong><a href="#/users/<%= id %>"><%= name %></a></strong>
-    <span class="badge badge-info" style="margin-left:10px;">
-      <a style="color: #fff;" class="amen-plus" href="#">Amen</a>
-    </span>
-    <br>
-    <small><%= ts %></small>
-    <br>
-    <%= comment %>
-  </div>
-</script>
-<!------------------------------------------------------- ENDOF; JavaScript Templates  ------------------------------------------>
-
-
 
   <div id="timeline" class="row-fluid" style="margin-top:20px">
    <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">

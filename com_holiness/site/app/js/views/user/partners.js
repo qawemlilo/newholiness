@@ -1,5 +1,7 @@
 
-define(["jquery", "underscore", "backbone", "views/partner"], function($, _, Backbone, PartnerView) {
+define(["jquery", "underscore", "backbone", "views/user/partner"], function($, _, Backbone, PartnerView) {
+    "use strict";
+    
     var PartnersView = Backbone.View.extend({
     
         tagName: 'ul',
@@ -14,6 +16,7 @@ define(["jquery", "underscore", "backbone", "views/partner"], function($, _, Bac
             
             this.$el.html('<li><img src="components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></li>');
             
+            // this is where the magic happens
             this.listenTo(this.parent, 'showpartners', this.fetchPartners);
             
             return this;

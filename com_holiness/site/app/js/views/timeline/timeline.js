@@ -3,7 +3,7 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
-    "views/timelineitem"
+    "views/timeline/timelineitem"
 ], function ($, _, Backbone, TimelineItemView) {
     "use strict";
     
