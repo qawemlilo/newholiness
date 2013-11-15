@@ -41,7 +41,7 @@ define([
         
             this.collection.forEach(function (postModel) { 
                 var postView = new TimelineItemView({model: postModel});
-                //console.log(postModel);
+
                 fragment.appendChild(postView.render().el);
             });
             

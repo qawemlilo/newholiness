@@ -1,5 +1,7 @@
 
 define(["backbone"], function(Backbone) {
+    "use strict";
+    
     var User = Backbone.Model.extend({
         defaults: {
             id: 0, 

@@ -5,6 +5,7 @@ define([
     "backbone", 
     "views/devotions/comment"
 ], function ($, _, Backbone, CommentView) {
+    "use strict";
 
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),

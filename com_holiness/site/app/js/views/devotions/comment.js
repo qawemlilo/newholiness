@@ -6,6 +6,7 @@ define([
     "text!tmpl/comment.html",    
     "moment"
 ], function ($, _, Backbone, Template) {
+    "use strict";
 
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),

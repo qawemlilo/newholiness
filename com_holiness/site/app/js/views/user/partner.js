@@ -5,6 +5,8 @@ define([
     "backbone",
     "text!tmpl/partner.html"
 ], function ($, _, Backbone, Template) {
+    "use strict";
+    
     var PartnerView = Backbone.View.extend({
     
         tagName: 'li',

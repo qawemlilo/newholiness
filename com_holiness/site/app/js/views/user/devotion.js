@@ -1,5 +1,7 @@
     
 define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
+    "use strict";
+
     var DevotionView = Backbone.View.extend({
 
         tagName: 'li',

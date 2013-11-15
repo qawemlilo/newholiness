@@ -20,8 +20,8 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
         activateSearch: function (suggestions) {
             var self = this;
             
-            self.$el.typeahead('destroy')
-            .typeahead({
+            self.$el.typeahead('destroy');
+            self.$el.typeahead({
               
                 name: 'search',
                 
@@ -42,9 +42,9 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
                 },
             
                 limit: 10
-            })
+            });
             
-            .on('typeahead:selected', function (event, user) {
+            self.$el.on('typeahead:selected', function (event, user) {
                 window.location.hash = '#/users/' + user.id;
             });     
         }        

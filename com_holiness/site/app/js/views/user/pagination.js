@@ -1,5 +1,7 @@
     
 define(["jquery", "underscore", "backbone", "text!tmpl/pagination.html"], function($, _, Backbone, Template) {
+    "use strict";
+    
     var Pagination = Backbone.View.extend({
     
         tagName: 'ul',

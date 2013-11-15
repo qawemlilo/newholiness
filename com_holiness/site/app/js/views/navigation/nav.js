@@ -1,5 +1,7 @@
     
 define(["jquery", "underscore", "backbone", "bootstrap"], function($, _, Backbone) {
+    "use strict";
+    
     var Nav = Backbone.View.extend({
 
         el: '#mainNavigation',

@@ -6,6 +6,8 @@ define([
     "collections/devotions", 
     "views/user/devotion"
 ], function($, _, Backbone, Devotions, DevotionView) {
+    "use strict";
+    
     var DevotionsView = Backbone.View.extend({
     
         tagName: 'ul',

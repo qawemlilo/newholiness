@@ -6,7 +6,6 @@ requirejs.config({
         underscore: 'libs/underscore',
         backbone: 'libs/backbone',
         bootstrap: 'libs/bootstrap',
-        backboneCache: 'libs/backbone.fetch-cache.min',
         typeahead: 'libs/typeahead.min',
         moment: 'libs/moment',
         text: 'libs/text'
@@ -30,11 +29,6 @@ requirejs.config({
             exports: 'Backbone'
         },
         
-        backboneCache: {
-            deps: ['underscore','jquery', 'backbone'],
-            exports: 'backboneCache'
-        },
-        
         bootstrap: {
             deps: ['jquery']
         },
@@ -48,8 +42,14 @@ requirejs.config({
 require(["jquery", "app"], function($, App) { 
     "use strict";
     $(function () {
-        var devotion = $('#devotionid'), 
-            devotionid = devotion.length ? devotion.val() : false;
+        var devotion = $('#devotionid'), devotionid; 
+        
+        if (devotion.length) {
+            devotionid = devotion.val();
+        }
+        else {
+            devotionid = false;
+        }
 
         App.init(devotionid);
     });

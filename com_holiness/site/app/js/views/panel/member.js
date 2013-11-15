@@ -1,10 +1,7 @@
 
-define([
-    "jquery",
-    "underscore", 
-    "backbone",
-    "text!tmpl/member-side.html"
-], function ($, _, Backbone, Template) {
+define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], function ($, _, Backbone, Template) {
+    "use strict";
+    
     $.toUpperFirst = $.toUpperFirst || function(txt) {
         var txtArr = txt.toLowerCase().split(" "),
         words = [];

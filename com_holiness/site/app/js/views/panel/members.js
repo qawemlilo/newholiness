@@ -1,16 +1,13 @@
-
-define([
-    "jquery",
-    "underscore", 
-    "backbone",
-    "views/panel/member",
-    "backboneCache"
-], function ($, _, Backbone, UserView, backboneCache) {
+﻿
+define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, _, Backbone, UserView) {
     "use strict";
     
     var MembersView = Backbone.View.extend({
     
         el: $('#members-list'),
+   
+   
+        fired: false,
 
         
         initialize: function () { 
@@ -21,11 +18,24 @@ define([
                 
                 expires: (1000 * 60) * 60 * 24 * 2,
                 
-                success: function (collection, response, options) {
+                prefillSuccess: function (collection, response, options) {
                     self.render();
                     
                     // search view waiting for this event to populate auto-fill
                     self.collection.trigger('complete');
+                    
+                    self.fired = true;
+                },
+                
+                success: function (collection, response, options) {
+                    if (!self.fired) {
+                        self.render();
+                    
+                        // search view waiting for this event to populate auto-fill
+                        self.collection.trigger('complete');
+                        
+                        self.fired = true;
+                    }
                 }
             });
             
