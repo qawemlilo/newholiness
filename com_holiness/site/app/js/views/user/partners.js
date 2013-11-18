@@ -56,6 +56,10 @@ define(["jquery", "underscore", "backbone", "views/user/partner"], function($, _
                 
                 expires: (1000 * 60) * 60 * 24 * 2,
                 
+                prefillSuccess: function (collection, response, options) {
+                    self.render(false);
+                },
+                
                 success: function () {
                     self.render(false);                    
                 },

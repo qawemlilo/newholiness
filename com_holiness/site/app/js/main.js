@@ -31,10 +31,6 @@ requirejs.config({
         
         bootstrap: {
             deps: ['jquery']
-        },
-        
-        app: {
-            deps: ['jquery', 'underscore', 'backbone', 'typeahead']
         }
     }
 });
@@ -42,6 +38,9 @@ requirejs.config({
 require(["jquery", "app"], function($, App) { 
     "use strict";
     $(function () {
+        /*
+           a little trick here to detect page
+        */
         var devotion = $('#devotionid'), devotionid; 
         
         if (devotion.length) {

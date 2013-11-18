@@ -1,7 +1,15 @@
+<% 
+    if (!imgext) {
+        var qsrc = "modules/mod_hpmembers/assets/images/none.jpg"; 
+    }
+    else {
+        var qsrc = "media/com_holiness/images/user-" + id + "-thumb." + imgext;
+    }
+%>
 
 <div class="row-fluid fellow" style="margin-bottom:10px;">
   <div class="span2">
-    <img class="img-polaroid" src="media/com_holiness/images/user-<%= id %>-thumb.<%= imgext %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
+    <img class="img-polaroid" src="<%= qsrc %>" onerror="this.src='modules/mod_hpmembers/assets/images/none.jpg'" />
   </div>
   
   <div class="span9" style="margin-bottom:10px; margin-left:20px">

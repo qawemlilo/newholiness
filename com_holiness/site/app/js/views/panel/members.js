@@ -65,11 +65,21 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
         
 
         randomArray: function (size, collectionLength) {
-            var temp = [], i, num;
-            
+            var temp = [], tracker = {};
+            /*
             for (i = 0; i < size; i++) {
                 num = Math.floor((Math.random() * collectionLength) + 1);
                 temp.push(num);
+            }*/
+            
+            while(temp.length < size) {
+                var num = Math.floor((Math.random() * collectionLength) + 1);
+                
+                
+                if (!tracker.hasOwnProperty(num)) {
+                    temp.push(num);
+                    tracker[num] = true;
+                }                
             }
             
             return temp;

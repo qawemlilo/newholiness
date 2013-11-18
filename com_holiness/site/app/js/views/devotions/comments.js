@@ -30,6 +30,10 @@ define([
                 
                 expires: (1000 * 60) * 60 * 24 * 2,
                 
+                prefillSuccess: function (collection, response, options) {
+                    self.render();
+                },
+                
                 success: function () {
                     self.render();                    
                 }

@@ -1,7 +1,15 @@
 
+<% 
+    if (!imgext) {
+        var qsrc = "components/com_holiness/assets/images/placeholder.png"; 
+    }
+    else {
+        var qsrc = "media/com_holiness/images/user-" + id + "-icon." + imgext;
+    }
+%>
 <div class="row-fluid fellow">
   <div class="span3">
-    <img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="width:50px; height:50px;" class="img-polaroid" />
+    <img src="<%= qsrc %>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" style="width:50px; height:50px;" class="img-polaroid" />
   </div>
   
   <div class="span9"><div class="row-fluid">

@@ -27,17 +27,10 @@ define([
         
         initialize: function () {
             var self = this;
-            
-            this.collection.fetch({
-                cache: true, 
                 
-                expires: (1000 * 60) * 60 * 24 * 2,
-
-                success: function () {
-                    if (self.waiting) {
-                        self.collection.trigger('render');
-                    }                        
-                }            
+            self.collection.once('render', function (uid) {
+                self.showView(uid);
+                self.waiting = false;
             });
         },
         
@@ -64,10 +57,16 @@ define([
             else {
                 self.waiting = true;
                 
-                self.collection.on('render', function () {
-                    self.showView(id);
-                    self.collection.off('render');
-                    self.waiting = false;
+                self.collection.fetch({
+                    cache: true, 
+                    
+                    expires: (1000 * 60) * 60 * 24 * 2,
+                
+                    success: function () {
+                        if (self.waiting) {
+                            self.collection.trigger('render', id);
+                        }                        
+                    }            
                 });
             }
             

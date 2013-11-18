@@ -1,7 +1,14 @@
-
+<% 
+    if (!imgext) {
+        var qsrc = "components/com_holiness/assets/images/placeholder.png"; 
+    }
+    else {
+        var qsrc = "media/com_holiness/images/user-" + id + "-icon." + imgext;
+    }
+%>
 
 <div class="span1">
-  <a href="#/users/<%= id %>"><img src="media/com_holiness/images/user-<%= id %>-icon.<%= imgext %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
+  <a href="#/users/<%= id %>"><img src="<%= qsrc %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
 </div>
 
 <div class="span11">
