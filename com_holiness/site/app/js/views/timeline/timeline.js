@@ -17,7 +17,9 @@ define([
         },
         
         
-        initialize: function () {
+        initialize: function (opts) {
+            this.app = opts.app;
+            
             this.listenTo(this.collection, "reset", this.render);
             this.listenTo(this.collection, "add", this.render);
             this.$('.dropdown-toggle').dropdown();
@@ -27,7 +29,7 @@ define([
         render: function () {
             var fragment = this.viewAll();
             
-            $('.timeline-item, .btn-block').remove();
+            this.$('.timeline-item, .btn-block').remove();
             this.$el.append(fragment);
             
             return this;                
@@ -37,10 +39,12 @@ define([
         
         
         viewAll: function () {
-            var fragment = document.createDocumentFragment(), button = document.createElement('button');
+            var fragment = document.createDocumentFragment(), 
+                button = document.createElement('button'),
+                self = this;
         
             this.collection.forEach(function (postModel) { 
-                var postView = new TimelineItemView({model: postModel});
+                var postView = new TimelineItemView({model: postModel, app: self.app});
 
                 fragment.appendChild(postView.render().el);
             });

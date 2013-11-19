@@ -8,6 +8,27 @@ jimport('joomla.application.component.controller');
 
 class HolinessControllerHome extends JController
 {
+    public function me() {
+        $user =& JFactory::getUser();
+        
+        if ($user->guest) {
+            $this->response(500, json_encode(array('error'=>true, 'message'=>'Unauthorized user'))); 
+        }
+        else {
+            $me = array(
+                'id'=>$user->id,
+                'name'=>$user->name,
+                'username'=>$user->username,
+                'email'=>$user->email
+            );
+            
+            $this->response(200, json_encode($me));
+        }
+        
+        exit();
+    }
+    
+    
     public function handlepost() {
         $model =& $this->getModel('home');
         $post = array();
@@ -26,12 +47,12 @@ class HolinessControllerHome extends JController
         
         if (empty($post['userid']) || empty($post['post_type']) || empty($post['post']) || !$result = $model->create($post)) {
             $this->response(500, json_encode($post)); 
-            exit();
         }
         else {
             $this->response(200, json_encode($result));
-            exit();
         }
+        
+        exit();
     }
     
     
@@ -39,13 +60,13 @@ class HolinessControllerHome extends JController
         $model =& $this->getModel('home');
         
         if (!$posts = $model->getTimeline()) {
-            $this->response(500, '{"error":"true", "message":"No posts were found"}'); 
-            exit();        
+            $this->response(500, '{"error":"true", "message":"No posts were found"}');        
         }
         else {
             $this->response(200, json_encode($posts));
-            exit();
         }
+        
+        exit();
     }
 
 
@@ -67,7 +88,7 @@ class HolinessControllerHome extends JController
         }
         
         if (!$id || !$result = $model->remove($id)) {
-            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item deleted'))); 
+            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item not deleted'))); 
         }
         else {
             $this->response(200, json_encode($result));

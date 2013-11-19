@@ -30,6 +30,13 @@ define([
         },
         
         
+        initialize: function (opts) {
+            var self = this;
+            
+            self.app = opts.app;
+        },
+        
+        
         postLabel: {
             'prayerrequest': 'Prayer Request',
             'prophecy': 'Prophecy',
@@ -75,14 +82,26 @@ define([
         
         
         editItem: function (e) {
+            if (this.app.user.id !== this.model.get('userid')) {
+                return false;
+            }
+            
             return false;
         },
         
         
         
         deleteItem: function (e) {
-            this.model.destroy();
-            this.$el.remove();
+            if (this.app.user.id !== this.model.get('userid')) {
+                return false;
+            }
+            
+            this.$el.addClass('highlight')
+            
+            .fadeOut(function () {
+                this.$el.off();
+                this.model.destroy();
+            }.bind(this));
             
             return false;
         }

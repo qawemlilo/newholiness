@@ -2,6 +2,20 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+$doc =& JFactory::getDocument();
+$doc->addStyleDeclaration('
+  div.row-fluid a.edit-timeline-item.dropdown-toggle {
+      color: #ddd!important;
+  }
+  
+  div.row-fluid a.edit-timeline-item.dropdown-toggle:hover {
+      color: #08c!important;
+  }
+  
+  .highlight {
+      background: #ffff99!important;
+  }
+');
 $user =& JFactory::getUser();
 ?>
 <div id="timeline" class="row-fluid content-display hide">

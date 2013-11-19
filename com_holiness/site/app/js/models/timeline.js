@@ -1,6 +1,7 @@
 
-define(["backbone"], function(Backbone) {
+define(["jquery","underscore", "backbone"], function($, _, Backbone) {
     var Timeline = Backbone.Model.extend({
+    
         defaults: {
             userid: '',
             name: '',
@@ -9,6 +10,41 @@ define(["backbone"], function(Backbone) {
             posttype: 'prayerrequest',
             ts: ''
         },
+        
+        
+        sync: function(method, model, options) {
+            var self = this;
+            
+            options || (options = {});
+            
+            switch (method) {
+                case 'delete':
+                    self.deleteItem(model.get('id'), model, options);
+                break;
+                
+                case 'read':
+                case 'update':
+                case 'create':
+                    Backbone.sync.apply(self, arguments);
+                break;
+            }
+        },
+        
+        
+        deleteItem: function(itemId, model, opts) {
+            $.post('index.php?option=com_holiness&task=home.handledelete', {id: itemId})
+            .done(function(data){
+                if (opts.success) {
+                    opts.success(model, data);
+                }
+            })
+            .fail(function () {
+                if (opts.error) {
+                    opts.error(model, 'Error');
+                }
+            });    
+        },
+        
         
         urlRoot: 'index.php?option=com_holiness&task=home.handlepost'
     });

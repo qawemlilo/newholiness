@@ -59,6 +59,10 @@ class HolinessModelHome extends JModelItem
         $table =& $this->getTable();
         $user =& JFactory::getUser();
         
+        if (!$table->load($id)) {
+            return false;
+        }
+        
         if ($table->userid != $user->id) {
             return false;
         }

@@ -3,14 +3,14 @@
         var qsrc = "modules/mod_hpmembers/assets/images/none.jpg"; 
     }
     else {
-        var qsrc = "media/com_holiness/images/user-" + id + "-icon." + imgext;
+        var qsrc = "media/com_holiness/images/user-" + userid + "-icon." + imgext;
     }
 %>
 
 <div  class="row-fluid">
   <div class="span1">
     <a href="#/users/<%= userid %>">
-    <img src="<%= qsrc %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='">
+    <img src="<%= qsrc %>" class="img-circle" />
     </a>
   </div>
   

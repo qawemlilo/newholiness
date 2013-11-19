@@ -16,12 +16,27 @@ define([
 ], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
     "use strict";
     
+    var Me = Backbone.Model.extend({
+        defaults: {
+            name: "", 
+            username: "", 
+            email: ""
+        },
+        
+        initialize: function() {  
+            this.fetch();
+        },
+        
+        urlRoot: 'index.php?option=com_holiness&task=home.me'
+    });
+    
     var App = {
         init: function (id) {
             // Collections
             var usersCollection = App.collections.users = new UsersCollection();
             
             // Views
+            App.user = new Me();
             App.views.nav = new Nav();
             App.views.search = new Search({collection: usersCollection}); 
             App.views.members = new MembersView({collection: usersCollection});
@@ -29,7 +44,7 @@ define([
             // if id not defined (which means we are on the home page)
             if (!id) {
                 var timelineCollection =  App.collections.timeline = new TimelineCollection();
-                var timelineView = new TimelineView({collection: timelineCollection});
+                var timelineView = new TimelineView({collection: timelineCollection, app: App});
                 
                 timelineView.collection.fetch({
                     success: function (collection, response, options) {
