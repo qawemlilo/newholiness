@@ -4,7 +4,8 @@ define([
     "underscore", 
     "backbone",
     "models/timeline",
-    "moment"
+    "moment",
+    "wordlimit"
 ], function ($, _, Backbone, TimelineItem) {
     "use strict";
 
@@ -22,13 +23,20 @@ define([
         events: {
             'click .post-actions a': 'changeTab',
             
-            'keyup #sharebox': 'countLength',
-            
             'submit #postform': 'submitPost'
         },
         
         
+        initialize: function () {
+            this.$('#sharebox').wordLimit({
+                counterDiv: '#chars'
+            });
+        },
+        
+        
         changeTab: function (event) {
+            event.preventDefault();
+            
             var marginleft = '2%', 
                 self = this,
                 plcHolder = 'Share your Prayer Request, your Devotion Partners will pray with you!',
@@ -59,24 +67,6 @@ define([
                 self.sharebox.val('').attr('placeholder', plcHolder).focus();
                 self.charsDiv.html('150');
             });  
-            
-            return false;
-        },
-        
-        
-        countLength: function (event) {
-            var self = this,
-                len = self.sharebox.val().length, 
-                diff = 150 - parseInt(len, 10);
-                 
-            if (diff < 0) {
-                self.sharebox.val(self.sharebox.val().substring(0, 150));
-                diff = 0;
-            }
-        
-            self.charsDiv.html(diff);
-            
-            return false;
         },
         
         
@@ -99,8 +89,6 @@ define([
             this.charsDiv.html('150');
             
             this.collection.add(model);
-            
-            return false;
         },
         
     

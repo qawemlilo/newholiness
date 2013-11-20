@@ -81,19 +81,21 @@ define([
         
         
         
-        editItem: function (e) {
+        editItem: function (event) {
+            event.preventDefault();
+            
             if (this.app.user.id !== this.model.get('userid')) {
                 return false;
             }
-            
-            return false;
         },
         
         
         
-        deleteItem: function (e) {
+        deleteItem: function (event) {
+            event.preventDefault();
+            
             if (this.app.user.id !== this.model.get('userid')) {
-                return false;
+                return;
             }
             
             this.$el.addClass('highlight')
@@ -102,8 +104,6 @@ define([
                 this.$el.off();
                 this.model.destroy();
             }.bind(this));
-            
-            return false;
         }
     });
     

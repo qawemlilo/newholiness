@@ -19,6 +19,11 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
 
 
         template: _.template(Template),
+        
+        
+        event: {
+            "click a.makedevotionpartner": "addPartner"
+        },
 
         
         render: function () {
@@ -33,7 +38,14 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
             this.model.set({viewed: true});
             
             return this;
-        }       
+        },
+        
+        
+        addPartner: function (event) {
+            event.preventDefault();
+            
+            return false;
+        }
     });
     
     return MemberView;

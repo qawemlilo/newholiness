@@ -19,6 +19,7 @@ class HolinessControllerHome extends JController
                 'id'=>$user->id,
                 'name'=>$user->name,
                 'username'=>$user->username,
+                "baseUrl"=>JURI::base(),
                 'email'=>$user->email
             );
             

@@ -1,5 +1,5 @@
 
-define(["jquery","underscore", "backbone"], function($, _, Backbone) {
+define(["jquery", "backbone"], function($, Backbone) {
     var Timeline = Backbone.Model.extend({
     
         defaults: {

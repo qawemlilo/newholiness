@@ -1,5 +1,7 @@
 
 define(["backbone"], function(Backbone) {
+    "use strict";
+    
     var Comment = Backbone.Model.extend({
         defaults: {
             id: 0, 

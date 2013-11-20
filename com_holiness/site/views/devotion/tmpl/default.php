@@ -69,10 +69,19 @@ $devotionid = JRequest::getVar('id', '', 'get', 'int');
       <div class="span11">
         <div class="row-fluid">
           <form style="margin-bottom: 0px; text-align:right">
-            <textarea rows="2" cols="10" class="span12" placeholder="Write a comment..."></textarea>
-            <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
+            <div class="row-fluid">
+              <textarea rows="2" cols="10" class="span12" id="commentsbox" placeholder="Write a comment..."></textarea>
+            </div>
+            <div class="row-fluid">
+              <div class="span6" style="text-align:left">
+                 <strong>Characters: <span id="chars">150</span></strong>
+              </div>
+              <div class="span6" style="text-align:right">
+                <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
+              </div>
+            </div>
             <input type="hidden" id="devotionid" value="<?php echo $devotionid; ?>" />
-          </form>          
+          </form>       
         </div>
       </div>
     </div>

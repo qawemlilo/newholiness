@@ -58,7 +58,9 @@ define([
         
         
         
-        loadMore: function (e) {
+        loadMore: function (event) {
+            if (event) event.preventDefault();
+            
             this.collection.getMore();
         }
     });

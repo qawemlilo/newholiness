@@ -1,7 +1,5 @@
 
 define([
-    "jquery", 
-    "underscore", 
     "backbone",
     "collections/users",
     "collections/timeline",
@@ -13,13 +11,14 @@ define([
     "views/timeline/postbox",
     "views/panel/members",
     "router"
-], function($, _, Backbone, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
+], function(Backbone, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
     "use strict";
     
     var Me = Backbone.Model.extend({
         defaults: {
             name: "", 
-            username: "", 
+            username: "",
+            baseUrl: "",            
             email: ""
         },
         
@@ -38,7 +37,7 @@ define([
             // Views
             App.user = new Me();
             App.views.nav = new Nav();
-            App.views.search = new Search({collection: usersCollection}); 
+            App.views.search = new Search({collection: usersCollection, user: App.user}); 
             App.views.members = new MembersView({collection: usersCollection});
             
             // if id not defined (which means we are on the home page)

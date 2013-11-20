@@ -8,7 +8,8 @@ requirejs.config({
         bootstrap: 'libs/bootstrap',
         typeahead: 'libs/typeahead.min',
         moment: 'libs/moment',
-        text: 'libs/text'
+        text: 'libs/text',
+        wordlimit: 'libs/wordlimit'
     },
     
     shim: {
@@ -31,12 +32,17 @@ requirejs.config({
         
         bootstrap: {
             deps: ['jquery']
+        },
+        
+        wordlimit: {
+            deps: ['jquery']
         }
     }
 });
 
 require(["jquery", "app"], function($, App) { 
     "use strict";
+    
     $(function () {
         /*
            a little trick here to detect page
@@ -52,5 +58,4 @@ require(["jquery", "app"], function($, App) {
 
         App.init(devotionid);
     });
-    
 });

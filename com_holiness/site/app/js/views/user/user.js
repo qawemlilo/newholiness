@@ -91,6 +91,8 @@ define([
         
         
         loadTabs: function (event) {
+            event.preventDefault();
+            
             var nav = $(event.currentTarget), 
                 hash = nav.attr('href'), 
                 opentab = hash.substr(1);

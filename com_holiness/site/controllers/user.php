@@ -65,7 +65,7 @@ class HolinessControllerUser extends JController
         
         }
         
-         exit();
+        exit();
     }
     
     

@@ -1,5 +1,7 @@
 
-define(["underscore", "backbone"], function(_, Backbone) {
+define(["backbone"], function(Backbone) {
+    "use strict";
+    
     var Devotion = Backbone.Model.extend({
         defaults: {
             id: 0, 

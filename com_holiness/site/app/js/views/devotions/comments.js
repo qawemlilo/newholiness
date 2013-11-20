@@ -3,7 +3,8 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
-    "views/devotions/comment"
+    "views/devotions/comment",
+    "wordlimit"
 ], function ($, _, Backbone, CommentView) {
     "use strict";
 
@@ -24,8 +25,12 @@ define([
         
         initialize: function () {
             var self = this;
+            
+            $('#commentsbox').wordLimit({
+                counterDiv: '#chars'
+            });
                        
-            this.collection.fetch({
+            self.collection.fetch({
                 cache: true, 
                 
                 expires: (1000 * 60) * 60 * 24 * 2,

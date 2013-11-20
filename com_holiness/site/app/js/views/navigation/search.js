@@ -10,6 +10,8 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
         initialize: function (opts) {
             var self = this;
             
+            self.user = opts.user;
+            
             self.collection.once('complete', function () {
                 var suggestions = self.collection.toJSON();
                 self.activateSearch(suggestions);
@@ -45,7 +47,7 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
             });
             
             self.$el.on('typeahead:selected', function (event, user) {
-                window.location.hash = '#/users/' + user.id;
+                window.location.href = self.user.get('baseUrl') + '#/users/' + user.id;
             });     
         }        
     });

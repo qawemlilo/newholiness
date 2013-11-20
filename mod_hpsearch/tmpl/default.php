@@ -22,15 +22,17 @@ $document->addStyleDeclaration(
        <li>
          <a href="#" title="" id="requestnotices" class="ddowns" data-content="No requests" data-placement="bottom" data-toggle="popover" data-original-title="Devotion Partner Requests">
            <i class="icon-user icon-large"></i> 
-           <span class="badge badge-important noti-indicator">1</span>
+           <span class="badge badge-important noti-indicator hide"> </span>
          </a>
        </li>
+       
        <li>
          <a href="#" title="" id="notifications" class="ddowns" data-content="No notifications" data-placement="bottom" data-toggle="popover" data-original-title="Notifications">
           <i class="icon-flag icon-large"></i> 
-          <span class="badge badge-important noti-indicator">1</span>
+          <span class="badge badge-important noti-indicator hide"></span>
         </a>
       </li>
+      
        <li><a href="#">Home</a></li>
        <li>
        <div class="btn-group pull-left" style="padding-top: 3px; margin-left: 10px">
