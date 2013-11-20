@@ -22,20 +22,16 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
                     self.render();
                     
                     // search view waiting for this event to populate auto-fill
-                    self.collection.trigger('complete');
-                    
-                    self.fired = true;
+                    if (collection.length > 0) {
+                        self.collection.trigger('complete');
+                    }
                 },
                 
                 success: function (collection, response, options) {
-                    if (!self.fired) {
                         self.render();
                     
                         // search view waiting for this event to populate auto-fill
                         self.collection.trigger('complete');
-                        
-                        self.fired = true;
-                    }
                 }
             });
             
