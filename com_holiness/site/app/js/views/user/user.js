@@ -53,6 +53,11 @@ define([
             
             if (self.collection && self.collection.length > 0) {
                 self.showView(id);
+                
+                // scroll to top
+                $('html, body').stop().animate({
+                    'scrollTop': 0 // - 200px (nav-height)
+                }, 200, 'swing');
             }
             else {
                 self.waiting = true;

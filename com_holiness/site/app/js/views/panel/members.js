@@ -42,7 +42,7 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
         render: function () {
             var self = this, itemlist, fragment = document.createDocumentFragment(), userView, model;
 
-            itemlist = self.randomArray(12, self.collection.length);
+            itemlist = self.randomArray(12, self.collection.length - 1);
             
             itemlist.forEach(function (key) {
                 model = self.collection.at(key);
@@ -62,11 +62,6 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
 
         randomArray: function (size, collectionLength) {
             var temp = [], tracker = {};
-            /*
-            for (i = 0; i < size; i++) {
-                num = Math.floor((Math.random() * collectionLength) + 1);
-                temp.push(num);
-            }*/
             
             while(temp.length < size) {
                 var num = Math.floor((Math.random() * collectionLength) + 1);

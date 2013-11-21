@@ -21,7 +21,7 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
         template: _.template(Template),
         
         
-        event: {
+        events: {
             "click a.makedevotionpartner": "addPartner"
         },
 
