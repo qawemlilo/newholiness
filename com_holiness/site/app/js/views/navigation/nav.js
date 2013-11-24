@@ -7,7 +7,7 @@ define(["jquery", "underscore", "backbone", "bootstrap"], function($, _, Backbon
         el: '#mainNavigation',
         
         
-        activePopUps: [],
+        activePopUp: false,
         
         
         events: {
@@ -26,26 +26,17 @@ define(["jquery", "underscore", "backbone", "bootstrap"], function($, _, Backbon
             event.preventDefault();
             
             // let use close any open popovers
-            if (this.activePopUps.length > 0) {
-                this.removePopUps();
+            if (this.activePopUp) {
+                this.activePopUp.popover('hide');
             }
             
             var currentElem = $(event.currentTarget);
             
             // let us keep a record of this popover
-            this.activePopUps.push(currentElem);
+            this.activePopUp = currentElem;
             
             // let us remove highlighting on popover
             currentElem.find("span.noti-indicator").empty().addClass('hide');        
-        },
-
-
-        removePopUps: function () {
-            var self = this;
-            
-            _.each(self.activePopUps, function (popUp) {
-                popUp.popover('hide');
-            });       
         }
     });
     

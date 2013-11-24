@@ -9,7 +9,7 @@ define([
     
     var Timeline =  Backbone.View.extend({
     
-        el: '#timeline',
+        el: '#timeline-content',
         
         
         events: {
@@ -21,7 +21,7 @@ define([
             this.app = opts.app;
             
             this.listenTo(this.collection, "reset", this.render);
-            this.listenTo(this.collection, "add", this.render);
+            this.listenTo(this.collection, "add", this.addOne);
             this.$('.dropdown-toggle').dropdown();
         },
         
@@ -30,9 +30,23 @@ define([
             var fragment = this.viewAll();
             
             this.$('.timeline-item, .btn-block').remove();
-            this.$el.append(fragment);
+            this.$el.empty().append(fragment);
             
             return this;                
+        },
+        
+        
+        
+        
+        addOne: function (model) {
+            var view = new TimelineItemView({model: model, app: this.app}),
+            
+                el = view.render();
+            
+            el.$el.hide();
+
+            this.$el.prepend(el.el);
+            el.$el.slideDown('slow');
         },
         
         

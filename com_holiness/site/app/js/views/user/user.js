@@ -25,8 +25,10 @@ define([
         template: _.template(Template),
         
         
-        initialize: function () {
+        initialize: function (opts) {
             var self = this;
+            
+            self.user = opts.user;
                 
             self.collection.once('render', function (uid) {
                 self.showView(uid);
@@ -84,6 +86,7 @@ define([
                 
             var data = this.model.toJSON();
             data.value = $.toUpperFirst(data.value);
+            data.mine = (this.user.id === data.id);
 
             this.$el.html(this.template(data));
             this.$el.removeClass('hide');

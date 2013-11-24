@@ -36,8 +36,13 @@ class HolinessModelHome extends JModelItem
     
     public function update($id, $arr) {
         $table = $this->getTable();
+        $user =& JFactory::getUser();
         
         if (!$table->load($id)) {
+            return false;
+        }
+        
+        if ($table->userid != $user->id) {
             return false;
         }
         

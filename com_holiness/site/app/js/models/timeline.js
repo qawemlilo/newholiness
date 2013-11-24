@@ -22,8 +22,12 @@ define(["jquery", "backbone"], function($, Backbone) {
                     self.deleteItem(model.get('id'), model, options);
                 break;
                 
-                case 'read':
                 case 'update':
+                case 'put':
+                    self.saveEdit(model.get('id'), model, options);
+                break;
+                
+                case 'read':
                 case 'create':
                     Backbone.sync.apply(self, arguments);
                 break;
@@ -33,6 +37,21 @@ define(["jquery", "backbone"], function($, Backbone) {
         
         deleteItem: function(itemId, model, opts) {
             $.post('index.php?option=com_holiness&task=home.handledelete', {id: itemId})
+            .done(function(data){
+                if (opts.success) {
+                    opts.success(model, data);
+                }
+            })
+            .fail(function () {
+                if (opts.error) {
+                    opts.error(model, 'Error');
+                }
+            });    
+        },
+        
+        
+        saveEdit: function(itemId, model, opts) {
+            $.post('index.php?option=com_holiness&task=home.handleput', {id: itemId, post: model.get('post')})
             .done(function(data){
                 if (opts.success) {
                     opts.success(model, data);

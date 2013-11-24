@@ -87,8 +87,8 @@ class HolinessControllerHome extends JController
             $post['post'] = $data['post'];
         }
         
-        if (!$id || !$result = $model->update($id, $post)) {
-            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item not updated'))); 
+        if (!$id || !$result = $model->update($id)) {
+            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item not update'))); 
         }
         else {
             $this->response(200, json_encode($result));

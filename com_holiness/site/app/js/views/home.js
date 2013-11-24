@@ -6,7 +6,7 @@ define(["jquery", "underscore", "backbone"], function($, _, Backbone) {
 
         
         render: function () {
-            this.$el.removeClass('hide');
+            $('#timeline-content, #timeline').removeClass('hide');
             
             return this;
         }       

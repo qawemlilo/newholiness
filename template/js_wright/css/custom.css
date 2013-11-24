@@ -166,14 +166,14 @@ h3 {
 } 
 
 
-#timeline .timeline-item {
+#timeline .timeline-item, #timeline-content .timeline-item {
   border: 1px solid #E5E5E5!important;
   margin: 10px 0px 10px 0px;
   padding: 10px;
   background-color: #fff;
 }
 
-#timeline .timeline-item  span.badge {
+#timeline .timeline-item  span.badge, #timeline-content .timeline-item  span.badge {
 -moz-border-radius: 0px!important;
 -webkit-border-radius: 0px!important;
 border-radius: 0px!important;

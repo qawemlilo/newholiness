@@ -10,7 +10,7 @@ define(["collections/backbone-fetchcache", "models/timeline"], function(Backbone
         ogModels: [],
         
         
-        displayLimit: 5,
+        displayLimit: 10,
         
         
         currentDisplayed: 0,

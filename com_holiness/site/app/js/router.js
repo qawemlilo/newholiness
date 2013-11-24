@@ -32,7 +32,7 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/home"], fu
         loadUser: function (id) {
             $('.content-display:not(.hide)').addClass('hide');
             
-            var user = new User({collection: this.app.collections.users});
+            var user = new User({collection: this.app.collections.users, user: this.app.user});
             
             user.render(id);
         }
