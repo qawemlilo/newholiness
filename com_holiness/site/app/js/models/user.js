@@ -1,5 +1,5 @@
 
-define(["backbone"], function(Backbone) {
+define(["jquery", "backbone"], function($, Backbone) {
     "use strict";
     
     var User = Backbone.Model.extend({
@@ -9,6 +9,24 @@ define(["backbone"], function(Backbone) {
             church: "", 
             imgext: "", 
             value: ""
+        },
+        
+        
+        addPartner: function (fn) {
+            var self = this;
+            
+            self.send(self.get('id'), fn);
+        },
+        
+        
+        send: function(id, fn) {
+            $.post('index.php?option=com_holiness&task=home.handleput', {id: id})
+            .done(function(data){
+                fn(false, data);
+            })
+            .fail(function () {
+               fn(true);
+            });    
         }
     });
       
