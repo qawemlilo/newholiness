@@ -4,6 +4,7 @@ define(["jquery", "backbone"], function($, Backbone) {
     
         defaults: {
             userid: '',
+            memberid: '',
             name: '',
             post: '',
             imgext: 'jpg',
@@ -15,7 +16,9 @@ define(["jquery", "backbone"], function($, Backbone) {
         sync: function(method, model, options) {
             var self = this;
             
-            options || (options = {});
+            if (!options) {
+                options = {};
+            }
             
             switch (method) {
                 case 'delete':

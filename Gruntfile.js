@@ -1,5 +1,14 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    jshint: {
+        files: ['Gruntfile.js', 'com_holiness/site/app/js/collections/*.js', 'com_holiness/site/app/js/models/*.js', 'com_holiness/site/app/js/views/**/*.js', 'com_holiness/site/app/js/*.js'],
+        options: {
+            jshintrc: '.jshintrc',
+            ignores: ['com_holiness/site/app/js/app.build.js']
+        }
+    },
+    
+    
     compress: {
         template: {
             options: {
@@ -50,35 +59,13 @@ module.exports = function(grunt) {
                 {cwd: 'mod_hpmembers/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
             ]
         }
-    },
-    
-    exec: {
-        minify: {
-            cmd: 'uglifyjs com_holiness/site/assets/js/uploader/jquery.knob.js \
-         com_holiness/site/assets/js/uploader/jquery.ui.widget.js \
-         com_holiness/site/assets/js/uploader/jquery.iframe-transport.js \
-         com_holiness/site/assets/js/uploader/jquery.fileupload.js \
-         com_holiness/site/assets/js/uploader/script.js \
-         -o com_holiness/site/assets/js/uploader/script.min.js'
-        },
-        
-        minify_tmp: {
-            cmd: 'uglifyjs template/js_wright/wright/js/bootstrap/transition.js \
-         template/js_wright/wright/js/bootstrap/dropdown.js \
-         template/js_wright/wright/js/bootstrap/tooltip.js \
-         template/js_wright/wright/js/bootstrap/popover.js \
-         template/js_wright/wright/js/bootstrap/affix.js \
-         template/js_wright/wright/js/bootstrap/alert.js \
-         -o template/js_wright/wright/js/bootstrap.min.js'
-        }
     }
   });
   
   grunt.loadNpmTasks('grunt-contrib-compress');
-  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   
-  grunt.registerTask('default', ['compress']);
-  grunt.registerTask('minify', ['exec:minify']);
-  grunt.registerTask('minifytmp', ['exec:minify_tmp']);
+  grunt.registerTask('default', ['jshint', 'compress']);
+  grunt.registerTask('zipmain', ['jshint', 'compress:com_holiness']);
 };
 

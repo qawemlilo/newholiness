@@ -73,7 +73,9 @@ define([
         
         
         loadMore: function (event) {
-            if (event) event.preventDefault();
+            if (event) {
+                event.preventDefault();
+            }
             
             this.collection.getMore();
         }

@@ -87,15 +87,13 @@ class HolinessModelHome extends JModelItem
         $db =& JFactory::getDBO();
         $id = $user->id;
         
-        $query = "SELECT timeline.id, timeline.userid, members.imgext, users.name, timeline.userid, timeline.post_type AS posttype, timeline.post, UNIX_TIMESTAMP(timeline.ts) AS ts ";
+        $query = "SELECT timeline.id, timeline.userid, members.imgext, members.id AS memberid, users.name, timeline.post_type AS posttype, timeline.post, UNIX_TIMESTAMP(timeline.ts) AS ts ";
         $query .= "FROM #__hp_timeline AS timeline ";
-        $query .= "LEFT OUTER JOIN #__devotion_partners AS partners ";
-        $query .= "ON partners.userid = timeline.userid ";
         $query .= "INNER JOIN #__users AS users ";
         $query .= "ON timeline.userid = users.id ";
         $query .= "INNER JOIN #__hpmembers AS members ";
         $query .= "ON timeline.userid = members.userid ";
-        $query .= "WHERE timeline.userid=$id OR partners.partnerid=timeline.userid ";
+        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners WHERE userid=members.id) ";
         $query .= "ORDER BY ts LIMIT 20";
 
         $db->setQuery($query);

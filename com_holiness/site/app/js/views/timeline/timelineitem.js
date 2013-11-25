@@ -123,7 +123,7 @@ define([
                 charsId = 'chars' + uId,
                 textId = 'text' + uId;
                 
-            template = self.editTemplate({post: self.model.get('post'), charsId: charsId, textId: textId})
+            template = self.editTemplate({post: self.model.get('post'), charsId: charsId, textId: textId});
             
             self.$('.timelinepost-main').fadeOut(function () {
                 self.$('.timelinepost-main-edit').html(template).fadeIn();
