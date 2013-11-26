@@ -8,28 +8,6 @@ jimport('joomla.application.component.controller');
 
 class HolinessControllerHome extends JController
 {
-    public function me() {
-        $user =& JFactory::getUser();
-        
-        if ($user->guest) {
-            $this->response(500, json_encode(array('error'=>true, 'message'=>'Unauthorized user'))); 
-        }
-        else {
-            $me = array(
-                'id'=>$user->id,
-                'name'=>$user->name,
-                'username'=>$user->username,
-                "baseUrl"=>JURI::base(),
-                'email'=>$user->email
-            );
-            
-            $this->response(200, json_encode($me));
-        }
-        
-        exit();
-    }
-    
-    
     public function handlepost() {
         $model =& $this->getModel('home');
         $post = array();

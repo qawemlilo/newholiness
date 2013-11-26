@@ -6,7 +6,10 @@ define([
     "text!tmpl/timelineitem.html",
     "text!tmpl/edittimeline.html",
     "moment",
-    "wordlimit"
+    "wordlimit",
+    "noty",
+    "notyTheme",
+    "notyPosition"
 ], function ($, _, Backbone, Template, editTemplate) {
     "use strict";
     
@@ -37,7 +40,7 @@ define([
         initialize: function (opts) {
             var self = this;
             
-            self.app = opts.app;
+            self.user = opts.user;
         },
         
         
@@ -62,8 +65,8 @@ define([
                 data.id = 0; 
             }
             
-            if (this.app && this.app['user']) {
-                data.mine = (this.app.user.id === data.userid);
+            if (this.user && this.user.get('id')) {
+                data.mine = (this.user.get('id') === data.userid);
             }
             else {
                 data.mine = true;    
@@ -113,7 +116,9 @@ define([
         editItem: function (event) {
             event.preventDefault();
             
-            if (this.app.user.id !== this.model.get('userid')) {
+            var userid = this.user.get('id');
+
+            if (userid && userid !== this.model.get('userid')) {
                 return false;
             }
             
@@ -139,7 +144,9 @@ define([
         saveEdit: function (event) {
             event.preventDefault();
             
-            if (this.app.user.id !== this.model.get('userid')) {
+            var userid = this.user.get('id');
+            
+            if (userid && userid !== this.model.get('userid')) {
                 return false;
             }
             
@@ -152,6 +159,8 @@ define([
             this.model.set('post', formObj.post);
             this.model.save();
             
+            noty({text: 'Post successfully updated!', type: 'success'});
+            
             this.closeEdit();
         },
         
@@ -160,8 +169,10 @@ define([
         deleteItem: function (event) {
             event.preventDefault();
             
-            if (this.app.user.id !== this.model.get('userid')) {
-                return;
+            var userid = this.user.get('id');
+            
+            if (userid && userid !== this.model.get('userid')) {
+                return false;
             }
             
             this.$el.addClass('highlight')
@@ -169,6 +180,7 @@ define([
             .fadeOut(function () {
                 this.$el.off();
                 this.model.destroy();
+                noty({text: 'Post successfully deleted!', type: 'success'});
             }.bind(this));
         },
         

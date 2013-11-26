@@ -7,10 +7,8 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
         el: '#search',
         
         
-        initialize: function (opts) {
+        initialize: function () {
             var self = this;
-            
-            self.user = opts.user;
             
             self.collection.once('complete', function () {
                 var suggestions = self.collection.toJSON();

@@ -20,7 +20,7 @@
       <span class="badge badge-<%= label %>" style="margin-left:10px;">
         <a class="timeline-item-read" style="color:#fff;" href="#<%= id %>"><%= posttype %></a>
       </span>
-      <% if (mine) { %>
+      <% if (mine || myp) { %>
       <div class="dropdown pull-right">
         <a href="#" class="edit-timeline-item dropdown-toggle" data-toggle="dropdown">
           <i class="icon-chevron-down"></i>

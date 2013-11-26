@@ -15,7 +15,8 @@
     "jQuery": true,
     "define": true,
     "requirejs":true,
-    "moment": true
+    "moment": true,
+    "noty": true
   }
 }
 

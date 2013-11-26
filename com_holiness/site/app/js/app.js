@@ -1,6 +1,7 @@
 
 define([
     "backbone",
+    "models/me",
     "collections/users",
     "collections/timeline",
     "collections/comments",
@@ -11,39 +12,24 @@ define([
     "views/timeline/postbox",
     "views/panel/members",
     "router"
-], function(Backbone, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
+], function(Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
     "use strict";
-    
-    var Me = Backbone.Model.extend({
-        defaults: {
-            name: "", 
-            username: "",
-            baseUrl: "",            
-            email: ""
-        },
-        
-        initialize: function() {  
-            this.fetch();
-        },
-        
-        urlRoot: 'index.php?option=com_holiness&task=home.me'
-    });
     
     var App = {
         init: function (id) {
             // Collections
             var usersCollection = App.collections.users = new UsersCollection();
             
-            // Views
             App.user = new Me();
+            App.user.fetch();
             App.views.nav = new Nav();
-            App.views.search = new Search({collection: usersCollection, user: App.user}); 
+            App.views.search = new Search({collection: usersCollection}); 
             App.views.members = new MembersView({collection: usersCollection});
             
             // if id not defined (which means we are on the home page)
             if (!id) {
                 var timelineCollection =  App.collections.timeline = new TimelineCollection();
-                var timelineView = new TimelineView({collection: timelineCollection, app: App});
+                var timelineView = new TimelineView({collection: timelineCollection, user: App.user});
                 
                 timelineView.collection.fetch({
                     success: function (collection, response, options) {

@@ -4,7 +4,7 @@ define([
     "underscore", 
     "backbone", 
     "views/timeline/timelineitem"
-], function ($, _, Backbone, TimelineItemView) {
+], function ($, _, Backbone, TimelineItemView, Me) {
     "use strict";
     
     var Timeline =  Backbone.View.extend({
@@ -18,11 +18,13 @@ define([
         
         
         initialize: function (opts) {
-            this.app = opts.app;
+            var self = this, user;
             
-            this.listenTo(this.collection, "reset", this.render);
-            this.listenTo(this.collection, "add", this.addOne);
-            this.$('.dropdown-toggle').dropdown();
+            self.user = opts.user;
+            
+            self.listenTo(self.collection, "reset", self.render);
+            self.listenTo(self.collection, "add", self.addOne);
+            self.$('.dropdown-toggle').dropdown();
         },
         
         
@@ -39,8 +41,9 @@ define([
         
         
         addOne: function (model) {
-            var view = new TimelineItemView({model: model, app: this.app}),
+            var self = this;
             
+            var view = new TimelineItemView({model: model, user: self.user}),
                 el = view.render();
             
             el.$el.hide();
@@ -58,7 +61,7 @@ define([
                 self = this;
         
             this.collection.forEach(function (postModel) { 
-                var postView = new TimelineItemView({model: postModel, app: self.app});
+                var postView = new TimelineItemView({model: postModel, user: self.user});
 
                 fragment.appendChild(postView.render().el);
             });

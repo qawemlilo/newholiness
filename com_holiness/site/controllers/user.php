@@ -11,6 +11,34 @@ require_once(JPATH_COMPONENT . DS .'assets' . DS . 'includes' . DS .'resize-clas
 
 class HolinessControllerUser extends JController
 {
+    public function me() {
+        $user =& JFactory::getUser();
+        $model =& $this->getModel('user');
+        $partners = $model->getParners($user->id);
+        
+        if ($user->guest) {
+            $this->response(500, json_encode(array('error'=>true, 'message'=>'Unauthorized user'))); 
+        }
+        else {
+            $me = array(
+                'id'=>$user->id,
+                'name'=>$user->name,
+                'username'=>$user->username,
+                "baseUrl"=>JURI::base(),
+                'email'=>$user->email,
+                'partners'=>$partners
+            );
+            
+            http_response_code($code);
+            header('Content-type: application/json');            
+            echo json_encode($me);
+        }
+        
+        exit();
+    }
+    
+    
+    
     /*
         Fetches all registered holiness page members
         First Checks if the user is logged

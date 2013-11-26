@@ -41,13 +41,10 @@ class HolinessModelUser extends JModelItem
         
         $id = $user->id;
         
-        $query = "SELECT member.id AS memberid, member.userid AS id, member.church, member.imgext, user.name AS value ";
+        $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
         $query .= "FROM #__hpmembers AS member ";
         $query .= "INNER JOIN #__users AS user ";
         $query .= "ON member.userid=user.id ";
-        $query .= "INNER JOIN #__devotion_partners AS partners ";
-        $query .= "ON partners.userid=user.id ";
-        $query .= "WHERE partners.partnerid!=$id";
         $db->setQuery($query); 
 
        $result = $db->loadObjectList();
@@ -100,8 +97,8 @@ class HolinessModelUser extends JModelItem
         $db =& JFactory::getDBO();
         
         $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
-        $query .= "FROM #__devotion_partners AS partner ";
-        $query .= "INNER JOIN #__hpmembers AS member ON partner.partnerid = member.id ";
+        $query .= "FROM #__hpmembers AS member  ";
+        $query .= "INNER JOIN #__devotion_partners AS partner ON partner.partnerid = member.userid ";
         $query .= "INNER JOIN #__users AS user ON member.userid = user.id ";
         $query .= "WHERE partner.userid = $id AND partner.active = 1";
         
