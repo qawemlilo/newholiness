@@ -3,13 +3,12 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
-    "collections/users",
     "collections/partners",    
     "views/user/devotions", 
     "views/user/partners",
     "views/user/pagination",
     "text!tmpl/profile.html"
-], function ($, _, Backbone, Users, PartnersCollection, DevotionsView, PartnersView, PaginationView, Template) {
+], function ($, _, Backbone, PartnersCollection, DevotionsView, PartnersView, PaginationView, Template) {
     "use strict";
     
     var UserView = Backbone.View.extend({

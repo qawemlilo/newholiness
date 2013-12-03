@@ -40,6 +40,7 @@ $user =& JFactory::getUser();
       </div>
     </div>
     
+    
     <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#dddddd; margin:-15px 0px 0px 20px; z-index:999;"></div>
     
     <div class="row-fluid" style="margin-top: 13px;">
@@ -66,4 +67,8 @@ $user =& JFactory::getUser();
 
 <div id="user-content" class="content-display hide" style="padding:20px; background-color:#fff;">
 </div>
+
+<div id="user-post" class="content-display hide" style="padding:20px; background-color:#fff;">
+</div>
+
 
