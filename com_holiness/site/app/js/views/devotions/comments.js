@@ -23,12 +23,20 @@ define([
     
         el: $('#commentscontainer'),
         
-        initialize: function () {
+        initialize: function (opts) {
             var self = this;
             
-            $('#commentsbox').wordLimit({
-                counterDiv: '#chars'
-            });
+            // the commenting system for posts generates unique id for the container 
+            if (opts && opts.ts) {
+                $('#comments_' + opts.ts).wordLimit({
+                    counterDiv: '#chars_' + opts.ts
+                });            
+            }
+            else {
+                $('#commentsbox').wordLimit({
+                    counterDiv: '#chars'
+                });
+            }
                        
             self.collection.fetch({
                 cache: true, 
@@ -49,8 +57,6 @@ define([
         
         render: function () {
             var fragment = document.createDocumentFragment(), commentView, hr;
-            
-            this.$el.empty();
             
             if (this.collection.length > 0) {
                 hr = document.createElement('hr');

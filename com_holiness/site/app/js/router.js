@@ -42,7 +42,7 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
         loadPost: function (id) {
             $('.content-display:not(.hide)').addClass('hide');
             
-            var post = new Post({collection: this.app.collections.timeline, user: this.app.user});
+            var post = new Post({collection: this.app.collections.timeline, user: this.app.collections.users.get(this.app.user.get('id'))});
             
             post.render(id);
         }

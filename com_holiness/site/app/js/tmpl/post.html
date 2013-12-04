@@ -3,14 +3,14 @@
         var qsrc = "modules/mod_hpmembers/assets/images/none.jpg"; 
     }
     else {
-        var qsrc = "media/com_holiness/images/user-" + id + "-thumb." + imgext;
+        var qsrc = "media/com_holiness/images/user-" + userid + "-thumb." + imgext;
     }
 %>
 
   <div class="row-fluid">
     <div class="span2">
       <a href="#/users/<%= userid %>">
-      <img src="http://www.scottwebdesigns.co.za/holliness/media/com_holiness/images/user-82-thumb.jpg" style="width:100px; height:100px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid"></a><br>
+      <img src="<%= qsrc %>" style="width:100px; height:100px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid"></a><br>
       <blockquote>
         <p><a href="#/users/<%= userid %>"><%= name %></a></p>
       </blockquote>
@@ -22,6 +22,7 @@
           <div class="span3"><span class="badge badge-important" id="haveprayed"><%= haveprayed %></span> Have Prayed</div>
           <div class="span3"><span class="badge badge-important" id="postcomments"><%= comments %></span> Comments</div>
           <div class="span3">
+          <% if (userid === currentuser.id) { %>
             <div class="btn-group pull-right">
               <button class="btn"><i class="icon-cog"></i></button>
               <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown">
@@ -31,13 +32,14 @@
                 <li><a href="#" class="editpost">Edit</a></li>
                 <li><a href="#" class="deletepost">Delete</a></li>
               </ul>
-            </div>          
+            </div>
+          <% } %>            
           </div>
         </div>
         
         <div class="row-fluid" style="margin-top:0px; padding-top: 0px;">
           <div class="span12"><small><%= ts %></small></div>
-          <div class="span12">
+          <div class="span12" style="margin-left: 0px">
             <%= post %>
           </div>
         </div>
@@ -59,29 +61,29 @@
     <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
       <div class="row-fluid">
         <div class="span1" style="margin: 0px; padding: 0px">
-          <img src="http://www.scottwebdesigns.co.za/holliness/media/com_holiness/images/user-63-icon.jpg" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid">
+          <img src="media/com_holiness/images/user-<%= currentuser.id %>-icon.<%= currentuser.imgext %>" style="width:50px; height:50px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid">
         </div>
         <div class="span11">
           <div class="row-fluid">
             <form style="margin-bottom: 0px; text-align:right">
               <div class="row-fluid">
-                <textarea rows="2" cols="10" class="span12" id="commentsbox" placeholder="Write a comment..."></textarea>
+                <textarea rows="2" cols="10" class="span12" id="comments_<%= commentsProp %>" placeholder="Write a comment..."></textarea>
               </div>
               <div class="row-fluid">
                 <div class="span6" style="text-align:left">
-                   <strong>Characters: <span id="chars">150</span></strong>
+                   <strong>Characters: <span id="chars_<%= commentsProp %>">150</span></strong>
                 </div>
                 <div class="span6" style="text-align:right">
                   <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
                 </div>
               </div>
-              <input type="hidden" id="devotionid" value="121">
+              <input type="hidden" name="postid" value="<%= id %>">
             </form>       
           </div>
         </div>
       </div>
     
-      <div class="row-fluid" id="commentscontainer">
+      <div class="row-fluid" id="myfriendscomments">
       </div>
     </div>
   </div>
