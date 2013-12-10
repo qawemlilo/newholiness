@@ -49,6 +49,33 @@ class HolinessControllerHome extends JController
     }
 
 
+    public function handlepostitem() {
+        $model =& $this->getModel('home');
+        $post = array();
+        $data = $this->get_post_data();
+        
+        
+        if (is_object($data)) {
+            $id = $data->id;
+            $post['post'] = $data->post;
+            
+        }
+        elseif (is_array($data)) {
+            $id = $data['id'];
+            $post['post'] = $data['post'];
+        }
+        
+        if (!$id || !$result = $model->update($id, $post)) {
+            $this->response(500, json_encode(array('error'=>false, 'message'=>'Item not updated'))); 
+        }
+        else {
+            $this->response(200, json_encode($result));
+        }
+        
+        exit();     
+    }
+
+
     public function handleput() {
         $model =& $this->getModel('home');
         $post = array();

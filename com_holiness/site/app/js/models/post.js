@@ -24,25 +24,22 @@ define(["backbone"], function(Backbone) {
             }
             
             switch (method) {
-                case 'delete':
-                    self.deleteItem(model.get('id'), model, options);
+                case 'read':
+                    self.fetchItem(model.get('id'), model, options);
                 break;
                 
                 case 'update':
-                case 'put':
-                    self.saveEdit(model.get('id'), model, options);
-                break;
-                
-                case 'read':
+                case 'delete':
                 case 'create':
+                case 'put':
                     Backbone.sync.apply(self, arguments);
                 break;
             }
         },
         
         
-        deleteItem: function(itemId, model, opts) {
-            $.post('index.php?option=com_holiness&task=home.handledelete', {id: itemId})
+        fetchItem: function(itemId, model, opts) {
+            $.post('index.php?option=com_holiness&task=home.handlepostitem', {id: itemId})
             .done(function(data){
                 if (opts.success) {
                     opts.success(model, data);
