@@ -55,6 +55,9 @@ define([
             return this;
         },
         
+        
+        
+        
         render: function () {
             var fragment = document.createDocumentFragment(), commentView, hr;
             

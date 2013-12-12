@@ -18,6 +18,11 @@ define([
         template: _.template(Template),
         
         
+        events: {
+            'submit form': 'submitPost'
+        },
+        
+        
         initialize: function (opts) {
             var self = this;
             
@@ -65,6 +70,45 @@ define([
             }
             
             return ago;     
+        },
+        
+        
+        
+        
+        submitPost: function (event) {
+        
+            event.preventDefault();
+            
+            var data = this.formToObject(event.currentTarget);
+            
+            console.log(data);
+            
+            return false;
+
+            data.posttype = data.posttype.toLowerCase().replace(/ /g, '');
+            
+            
+            var model = new TimelineItem(data);
+            
+            model.save();
+            
+            this.sharebox.val('');
+            this.charsDiv.html('150');
+            
+            this.collection.add(model);
+        },
+        
+    
+        formToObject: function (form) {
+            var formObj = {}, arr = $(form).serializeArray();
+        
+            _.each(arr, function (fieldObj) {
+                if (fieldObj.name !== 'submit') {
+                    formObj[fieldObj.name] = fieldObj.value;
+                }
+            });
+        
+            return formObj;
         }      
     });
     
