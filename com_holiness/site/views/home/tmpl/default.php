@@ -20,6 +20,17 @@ $doc->addStyleDeclaration('
       display:none;
   }
 ');
+
+
+$HolinessPage = json_encode($this->globvars);
+
+$script = "
+(function(window) {
+    window.HolinessPageVars = $HolinessPage
+})(window);
+";
+$doc->addScriptDeclaration($script);
+
 $user =& JFactory::getUser();
 ?>
 

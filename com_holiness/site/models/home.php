@@ -77,6 +77,25 @@ class HolinessModelHome extends JModelItem
         }
                 
         return true;
+    }
+    
+    
+    function getParners()
+    {
+        $db =& JFactory::getDBO();
+        $user =& JFactory::getUser();
+        
+        $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
+        $query .= "FROM #__hpmembers AS member  ";
+        $query .= "INNER JOIN #__devotion_partners AS partner ON partner.partnerid = member.userid ";
+        $query .= "INNER JOIN #__users AS user ON member.userid = user.id ";
+        $query .= "WHERE partner.userid = $user->id AND partner.active = 1";
+        
+        $db->setQuery($query); 
+
+        $data = $db->loadObjectList();
+
+        return $data;
     } 
 
     

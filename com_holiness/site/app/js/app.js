@@ -20,8 +20,8 @@ define([
             // Collections
             var usersCollection = App.collections.users = new UsersCollection();
             
-            App.user = new Me();
-            App.user.fetch();
+            App.user = new Me(HolinessPageVars);
+            //App.user.fetch();
             App.views.nav = new Nav();
             App.views.search = new Search({collection: usersCollection}); 
             App.views.members = new MembersView({collection: usersCollection});

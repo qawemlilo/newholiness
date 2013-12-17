@@ -1,5 +1,5 @@
 
-define(["backbone"], function(Backbone) {
+define(["jquery", "backbone"], function($, Backbone) {
     var Post = Backbone.Model.extend({
     
         defaults: {

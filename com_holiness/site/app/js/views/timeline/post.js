@@ -83,7 +83,7 @@ define([
             
             console.log(data);
             
-            return false;
+            return false;/*
 
             data.posttype = data.posttype.toLowerCase().replace(/ /g, '');
             
@@ -95,7 +95,7 @@ define([
             this.sharebox.val('');
             this.charsDiv.html('150');
             
-            this.collection.add(model);
+            this.collection.add(model);*/
         },
         
     

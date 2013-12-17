@@ -16,7 +16,8 @@
     "define": true,
     "requirejs":true,
     "moment": true,
-    "noty": true
+    "noty": true,
+    "HolinessPageVars": true
   }
 }
 
