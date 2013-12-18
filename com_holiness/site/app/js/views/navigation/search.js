@@ -7,8 +7,10 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
         el: '#search',
         
         
-        initialize: function () {
+        initialize: function (opts) {
             var self = this;
+            
+            self.user = opts.user;
             
             self.collection.once('complete', function () {
                 var suggestions = self.collection.toJSON();
@@ -45,7 +47,7 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
             });
             
             self.$el.on('typeahead:selected', function (event, user) {
-                window.location.href = self.user.get('baseUrl') + '#/users/' + user.id;
+                window.location.href = (self.user.get('baseUrl')) + '#/users/' + user.id;
             });     
         }        
     });

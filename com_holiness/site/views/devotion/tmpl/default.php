@@ -10,6 +10,16 @@ $date =  new DateTime($this->devotion->ts . '');
 $devotion = str_replace("\n", "<br>", $this->devotion->devotion);
 $devotionid = JRequest::getVar('id', '', 'get', 'int');
 
+
+$HolinessPage = json_encode($this->globvars);
+
+$script = "
+(function(window) {
+    window.HolinessPageVars = {$HolinessPage};
+})(window);
+";
+$doc->addScriptDeclaration($script);
+
 ?>
 
 <div style="padding:20px; background-color:#fff;">

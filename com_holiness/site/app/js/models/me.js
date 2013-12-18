@@ -9,9 +9,7 @@ define(["backbone"], function(Backbone) {
             baseUrl: "",            
             email: "",
             partners: []
-        },
-        
-        urlRoot: 'index.php?option=com_holiness&task=user.me'
+        }
     });
       
     return Me;

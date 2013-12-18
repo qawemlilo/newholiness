@@ -26,7 +26,7 @@ $HolinessPage = json_encode($this->globvars);
 
 $script = "
 (function(window) {
-    window.HolinessPageVars = $HolinessPage
+    window.HolinessPageVars = {$HolinessPage};
 })(window);
 ";
 $doc->addScriptDeclaration($script);

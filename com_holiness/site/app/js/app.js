@@ -21,9 +21,8 @@ define([
             var usersCollection = App.collections.users = new UsersCollection();
             
             App.user = new Me(HolinessPageVars);
-            //App.user.fetch();
             App.views.nav = new Nav();
-            App.views.search = new Search({collection: usersCollection}); 
+            App.views.search = new Search({collection: usersCollection, user: App.user}); 
             App.views.members = new MembersView({collection: usersCollection});
             
             // if id not defined (which means we are on the home page)
