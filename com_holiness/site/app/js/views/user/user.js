@@ -17,7 +17,8 @@ define([
         
         
         events: {
-            'click ul.nav-tabs li a': 'loadTabs'
+            'click ul.nav-tabs li a': 'loadTabs',
+            'click buttom.makedevotionpartner': 'addPartner'
         },
         
         
@@ -110,6 +111,20 @@ define([
             this.trigger(opentab, this.model.get('memberid'));
 
 
+            return false;
+        },
+        
+        
+        addPartner: function (event) {
+            event.preventDefault();
+            
+            var self = this;
+            
+            self.model.addPartner(function(err, data){
+                if (!err) {
+                    $('button.makedevotionpartner').remove();
+                }
+            });
             return false;
         },
         

@@ -44,7 +44,13 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
         addPartner: function (event) {
             event.preventDefault();
             
-            this.model.addPartner(function(err, data){});
+            var self = this;
+            
+            self.model.addPartner(function(err, data){
+                if (!err) {
+                    self.$el.remove();
+                }
+            });
             return false;
         }
     });

@@ -5,6 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
 require_once(dirname(__FILE__) . DS . 'tables' . DS . 'timeline.php');
+require_once(dirname(__FILE__) . DS . 'tables' . DS . 'partners.php');
 
 
 class HolinessModelHome extends JModelItem
@@ -97,6 +98,27 @@ class HolinessModelHome extends JModelItem
 
         return $data;
     } 
+    
+    
+
+    
+    
+    function addPartner($arr) {
+        $table = $this->getTable('Partners');
+        
+        if (is_array($arr) && count($arr) > 0) {
+            if (!$table->bind($arr)) {
+                return false;
+            }
+            if (!$table->store($arr)) {
+                return false;
+            }
+                
+            return $table;
+        }
+        
+        return false;
+    }
 
     
     

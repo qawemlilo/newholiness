@@ -103,6 +103,34 @@ class HolinessControllerHome extends JController
     }
 
 
+    public function addpartner() {
+        $model =& $this->getModel('home');
+        $user =& JFactory::getUser();
+        $post = array();
+        $data = $this->get_post_data();
+        
+        $post['userid'] = $user->id;
+        $post['active'] = 0;
+        
+        if (is_object($data)) {
+            $post['partnerid'] = $data->partnerid;
+            
+        }
+        elseif (is_array($data)) {
+            $post['partnerid'] = $data['partnerid'];
+        }
+        
+        if (!$result = $model->addPartner($post)) {
+            $this->response(500, json_encode(array('error'=>false, 'message'=>'Add Partner request not sent'))); 
+        }
+        else {
+            $this->response(200, json_encode($result));
+        }
+        
+        exit();     
+    }
+
+
     public function handledelete() {
         $model =& $this->getModel('home');
         $post = array();

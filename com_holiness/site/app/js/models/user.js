@@ -15,12 +15,12 @@ define(["jquery", "backbone"], function($, Backbone) {
         addPartner: function (fn) {
             var self = this;
             
-            self.send(self.get('id'), self.get('memberid'), fn);
+            self.send(self.get('id'), fn);
         },
         
         
-        send: function(id, memberid, fn) {
-            $.post('index.php?option=com_holiness&task=home.handleput', {id: id, memberid: memberid})
+        send: function(id, fn) {
+            $.post('index.php?option=com_holiness&task=home.addpartner', {partnerid: id})
             .done(function(data){
                 fn(false, data);
             })
