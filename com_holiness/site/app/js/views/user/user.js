@@ -53,7 +53,7 @@ define([
 
             self.paginationView = new PaginationView({parent: self.devotionsView });
             
-            if (self.collection && self.collection.length > 0) {
+            if (self.collection && self.collection.length > 0 && self.collection.get(id)) {
                 self.showView(id);
                 
                 // scroll to top
@@ -108,7 +108,13 @@ define([
             nav.tab('show');
             
             // the partners and devotions views are listening for these actions
-            this.trigger(opentab, this.model.get('memberid'));
+            if (opentab === 'showdevotions') {
+                this.trigger('showdevotions', this.model.get('memberid'));
+            }
+            
+            if (opentab === 'showpartners') {
+                this.trigger('showpartners', this.model.get('id'));
+            }
 
 
             return false;

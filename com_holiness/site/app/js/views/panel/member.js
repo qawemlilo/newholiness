@@ -48,7 +48,11 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
             
             self.model.addPartner(function(err, data){
                 if (!err) {
-                    self.$el.remove();
+                    self.$el.off()
+                    .addClass('highlight')
+                    .fadeOut(function () {
+                        self.$el.remove();
+                    });
                 }
             });
             return false;

@@ -40,7 +40,6 @@ $document->addStyleDeclaration(
 
          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="<?php echo JRoute::_(JURI::base() . 'index.php?option=com_holiness&view=devotion&layout=new'); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-edit"></i></span> New Devotion</a></li>
           <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-user"></i></span> My Profile</a></li>
           <li><a href="<?php echo JRoute::_(JURI::base() . '#/users/' . $user->id); ?>/edit"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-pencil"></i></span> Edit Account</a></li>
           <li class="divider"></li>

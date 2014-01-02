@@ -3,82 +3,100 @@
 defined('_JEXEC') or die('Restricted access');
 
 $doc =& JFactory::getDocument();
-$doc->addStyleDeclaration('#commentscontainer .comment {margin-top:12px!important}');
+$HolinessPage = json_encode($this->globvars);
 
-$src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
-$date =  new DateTime($this->devotion->ts . '');
-$devotion = str_replace("\n", "<br>", $this->devotion->devotion);
-$devotionid = JRequest::getVar('id', '', 'get', 'int');
+$script = "
+(function(window) {
+    window.HolinessPageVars = {$HolinessPage};
+})(window);
+";
+$doc->addScriptDeclaration($script);
 
 ?>
 
 <div style="padding:20px; background-color:#fff;">
   <div class="row-fluid">
-    <div class="span3">
-      <a href="<?php echo JURI::base() . '#/users/' . $this->devotion->userid; ?>">
-      <img src="<?php echo $src; ?>" style="width:150px; height:150px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" /></a><br>
-      <blockquote>
-        <p><?php echo '<a href="' . JURI::base() . '#/users/' . $this->devotion->userid . '">' . ucwords(strtolower($this->devotion->name)); ?></a></p>
-        <small><?php echo $this->devotion->church; ?></small>
-      </blockquote>
-    </div>
-    <div class="span9">
-        <h3 style="margin-top: 0px"><?php echo ucwords($this->devotion->theme); ?></h3>
-        <div class="row-fluid" style="margin-top:0px; padding-top: 0px;">
-          <div class="span10"><small><?php echo $date->format("l d M Y"); ?></small></div>
-          <div class="span2">
-            <?php 
-            $user =& JFactory::getUser();
-            
-            if ($user->authorize( 'com_content', 'edit', 'content', 'all' )) { ?>
-            <div class="btn-group">
-              <button class="btn"><i class="icon-cog"></i></button>
-              <button class="btn dropdown-toggle btn-warning" data-toggle="dropdown">
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=devotion.unpublish&id=' . $devotionid); ?>">
-                    Unpublish
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <?php } ?>
-          </div>
-        </div>
-        <blockquote>
-          <p><?php echo $this->devotion->reading; ?></p>
-          <small><?php echo $this->devotion->scripture; ?> <cite title="Source Title"><?php echo $this->devotion->bible; ?></cite></small>
-        </blockquote>
-    </div>
+<form class="form-horizontal well">
+<fieldset>
+
+<!-- Form Name -->
+<legend>New Devotion</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="theme">Today's theme</label>
+  <div class="controls">
+    <input id="theme" name="theme" placeholder="Today's theme" class="input-xlarge" type="text">
+    
   </div>
-  <div class="row-fluid">
-    <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
-    <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="scripture">Today's scripture</label>
+  <div class="controls">
+    <select id="scripture" name="scripture" class="input-xlarge">
+      <option>Option one</option>
+      <option>Option two</option>
+    </select>
   </div>
+</div>
 
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for=" "></label>
+  <div class="controls">
+    <select id=" " name=" " class="input-small">
+      <option>Option one</option>
+      <option>Option two</option>
+    </select>
+  </div>
+</div>
 
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="scripture">The scripture reads as follows</label>
+  <div class="controls">                     
+    <textarea id="scripture" name="scripture"></textarea>
+  </div>
+</div>
 
-  <div id="timeline" class="row-fluid" style="margin-top:20px">
-   <div class="devotion-comments" style="background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;">
-    <div class="row-fluid">
-      <div class="span1" style="margin: 0px; padding: 0px">
-        <img src="<?php echo JURI::base() . 'media/com_holiness/images/user-' . $this->profile->userid .'-icon.' . $this->profile->imgext; ?>" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" />
-      </div>
-      <div class="span11">
-        <div class="row-fluid">
-          <form style="margin-bottom: 0px; text-align:right">
-            <textarea rows="2" cols="10" class="span12" placeholder="Write a comment..."></textarea>
-            <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary" type="button">Comment</button>
-            <input type="hidden" id="devotionid" value="<?php echo $devotionid; ?>" />
-          </form>          
-        </div>
-      </div>
-    </div>
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="bible">Bible translation used</label>
+  <div class="controls">
+    <input id="bible" name="bible" placeholder="Bible translation used" class="input-xlarge" type="text">
+    
+  </div>
+</div>
 
-     <div class="row-fluid" id="commentscontainer">
-     </div>
-   </div>
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="devotion">Today's devotion</label>
+  <div class="controls">                     
+    <textarea id="devotion" name="devotion"></textarea>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="prayer">Today's confession / prayer</label>
+  <div class="controls">                     
+    <textarea id="prayer" name="prayer"></textarea>
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="control-group">
+  <label class="control-label" for="button1id"></label>
+  <div class="controls">
+    <button id="button1id" name="button1id" class="btn btn-success">Submit</button>
+    <button id="button2id" name="button2id" class="btn btn-default">Cancel</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+    
   </div>
 </div>

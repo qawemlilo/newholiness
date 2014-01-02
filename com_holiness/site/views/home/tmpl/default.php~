@@ -19,7 +19,22 @@ $doc->addStyleDeclaration('
   .timelinepost-main-edit {
       display:none;
   }
+  
+.popover {
+  width: 250px!important;
+}
 ');
+
+
+$HolinessPage = json_encode($this->globvars);
+
+$script = "
+(function(window) {
+    window.HolinessPageVars = {$HolinessPage};
+})(window);
+";
+$doc->addScriptDeclaration($script);
+
 $user =& JFactory::getUser();
 ?>
 
@@ -40,6 +55,7 @@ $user =& JFactory::getUser();
       </div>
     </div>
     
+    
     <div id="pointer" style="position:absolute; border:solid 15px transparent; border-bottom-color:#dddddd; margin:-15px 0px 0px 20px; z-index:999;"></div>
     
     <div class="row-fluid" style="margin-top: 13px;">
@@ -48,6 +64,7 @@ $user =& JFactory::getUser();
         <input type="hidden" name="posttype" id="sharetype" value="Prayer Request" />
         <input type="hidden" name="name" value="<?php echo $user->name; ?>" />
         <input type="hidden" name="userid" value="<?php echo $user->id; ?>" />
+        <input type="hidden" name="imgext" value="<?php echo $this->globvars->imgext; ?>" />
         <div class="row-fluid">
             <div class="span9">
                <strong>Characters: <span id="chars">150</span></strong>
@@ -61,9 +78,13 @@ $user =& JFactory::getUser();
   </div>
 </div>
 
-<div id="timeline-content" class="content-display hide" style="padding:20px;">
+<div id="timeline-content" class="content-display hide">
 </div>
 
 <div id="user-content" class="content-display hide" style="padding:20px; background-color:#fff;">
 </div>
+
+<div id="user-post" class="content-display hide" style="padding:20px; background-color:#fff;">
+</div>
+
 

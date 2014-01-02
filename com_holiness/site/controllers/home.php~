@@ -35,7 +35,7 @@ class HolinessControllerHome extends JController
     }
     
     
-    public function getpartnerrequests() {
+    public function getpartners() {
         $db =& JFactory::getDBO();
         $user =& JFactory::getUser();
         

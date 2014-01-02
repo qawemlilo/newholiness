@@ -60,7 +60,7 @@ $doc->addScriptDeclaration($script);
                 </li>
               </ul>
             </div>
-            <?php } ?>
+            <?php } */ ?>
           </div>
         </div>
         <blockquote>

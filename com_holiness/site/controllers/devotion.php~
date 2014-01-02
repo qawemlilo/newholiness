@@ -272,7 +272,6 @@ class HolinessControllerDevotion extends JController
         
 	$arr['theme'] = JRequest::getVar('theme', '', 'post', 'string');
         $arr['scripture'] = $this->makeScripture($book, $chapter, $verse);
-        $arr['memberid'] = JRequest::getVar('memberid', '', 'post', 'int');
         $arr['devotion'] = JRequest::getVar('devotion', '', 'post', 'string');
         $arr['reading'] = JRequest::getVar('reading', '', 'post', 'string');
         $arr['bible'] = JRequest::getVar('bible', '', 'post', 'string');

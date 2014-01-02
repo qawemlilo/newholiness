@@ -8,6 +8,7 @@ define(["backbone"], function(Backbone) {
             username: "",
             baseUrl: "",            
             email: "",
+            imgext: "",
             partners: []
         }
     });

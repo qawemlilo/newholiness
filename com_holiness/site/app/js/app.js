@@ -5,7 +5,7 @@ define([
     "collections/users",
     "collections/timeline",
     "collections/comments",
-    "views/navigation/nav",
+    "views/navigation/requests",
     "views/navigation/search",
     "views/devotions/comments",
     "views/timeline/timeline",
@@ -20,8 +20,10 @@ define([
             // Collections
             var usersCollection = App.collections.users = new UsersCollection();
             
+            usersCollection.fetch();
+            
             App.user = new Me(HolinessPageVars);
-            App.views.nav = new Nav();
+            App.views.nav = new Nav({collection: usersCollection});
             App.views.search = new Search({collection: usersCollection, user: App.user}); 
             App.views.members = new MembersView({collection: usersCollection});
             

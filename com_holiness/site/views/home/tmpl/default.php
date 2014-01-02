@@ -19,6 +19,10 @@ $doc->addStyleDeclaration('
   .timelinepost-main-edit {
       display:none;
   }
+  
+.popover {
+  width: 250px!important;
+}
 ');
 
 
@@ -60,6 +64,7 @@ $user =& JFactory::getUser();
         <input type="hidden" name="posttype" id="sharetype" value="Prayer Request" />
         <input type="hidden" name="name" value="<?php echo $user->name; ?>" />
         <input type="hidden" name="userid" value="<?php echo $user->id; ?>" />
+        <input type="hidden" name="imgext" value="<?php echo $this->globvars['imgext']; ?>" />
         <div class="row-fluid">
             <div class="span9">
                <strong>Characters: <span id="chars">150</span></strong>

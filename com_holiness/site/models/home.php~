@@ -97,25 +97,6 @@ class HolinessModelHome extends JModelItem
         $data = $db->loadObjectList();
 
         return $data;
-    }
-    
-    
-    public function getMe()
-    {   
-        $db =& JFactory::getDBO();
-        $user =& JFactory::getUser();
-        
-        $query = "SELECT user.id, user.name, user.email, user.username, member.imgext ";
-        $query .= "FROM #__users AS user ";
-        $query .= "INNER JOIN #__hpmembers AS member ";
-        $query .= "ON user.id=member.userid ";
-        $query .= "WHERE user.id={$user->id}";
-        
-        $db->setQuery($query); 
-
-        $result = $db->loadObject();
-        
-        return $result;
     } 
     
     
