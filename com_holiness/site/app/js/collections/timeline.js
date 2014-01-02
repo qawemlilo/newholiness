@@ -1,5 +1,5 @@
 
-define(["collections/backbone-fetchcache", "models/timeline"], function(Backbone, TimelineItem) {
+define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
     "use strict";
     
     var Timeline = Backbone.Collection.extend({

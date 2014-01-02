@@ -209,7 +209,7 @@ class HolinessModelHome extends JModelItem
         $query .= "ON timeline.userid = users.id ";
         $query .= "INNER JOIN #__hpmembers AS members ";
         $query .= "ON timeline.userid = members.userid ";
-        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid = $id) ";
+        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid=$id AND partners.active=1) ";
         $query .= "ORDER BY ts DESC LIMIT 20";
 
         $db->setQuery($query);

@@ -14,19 +14,6 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
             var self = this;
             
             self.collection.fetch({
-                cache: true, 
-                
-                expires: (1000 * 60) * 60 * 24 * 2,
-                
-                prefillSuccess: function (collection, response, options) {
-                    self.render();
-                    
-                    // search view waiting for this event to populate auto-fill
-                    if (collection.length > 0) {
-                        self.collection.trigger('complete');
-                    }
-                },
-                
                 success: function (collection, response, options) {
                         self.render();
                     

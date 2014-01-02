@@ -97,6 +97,25 @@ class HolinessModelHome extends JModelItem
         $data = $db->loadObjectList();
 
         return $data;
+    }
+    
+    
+    public function getMe()
+    {   
+        $db =& JFactory::getDBO();
+        $user =& JFactory::getUser();
+        
+        $query = "SELECT user.id, user.name, user.email, user.username, member.imgext ";
+        $query .= "FROM #__users AS user ";
+        $query .= "INNER JOIN #__hpmembers AS member ";
+        $query .= "ON user.id=member.userid ";
+        $query .= "WHERE user.id={$user->id}";
+        
+        $db->setQuery($query); 
+
+        $result = $db->loadObject();
+        
+        return $result;
     } 
     
     
@@ -190,7 +209,7 @@ class HolinessModelHome extends JModelItem
         $query .= "ON timeline.userid = users.id ";
         $query .= "INNER JOIN #__hpmembers AS members ";
         $query .= "ON timeline.userid = members.userid ";
-        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid = $id) ";
+        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid=$id AND partners.active=1) ";
         $query .= "ORDER BY ts DESC LIMIT 20";
 
         $db->setQuery($query);

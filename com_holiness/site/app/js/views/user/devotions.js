@@ -79,11 +79,7 @@ define([
             self.collection.url = 'index.php?option=com_holiness&task=devotion.getdevotions&id=' + id;
             
             self.collection.fetch({
-                cache: true, 
-                
-                expires: (1000 * 60) * 60 * 24 * 2,
-                
-                success: function () {
+                success: function (collection, response, options) {
                     self.render(false);                    
                 },
                 

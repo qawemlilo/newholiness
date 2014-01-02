@@ -1,5 +1,5 @@
 
-define(["collections/backbone-fetchcache", "models/devotion"], function(Backbone, Devotion) {
+define(["backbone", "models/devotion"], function(Backbone, Devotion) {
     "use strict";
     
     var Devotions = Backbone.Collection.extend({

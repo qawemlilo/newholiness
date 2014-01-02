@@ -52,19 +52,11 @@ define(["jquery", "underscore", "backbone", "views/user/partner"], function($, _
             self.collection.url = 'index.php?option=com_holiness&task=user.getpartners&id=' + id;
             
             self.collection.fetch({
-                cache: true, 
-                
-                expires: (1000 * 60) * 60 * 24 * 2,
-                
-                prefillSuccess: function (collection, response, options) {
-                    self.render(false);
-                },
-                
-                success: function () {
+                success: function (collection, response, options) {
                     self.render(false);                    
                 },
                 
-                error: function () {
+                error: function (collection, response, options) {
                     self.render(true);
                 }
             });        
