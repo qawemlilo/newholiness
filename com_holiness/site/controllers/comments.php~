@@ -7,20 +7,21 @@ jimport('joomla.application.component.controller');
 
 
 
-class HolinessControllerDevotion extends JController
-{
-    public function getdevotions() {
+class HolinessControllerComments extends JController
+{   
+    public function getcomments() {
         $user =& JFactory::getUser();
-        $model =& $this->getModel('devotion');
+        $model =& $this->getModel('comments');
         $id = JRequest::getVar('id', '', 'get', 'int');
+        $type = JRequest::getVar('tp', '', 'get', 'string');
         
-        $devotions = $model->getDevotions($id);
+        $comments = $model->getComments($id, $type);
         
-        if ($devotions && count($devotions) > 0 && !$user->guest) {
+        if ($comments && count($comments) > 0 && !$user->guest) {
             http_response_code(200);
             header('Content-type: application/json');
             
-            echo json_encode($devotions);
+            echo json_encode($comments);
         }
         else {
             http_response_code(404);
@@ -30,73 +31,69 @@ class HolinessControllerDevotion extends JController
         
         }
         
-        exit();
+         exit();
     }
     
     
-    
-    public function unpublish() {
+
+
+    public function addamen() {
+        $model =& $this->getModel('comments');
+        $comment = array();
+        $data = $this->get_post_data();
         $user =& JFactory::getUser();
-        $application =& JFactory::getApplication();
-        $refer = JRoute::_($_SERVER['HTTP_REFERER']);
-        $model =& $this->getModel('devotion');
-        $id = JRequest::getVar('id', '', 'get', 'int');
         
-        if ($user->authorize( 'com_content', 'edit', 'content', 'all')) {
-            $model->unpublish($id);
+        if (is_object($data)) {
+            $userid = $user->id;
+            $commentid = $data->commentid;
+        }
+        elseif (is_array($data)) {
+            $userid = $user->id;
+            $commentid = $data['commentid'];
         }
         
-        $application->redirect($refer, 'Done!');
-    }
-    
-    
-    
-    public function edit() {
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-        
-        $model =& $this->getModel('devotion');
-        $application =& JFactory::getApplication();
-        $refer = JRoute::_($_SERVER['HTTP_REFERER']);
-        $arr = array();
-        
-	$book = JRequest::getVar('book', '', 'post', 'string');
-        $chapter = JRequest::getVar('chapter', '', 'post', 'int');
-        $verse = JRequest::getVar('verse', '', 'post', 'int');
-        
-        $id = JRequest::getVar('devotionid', '', 'post', 'int');
-        
-	$arr['theme'] = JRequest::getVar('theme', '', 'post', 'string');
-        $arr['scripture'] = $this->makeScripture($book, $chapter, $verse);
-        $arr['memberid'] = JRequest::getVar('memberid', '', 'post', 'int');
-        $arr['devotion'] = JRequest::getVar('devotion', '', 'post', 'string');
-        $arr['reading'] = JRequest::getVar('reading', '', 'post', 'string');
-        $arr['bible'] = JRequest::getVar('bible', '', 'post', 'string');
-        $arr['prayer'] = JRequest::getVar('prayer', '', 'post', 'string');
-        
-        if (!$model->update($id, $arr)) {
-            $application->redirect($refer, 'Devotion could not be updated', 'error');
+        if (!$model->addAmen($commentid, $userid)) {
+            $this->response(500, 'Amen not saved'); 
         }
         else {
-            $application->redirect($refer, 'Devotion updated', 'success');
+            $this->response(200, 'Amen saved');
         }
+        
+        exit();     
     }
     
     
-    
-    
-    private function makeScripture($book, $chapter, $verse) {
-        return $book . ' ' . $chapter . ':' . $verse;
-    }
-    
-    
-    
-    private function response ($code=200, $msg) {
-        http_response_code($code);
-        header('Content-type: application/json');
+
+
+    public function addcomment() {
+        $model =& $this->getModel('comments');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
         
-        echo '{"code":"' . $code . '","message":"' . $msg . '"}';
+        if (is_object($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data->txt;
+            $comment['postid'] = $data->postid;
+            $comment['name'] = $data->name;
+            $comment['post_type'] = $data->post_type;
+        }
+        elseif (is_array($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data['txt'];
+            $comment['postid'] = $data['postid'];
+            $comment['name'] = $data['name'];
+            $comment['post_type'] = $data['post_type'];
+        }
         
-        exit();
+        if ($comment['postid'] && $comment['txt'] && $comment['post_type'] && !$model->addComment($comment)) {
+            $this->response(500, 'Comment not saved'); 
+        }
+        else {
+            $this->response(200, 'Comment saved');
+        }
+        
+        exit();     
     }
     
     
@@ -115,7 +112,18 @@ class HolinessControllerDevotion extends JController
         } 
         
         return false; 
-    } 
+    }
+    
+    
+    
+    private function response ($code=200, $msg) {
+        http_response_code($code);
+        header('Content-type: application/json');
+        
+        echo '{"code":"' . $code . '","message":"' . $msg . '"}';
+        
+        exit();
+    }
 }
 
 

@@ -3,18 +3,18 @@
         var qsrc = "components/com_holiness/assets/images/none-small.jpg"; 
     }
     else {
-        var qsrc = "media/com_holiness/images/user-" + id + "-icon." + imgext;
+        var qsrc = "media/com_holiness/images/user-" + userid + "-icon." + imgext;
     }
 %>
 
 <div class="span1">
-  <a href="#/users/<%= id %>"><img src="<%= qsrc %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
+  <a href="#/users/<%= userid %>"><img src="<%= qsrc %>" class="img-circle" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" /></a>
 </div>
 
 <div class="span11">
-  <strong><a href="#/users/<%= id %>"><%= name %></a></strong>
+  <strong><a href="#/users/<%= userid %>"><%= name %></a></strong>
   <span class="badge badge-info" style="margin-left:10px;">
-    <a style="color: #fff;" class="amen-plus" href="#">Amen</a>
+    <a style="color: #fff;" class="amen-plus" href="#">Amen</a> <% if (amens) { %> +<%= amens %> <% } %>
   </span>
   <br>
   <small><%= ts %></small>

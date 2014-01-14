@@ -24,7 +24,7 @@ class HolinessViewDevotion extends JView
     
     
     function getGlobalVars() {
-        $user =& JFactory::getUser();
+        $user = $this->get('Me');
         $partners = $this->get('Parners');
         
         $data = array(
@@ -33,6 +33,7 @@ class HolinessViewDevotion extends JView
             'username'=>$user->username,
             'baseUrl'=>JURI::base(),
             'email'=>$user->email,
+            'imgext'=>$user->imgext,
             'partners'=>$partners
         ); 
 

@@ -6,6 +6,7 @@ define(["jquery", "backbone"], function($, Backbone) {
             userid: '',
             memberid: '',
             name: '',
+            comments: 0,
             post: '',
             imgext: 'jpg',
             posttype: 'prayerrequest',

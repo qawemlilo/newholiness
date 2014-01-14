@@ -5,6 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 // import Joomla modelitem library
 jimport('joomla.application.component.modelitem');
 require_once(dirname(__FILE__) . DS . 'tables' . DS . 'devotion.php');
+require_once(dirname(__FILE__) . DS . 'tables' . DS . 'comment.php');
 
 
 class HolinessModelDevotion extends JModelItem
@@ -44,22 +45,86 @@ class HolinessModelDevotion extends JModelItem
     
     
     
-    public function getComments($id)
-	{   
+    public function getComments($id) {   
         $db =& JFactory::getDBO();
         
-        $query = "SELECT comment.id AS commentid, comment.userid AS id, comment.txt AS comment, comment.ts, member.imgext, user.name ";
-        $query .= "FROM #__devotion_comments AS comment ";
+        $query = "SELECT comment.id , comment.userid, comment.comment_type, comment.txt AS comment, comment.amens, comment.ts, member.imgext, user.name ";
+        $query .= "FROM #__hp_comments AS comment ";
         $query .= "INNER JOIN #__hpmembers AS member ";
         $query .= "ON member.userid=comment.userid ";
         $query .= "INNER JOIN #__users AS user ";
         $query .= "ON member.userid=user.id ";
-        $query .= "WHERE comment.devotionid=$id";
+        $query .= "WHERE comment.devotionid=$id ";
+        $query .= "ORDER BY ts DESC";
 
         $db->setQuery($query);
         $result = $db->loadObjectList();
         
         return $result;
+    }
+    
+    
+    public function getMe() {   
+        $db =& JFactory::getDBO();
+        $user =& JFactory::getUser();
+        
+        $query = "SELECT user.id, user.name, user.email, user.username, member.imgext ";
+        $query .= "FROM #__users AS user ";
+        $query .= "INNER JOIN #__hpmembers AS member ";
+        $query .= "ON user.id=member.userid ";
+        $query .= "WHERE user.id={$user->id}";
+        
+        $db->setQuery($query); 
+
+        $result = $db->loadObject();
+        
+        return $result;
+    }
+    
+    
+    
+    public function addComment($arr = array()) {
+        $table = $this->getTable('Comment');
+            
+        if (!$table->bind( $arr )) {
+            return false;
+        }
+        if (!$table->store( $arr )) {
+            return false;
+        }
+                
+        return $table->id;
+    }
+    
+    
+    
+    public function addAmen($id, $userid) {
+        $table = $this->getTable('Comment');
+        
+        if (!$table->load($id)) {
+            return false;
+        }
+        
+        $amens = $table->amens;
+        
+        if ($amens) {
+            $amens .= ',' . $userid;
+        }
+        else {
+            $amens = $userid . '';
+        }
+        
+        $arr = array('amens'=>$amens);
+            
+        if (!$table->bind( $arr )) {
+            return false;
+        }
+        
+        if (!$table->store( $arr )) {
+            return false;
+        }
+                
+        return true;;
     }
     
     

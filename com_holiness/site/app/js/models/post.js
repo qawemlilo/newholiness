@@ -8,10 +8,10 @@ define(["jquery", "backbone"], function($, Backbone) {
             name: '',
             post: '',
             imgext: 'jpg',
-            posttype: 'prayerrequest',
-            willpray: 0,
+            posttype: '',
+            plusones: [],
             haveprayed: 0,
-            comments: 0,
+            comments: '',
             ts: ''
         },
         

@@ -58,13 +58,14 @@ class HolinessModelUser extends JModelItem
     {   
         $db =& JFactory::getDBO();
         
-        $query = "SELECT comment.id AS commentid, comment.userid AS id, comment.txt AS comment, comment.ts, member.imgext, user.name ";
+        $query = "SELECT comment.id, comment.userid, comment.txt AS comment, comment.amens, comment.ts, member.imgext, user.name ";
         $query .= "FROM #__devotion_comments AS comment ";
         $query .= "INNER JOIN #__hpmembers AS member ";
         $query .= "ON member.userid=comment.userid ";
         $query .= "INNER JOIN #__users AS user ";
         $query .= "ON member.userid=user.id ";
-        $query .= "WHERE comment.devotionid=$id";
+        $query .= "WHERE comment.devotionid=$id ";
+        $query .= "ORDER BY ts DESC";
 
         $db->setQuery($query);
         $result = $db->loadObjectList();

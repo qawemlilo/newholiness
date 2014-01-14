@@ -7,21 +7,10 @@ define([
     "wordlimit"
 ], function ($, _, Backbone, CommentView) {
     "use strict";
-
-    $.toUpperFirst = $.toUpperFirst || function(txt) {
-        var txtArr = txt.toLowerCase().split(" "),
-        words = [];
-
-        _.each(txtArr, function (word) {
-            words.push(word.charAt(0).toUpperCase() + word.slice(1));  
-        });
-        
-        return words.join(" ");
-    };
     
     var CommentsView = Backbone.View.extend({
     
-        el: $('#commentscontainer'),
+        el: '#commentscontainer',
         
         initialize: function (opts) {
             var self = this;
@@ -40,7 +29,11 @@ define([
                        
             self.collection.fetch({
                 success: function (collection, response, options) {
-                    self.render();                    
+                    self.render(); 
+                    if (opts && opts.ts) {
+                        $("#postcomments").text(collection.length); 
+                    }
+                                     
                 }
             });
             
@@ -70,7 +63,7 @@ define([
             this.$el.html(fragment);
             
             return this;
-        }        
+        }       
     });
     
     return CommentsView;

@@ -386,6 +386,80 @@ class HolinessControllerDevotion extends JController
     
         return true;    
     }
+
+
+    public function addamen() {
+        $model =& $this->getModel('devotion');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
+        
+        if (is_object($data)) {
+            $userid = $user->id;
+            $commentid = $data->commentid;
+        }
+        elseif (is_array($data)) {
+            $userid = $user->id;
+            $commentid = $data['commentid'];
+        }
+        
+        if (!$model->addAmen($commentid, $userid)) {
+            $this->response(500, 'Amen not saved'); 
+        }
+        else {
+            $this->response(200, 'Amen saved');
+        }
+        
+        exit();     
+    }
+
+
+    public function addcomment() {
+        $model =& $this->getModel('devotion');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
+        
+        if (is_object($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data->txt;
+            $comment['devotionid'] = $data->devotionid;
+            $comment['name'] = $data->name;
+        }
+        elseif (is_array($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data['txt'];
+            $comment['devotionid'] = $data['devotionid'];
+            $comment['name'] = $data['name'];
+        }
+        
+        if (!$model->addComment($comment)) {
+            $this->response(500, 'Comment not saved'); 
+        }
+        else {
+            $this->response(200, 'Comment saved');
+        }
+        
+        exit();     
+    }
+    
+    
+    
+    private function get_post_data() { 
+        if ($input = file_get_contents("php://input")) { 
+
+            if ($json_post = json_decode($input,true)) { 
+                return $json_post; 
+            }
+            else { 
+                parse_str($input, $variables); 
+                
+                return $variables; 
+            } 
+        } 
+        
+        return false; 
+    } 
 }
 
 

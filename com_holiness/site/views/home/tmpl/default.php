@@ -20,9 +20,10 @@ $doc->addStyleDeclaration('
       display:none;
   }
   
-.popover {
-  width: 250px!important;
-}
+  .popover {
+    width: 250px!important;
+  }
+  #myfriendscomments .comment {margin-top:12px!important} .popover {width: 250px!important;}
 ');
 
 

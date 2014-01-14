@@ -16,7 +16,9 @@
     <p>
       <strong><a href="#/users/<%= id %>"><%= value %></a></strong><br>
       <small><%= church %></small><br>
-      <button class="btn add-partner" style="margin-top:5px;">Make devotion partner</button>
+      <% if(!mine && !mypartner) { %>
+        <button class="btn add-partner" style="margin-top:5px;">Make devotion partner</button>
+      <% } %>
     </p>
   </div>
 </div>

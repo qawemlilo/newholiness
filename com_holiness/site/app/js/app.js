@@ -7,12 +7,13 @@ define([
     "collections/comments",
     "views/navigation/requests",
     "views/navigation/search",
-    "views/devotions/comments",
+    "views/comments/comments",
+    "views/comments/commentbox",
     "views/timeline/timeline",
     "views/timeline/postbox",
     "views/panel/members",
     "router"
-], function(Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
+], function(Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, CommentBox, TimelineView, PostBox, MembersView, Router) {
     "use strict";
     
     var App = {
@@ -44,9 +45,10 @@ define([
             // if id id defined (which means we are on the devotion page)
             else {
                 var commentsCollection =  App.collections.comments = new CommentsCollection();
-                commentsCollection.url = 'index.php?option=com_holiness&task=user.getcomments&id=' + id;
+                commentsCollection.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=devotion&id=' + id;
             
-                App.views.comments = new CommentsView({collection: commentsCollection});                 
+                App.views.comments = new CommentsView({collection: commentsCollection}); 
+                App.views.commentbox = new CommentBox({collection: commentsCollection});                
             }            
             
             App.router = new Router(App);

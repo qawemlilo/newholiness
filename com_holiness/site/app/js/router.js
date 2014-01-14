@@ -14,7 +14,8 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
         
         
         home: function () {
-            $('.content-display:not(.hide)').addClass('hide');
+            // clean up the views by removing old event handlers
+            $('.content-display:not(.hide)').off().addClass('hide');
            
             var home;
             
@@ -31,7 +32,8 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
         
         
         loadUser: function (id) {
-            $('.content-display:not(.hide)').addClass('hide');
+            // clean up the views by removing old event handlers
+            $('.content-display:not(.hide)').off().addClass('hide');
             
             var user = new User({collection: this.app.collections.users, user: this.app.user});
             
@@ -40,7 +42,8 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
         
         
         loadPost: function (id) {
-            $('.content-display:not(.hide)').addClass('hide');
+            // clean up the views by removing old event handlers
+            $('.content-display:not(.hide)').off().addClass('hide');
             
             var post = new Post({collection: this.app.collections.timeline, user: this.app.collections.users.get(this.app.user.get('id'))});
             

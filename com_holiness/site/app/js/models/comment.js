@@ -4,12 +4,14 @@ define(["backbone"], function(Backbone) {
     
     var Comment = Backbone.Model.extend({
         defaults: {
-            id: 0, 
-            ts: 0, 
-            comment: "", 
-            imgext: "", 
-            name: "",
-            amens: ""
+            id: '',
+            userid: '', 
+            ts: '', 
+            comment: '',
+            'comment_type': '', 
+            imgext: '', 
+            name: '',
+            amens: ''
         }
     });
       

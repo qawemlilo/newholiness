@@ -18,7 +18,7 @@ define([
         
         events: {
             'click ul.nav-tabs li a': 'loadTabs',
-            'click buttom.makedevotionpartner': 'addPartner'
+            'click button.makedevotionpartner': 'addPartner'
         },
         
         
@@ -85,8 +85,11 @@ define([
             this.model = this.collection.get(id);
                 
             var data = this.model.toJSON();
+            var partners = _.pluck(this.user.partners, 'id');
+            
             data.value = $.toUpperFirst(data.value);
             data.mine = (this.user.id === data.id);
+            data.mypartner = ($.inArray(data.id, partners) > -1); 
 
             this.$el.html(this.template(data));
             this.$el.removeClass('hide');
@@ -128,9 +131,10 @@ define([
             
             self.model.addPartner(function(err, data){
                 if (!err) {
-                    $('button.makedevotionpartner').remove();
+                    $('button.makedevotionpartner').off().fadeOut().remove();
                 }
             });
+
             return false;
         },
         
