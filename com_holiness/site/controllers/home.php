@@ -91,7 +91,10 @@ class HolinessControllerHome extends JController
                 if (!$model->addPartner(array('active'=>1, 'userid'=>$user->id, 'partnerid'=>$partnerid))) {
                     $this->response(500, '{"error":"true", "message":"Failed to insert new partner"}');
                 }
-                else { 
+                else {
+                    $message = "$user->name has agreed to become your Devotion Partner. Login to http://www.holinesspage.com to be blessed by new your Devotion Partner.";
+                    $this->eMail($partnerid, $user->name, "Holiness Page", $message);
+                    
                     $this->response(200, json_encode('{"error":"false", "message":"Partner request accepted"}'));
                 }
             } 
@@ -190,6 +193,9 @@ class HolinessControllerHome extends JController
             $this->response(500, json_encode(array('error'=>false, 'message'=>'Add Partner request not sent'))); 
         }
         else {
+            $message = "$user->name wants to become your Devotion Partner. Login to http://www.holinesspage.com to add $user->name as your Devotion Partner.";
+            $this->eMail($post['partnerid'], $user->name, "New Devotion Partner", $message); 
+            
             $this->response(200, json_encode($result));
         }
         
@@ -244,6 +250,19 @@ class HolinessControllerHome extends JController
         } 
         
         return false; 
+    }
+    
+    
+    private function eMail($receiverid, $sendername, $subject, $message) {
+        $user =& JFactory::getUser($receiverid);
+        
+        $body = "Hi {$user->name}, \n\n";
+        $body .= "{$message} \n\n\n";
+        $body .= "Holiness Page";
+        
+        $result = JUtility::sendMail('info@holinesspage.com', 'Holiness Page', $user->email, $subject, $body);
+        
+        return $result;
     } 
 }
 

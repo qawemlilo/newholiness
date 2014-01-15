@@ -32,6 +32,22 @@ class HolinessModelPosts extends JModelItem
     
     
     
+    
+    public function iHavePrayed($userid, $postid) {   
+        $db =& JFactory::getDBO();
+        
+        if (!$prayerid = $this->checkPromise($userid, $postid)) {
+            return false;
+        }
+        
+        $arr = array('prayed'=>1);
+        $result = $this->updatePromise($prayerid, $arr);
+        
+        return $result;
+    }
+    
+    
+    
     public function getPlusones($id, $type) {   
         $db =& JFactory::getDBO();
         
@@ -126,6 +142,26 @@ class HolinessModelPosts extends JModelItem
         }
                 
         return $table->id;
+    }
+    
+    
+    
+    private function updatePromise($id, $arr) {
+        $table = $this->getTable();
+
+        if (!$table->load($id)) {
+            return false;
+        }
+        
+        if (!$table->bind($arr)) {
+            return false;
+        }
+        
+        if (!$table->store($arr)) {
+            return false;
+        }
+                
+        return true;
     }
     
     

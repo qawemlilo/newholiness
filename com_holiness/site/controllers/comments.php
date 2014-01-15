@@ -77,6 +77,7 @@ class HolinessControllerComments extends JController
             $comment['postid'] = $data->postid;
             $comment['name'] = $data->name;
             $comment['post_type'] = $data->post_type;
+            $author = (int)$data->author;
         }
         elseif (is_array($data)) {
             $comment['userid'] = $user->id;
@@ -84,13 +85,19 @@ class HolinessControllerComments extends JController
             $comment['postid'] = $data['postid'];
             $comment['name'] = $data['name'];
             $comment['post_type'] = $data['post_type'];
+            $author = (int)$data['author'];
         }
         
         if ($comment['postid'] && $comment['txt'] && $comment['post_type'] && !$model->addComment($comment)) {
             $this->response(500, 'Comment not saved'); 
         }
         else {
-            $this->response(200, 'Comment saved');
+            if ($user->id != $author) {
+                $message = "$user->name commented on your {$comment['post_type']}. Login to http://www.holinesspage.com to view the comment.";
+                $this->eMail($author, $user->name, "Holiness Page", $message);
+            }
+            
+            $this->response(200, 'Comment saved');                
         }
         
         exit();     
@@ -123,6 +130,19 @@ class HolinessControllerComments extends JController
         echo '{"code":"' . $code . '","message":"' . $msg . '"}';
         
         exit();
+    }
+    
+    
+    private function eMail($author, $sendername, $subject, $message) {
+        $user =& JFactory::getUser($author);
+        
+        $body = "Hi {$user->name}, \n\n";
+        $body .= "{$message} \n\n\n";
+        $body .= "Holiness Page";
+        
+        $result = JUtility::sendMail('info@holinesspage.com', 'Holiness Page', $user->email, $subject, $body);
+        
+        return $result;
     }
 }
 

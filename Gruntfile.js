@@ -59,13 +59,45 @@ module.exports = function(grunt) {
                 {cwd: 'mod_hpmembers/', src: ['**/*'], expand: true, dest: ''}, // includes files in path and its subdirs
             ]
         }
+    },
+    
+    exec: {
+        test: {
+            cmd: "find com_holiness -type f -name '*.php' -exec php -l {} ;",
+
+            
+            onOutData: function (data) {
+                if (data.match(/Errors parsing|PHP Parse error/g)) {
+                    grunt.log.error(data);
+                    process.exit(1);
+                }
+                else {
+                    grunt.log.write(data);
+                }
+            },
+        
+            onErrData: function (data) {
+                if (data.match(/Errors parsing|PHP Parse error/g)) {
+                    grunt.log.error(data);
+                    process.exit(1);
+                }
+                else {
+                    grunt.log.write(data);
+                }
+            }
+        },
+        
+        clean: {
+            cmd: 'find . -type f -name "*~" -exec rm -f {} ;'
+        }
     }
   });
   
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-exec');
   
-  grunt.registerTask('default', ['jshint', 'compress']);
-  grunt.registerTask('zipmain', ['jshint', 'compress:com_holiness']);
+  grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
+  grunt.registerTask('zipmain', ['jshint', 'exec:test', 'compress:com_holiness']);
 };
 

@@ -25,7 +25,8 @@ define([
         
         events: {
             'submit form': 'submitComment',
-            'click button.plusoneButton': 'plusOne'
+            'click button.plusoneButton': 'plusOne',
+            'click button.iprayedbutton': 'iHavePrayed'
         },
         
         
@@ -41,11 +42,6 @@ define([
             var self = this;
             
             self.user = opts.user;
-            
-            if (self.model) {
-                self.model.off();
-                console.log('model existed');
-            }
         },
         
         
@@ -111,17 +107,19 @@ define([
                 prayed = 0;
                 
             _.each(plusones, function (plusone) {
-                if (posttype === 'prayerrequest') {
-                   if(parseInt(plusone.prayed, 10) === 1) {
-                      prayed += 1;
-                      prayedHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> has prayed for you</li>';
-                   }
-                   else {
-                      plusonesHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> ' + self.postMsges[posttype] + '</li>';        
-                   }
-                }
-                else {
-                   plusonesHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> ' + self.postMsges[posttype] + '</li>';
+                if (plusone) {
+                    if (posttype === 'prayerrequest') {
+                       if(parseInt(plusone.prayed, 10) === 1) {
+                          prayed += 1;
+                          prayedHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> has prayed for you</li>';
+                       }
+                       else {
+                          plusonesHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> ' + self.postMsges[posttype] + '</li>';        
+                       }
+                    }
+                    else {
+                       plusonesHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> ' + self.postMsges[posttype] + '</li>';
+                    }
                 }
             });
                 
@@ -227,6 +225,20 @@ define([
         },
         
         
+        iHavePrayed: function(event) {
+            event.preventDefault();
+            
+            var self = this, data = {};
+            
+            data.postid = this.model.get('id');
+            data.post_type = this.model.get('posttype');
+            
+            self.sendPrayer(data); 
+            
+            return false;   
+        },
+        
+        
         sendplusOne: function(data) {
             var self = this, plusones = [], type, url;
             
@@ -244,6 +256,7 @@ define([
                 _.each(self.model.get('plusones'), function (plusone) {
                     plusones.push(plusone);
                 });
+                
                 plusones.push({'userid': HolinessPageVars.id, 'name': HolinessPageVars.name, 'prayed': 0});
                 self.model.set({'plusones': plusones});
                 
@@ -253,7 +266,33 @@ define([
             .fail(function () {
                noty({text: 'Already saved', type: 'error'});
             });    
-        }      
+        },
+        
+        
+        sendPrayer: function(data) {
+            var self = this, 
+                plusones = [], 
+                url = 'index.php?option=com_holiness&task=posts.ihaveprayed';
+            
+            $.post(url, data)
+            .done(function(data){
+                _.each(self.model.get('plusones'), function (plusone) {
+                    if (+(plusone.userid) === +(HolinessPageVars.id)) {
+                        plusone.prayed = 1;
+                    }
+                    plusones.push(plusone);
+                });
+                
+                plusones.push(false);
+                self.model.set({'plusones': plusones});
+                
+                noty({text: 'Amen!', type: 'success'});
+            })
+            
+            .fail(function () {
+               noty({text: 'Already saved', type: 'error'});
+            });    
+        }       
     });
     
     return Post;

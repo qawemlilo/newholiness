@@ -42,6 +42,34 @@ class HolinessControllerPosts extends JController
     
     
       
+    public function ihaveprayed() {
+        $model =& $this->getModel('posts');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
+        
+        if (is_object($data)) {
+            $userid = $user->id;
+            $postid = $data->postid;
+        }
+        elseif (is_array($data)) {
+            $userid = $user->id;
+            $postid = $data['postid'];
+        }
+        
+        if (!$model->iHavePrayed($userid, $postid)) {
+            $this->response(500, 'Not saved'); 
+        }
+        else {
+            $this->response(200, 'Saved');
+        }
+        
+        exit(); 
+    }
+    
+    
+    
+      
     public function willpray() {
         $model =& $this->getModel('posts');
         $comment = array();
