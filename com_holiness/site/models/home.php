@@ -185,7 +185,7 @@ class HolinessModelHome extends JModelItem
     
     
 
-    public function getTimeline() {   
+    public function getTimeline($start = 0, $limit = 10) {   
         $user =& JFactory::getUser();
         $db =& JFactory::getDBO();
         $id = $user->id;
@@ -197,9 +197,9 @@ class HolinessModelHome extends JModelItem
         $query .= "INNER JOIN #__hpmembers AS members ";
         $query .= "ON timeline.userid = members.userid ";
         $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid=$id AND partners.active=1) ";
-        $query .= "ORDER BY ts DESC LIMIT 20";
+        $query .= "ORDER BY ts DESC";
 
-        $db->setQuery($query);
+        $db->setQuery($query, $start, $limit);
         $result = $db->loadObjectList();
         
         return $result;

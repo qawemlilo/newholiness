@@ -45,7 +45,7 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
             // clean up the views by removing old event handlers
             $('.content-display:not(.hide)').off().addClass('hide');
             
-            var post = new Post({collection: this.app.collections.timeline, user: this.app.collections.users.get(this.app.user.get('id'))});
+            var post = new Post({collection: this.app.collections.timeline, user: this.app.user});
             
             post.render(id);
         }

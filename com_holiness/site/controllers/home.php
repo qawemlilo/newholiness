@@ -106,8 +106,10 @@ class HolinessControllerHome extends JController
     
     public function handleget() {
         $model =& $this->getModel('home');
+        $start = JRequest::getVar('start', 0, 'get', 'int');
+        $limit = JRequest::getVar('limit', 10, 'get', 'int');
         
-        if (!$posts = $model->getTimeline()) {
+        if (!$posts = $model->getTimeline($start, $limit)) {
             $this->response(500, '{"error":"true", "message":"No posts were found"}');        
         }
         else {

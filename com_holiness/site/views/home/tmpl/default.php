@@ -80,6 +80,11 @@ $user =& JFactory::getUser();
 </div>
 
 <div id="timeline-content" class="content-display hide">
+  <div class="timeline-content-items">
+  </div>
+  <div class="timeline-content-button">
+    <button class="btn btn-block btn-success" data-loading-text="Loading..." autocomplete="off">Load More</button>
+  </div>
 </div>
 
 <div id="user-content" class="content-display hide" style="padding:20px; background-color:#fff;">

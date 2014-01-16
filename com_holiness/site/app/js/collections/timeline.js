@@ -7,43 +7,19 @@ define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
         model: TimelineItem,
         
         
-        ogModels: [],
+        limit: 10,
         
         
-        displayLimit: 10,
+        start: 0,
         
         
-        currentDisplayed: 0,
-        
-        
-        url: 'index.php?option=com_holiness&task=home.handleget',
-        
-        
-        initialize: function () {
-            this.currentDisplayed = 0;
-            this.ogModels = [];
+        url: function () {
+            return 'index.php?option=com_holiness&task=home.handleget&start=' + this.start + '&limit=' + this.limit;
         },
         
         
-        getMore: function () {
-            if (!this.ogModels.length) {
-                this.ogModels = this.clone().models;
-            }
-            else {
-                this.models = this.ogModels;
-            }
-            
-            var limit = (this.currentDisplayed + this.displayLimit);
-            
-            if (limit >= this.ogModels.length) {
-                limit = this.ogModels.length;
-            }
-            
-            this.currentDisplayed = limit;
-
-            var currentModels = this.models.slice(0, limit);
-
-            this.reset(currentModels);
+        pushCounter: function () {
+            this.start += this.limit;
         }
     });
       

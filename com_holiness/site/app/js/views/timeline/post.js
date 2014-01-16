@@ -42,42 +42,32 @@ define([
             var self = this;
             
             self.user = opts.user;
+            
+            self.collection.once('render', function (uid) {
+                self.render(uid);
+            });
         },
         
         
         render: function (id) {
-            var self = this, 
-                comments, 
-                model = self.collection.get(id),
-                ts = (new Date()).getTime(),
-                data;
+            var self = this,
+                ts = (new Date()).getTime();
             
-            self.ts = ts;
-            self.model = new Model(model.toJSON());
-            data = self.model.toJSON();            
-            data.ts = self.timeAgo(data.ts);
-            data.commentsProp = ts;
-            data.currentuser = self.user.toJSON();
-
-            self.$el.empty().html(self.template(data));
-            self.$el.removeClass('hide');
-            
-            self.model.on('change:plusones',  function (model, plusones) {
-                self.handleChanges(model, plusones);
-            });
-            
-            comments =  new Comments();
-            comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + self.model.get('posttype') + '&id=' + id;            
-            self.comments = new CommentsView({el: '#myfriendscomments', collection: comments, ts: ts});
-            
-            self.getPlusones(function (error) {
-               // do something
-            });
-
-            // scroll to top
-            $('html, body').stop().animate({
-                'scrollTop': 0 // - 200px (nav-height)
-            }, 200, 'swing');
+            if (self.collection && self.collection.length > 0 && self.collection.get(id)) {
+                self.showView(id, ts);
+                
+                // scroll to top
+                $('html, body').stop().animate({
+                    'scrollTop': 0 // - 200px (nav-height)
+                }, 200, 'swing');
+            }
+            else {
+                self.collection.fetch({
+                    success: function () {
+                        self.collection.trigger('render', id);                      
+                    }            
+                });
+            }
             
             return self;
         },
@@ -94,6 +84,36 @@ define([
             }
             
             return ago;     
+        },
+        
+        
+        showView: function (id, ts) {
+            var self = this,
+                model = self.collection.get(id),
+                data;
+            
+            self.ts = ts;
+            self.model = new Model(model.toJSON());
+            data = self.model.toJSON();            
+            data.ts = self.timeAgo(data.ts);
+            data.commentsProp = ts;
+            data.currentuser = self.user.toJSON();
+
+            self.$el.empty().html(self.template(data));
+            self.$el.removeClass('hide');
+            
+            self.model.on('change:plusones',  function (model, plusones) {
+                self.handleChanges(model, plusones);
+            });
+            
+            self.showComments(id, ts);
+        },
+        
+        
+        showComments: function (id, ts) {
+            var comments =  new Comments();
+            comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + this.model.get('posttype') + '&id=' + id;            
+            this.comments = new CommentsView({el: '#myfriendscomments', collection: comments, ts: ts});     
         },
         
         

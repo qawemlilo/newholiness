@@ -35,7 +35,7 @@ define([
                 
                 timelineView.collection.fetch({
                     success: function (collection, response, options) {
-                        timelineView.loadMore();
+                        timelineView.collection.pushCounter();
                     }
                 });
             

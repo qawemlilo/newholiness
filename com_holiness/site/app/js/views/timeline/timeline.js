@@ -13,7 +13,7 @@ define([
         
         
         events: {
-            "click .btn-block": "loadMore"
+            "click .timeline-content-button": "loadMore"
         },
         
         
@@ -22,17 +22,14 @@ define([
             
             self.user = opts.user;
             
-            self.listenTo(self.collection, "reset", self.render);
             self.listenTo(self.collection, "add", self.addOne);
             self.$('.dropdown-toggle').dropdown();
         },
         
         
         render: function () {
-            var fragment = this.viewAll();
-            
-            this.$('.timeline-item, .btn-block').remove();
-            this.$el.empty().append(fragment);
+            this.$('.timeline-content-items').empty();
+            this.viewAll();
             
             return this;                
         },
@@ -48,7 +45,7 @@ define([
             
             el.$el.hide();
 
-            this.$el.prepend(el.el);
+            this.$('.timeline-content-items').append(el.el);
             el.$el.slideDown('slow');
         },
         
@@ -56,31 +53,31 @@ define([
         
         
         viewAll: function () {
-            var fragment = document.createDocumentFragment(), 
-                button = document.createElement('button'),
-                self = this;
+            var self = this;
         
-            this.collection.forEach(function (postModel) { 
-                var postView = new TimelineItemView({model: postModel, user: self.user});
-
-                fragment.appendChild(postView.render().el);
+            self.collection.forEach(function (postModel) { 
+                self.addOne(postModel);
             });
-            
-            button.className = "btn btn-block btn-success";
-            button.innerHTML = "Load More";
-            fragment.appendChild(button);
-            
-            return fragment;
         },
         
         
         
         loadMore: function (event) {
-            if (event) {
-                event.preventDefault();
-            }
+            event.preventDefault();
             
-            this.collection.getMore();
+            var self = this, button = $(event.currentTarget);
+            
+            button.button('loading');
+
+            self.collection.fetch({
+                success: function (collection, response, options) {
+                    self.collection.pushCounter();
+                    button.button('reset');
+                },
+                error: function (collection, response, options) {
+                    button.button('reset');
+                }
+            });
         }
     });
     
