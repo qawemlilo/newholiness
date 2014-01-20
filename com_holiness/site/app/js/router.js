@@ -1,5 +1,5 @@
 
-define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/post", "views/home"], function($, _, Backbone, User, Post, Home) {
+define(["jquery", "underscore", "backbone", "views/main"], function($, _, Backbone, Controller) {
     var Router = Backbone.Router.extend({
     
         routes: {
@@ -8,46 +8,28 @@ define(["jquery", "underscore", "backbone", "views/user/user", "views/timeline/p
             'post/:id': 'loadPost'
         },
         
+        
         initialize: function (app) { 
-            this.app = app;
+            this.views = new Controller({
+                users: app.collections.users, 
+                user: app.user, 
+                timeline: app.collections.timeline
+            });
         },
         
         
         home: function () {
-            // clean up the views by removing old event handlers
-            $('.content-display:not(.hide)').off().addClass('hide');
-           
-            var home;
-            
-            if (this.app.views.home) {
-                home = this.app.views.home; 
-            }
-            else {
-                home = new Home();
-                this.app.views.home = home;
-            }
-            
-            home.render();
+            this.views.renderHome();
         },
         
         
         loadUser: function (id) {
-            // clean up the views by removing old event handlers
-            $('.content-display:not(.hide)').off().addClass('hide');
-            
-            var user = new User({collection: this.app.collections.users, user: this.app.user});
-            
-            user.render(id);
+            this.views.renderProfile(id);
         },
         
         
         loadPost: function (id) {
-            // clean up the views by removing old event handlers
-            $('.content-display:not(.hide)').off().addClass('hide');
-            
-            var post = new Post({collection: this.app.collections.timeline, user: this.app.user});
-            
-            post.render(id);
+            this.views.renderPost(id);
         }
     });
     

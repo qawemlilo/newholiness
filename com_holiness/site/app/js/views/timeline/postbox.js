@@ -4,14 +4,24 @@ define([
     "underscore", 
     "backbone",
     "models/timeline",
+    "text!tmpl/timeline/postbox.html",
     "moment",
     "wordlimit"
-], function ($, _, Backbone, TimelineItem) {
+], function ($, _, Backbone, TimelineItem, Template) {
     "use strict";
 
     var PostBox =  Backbone.View.extend({
     
-        el: '#postbox',
+        tagName: 'div',
+        
+        
+        id: 'postbox',
+        
+        
+        className: 'postbox-cont',
+        
+        
+        template: _.template(Template),
         
         
         sharebox: $('#sharebox'),
@@ -22,15 +32,24 @@ define([
         
         events: {
             'click .post-actions a': 'changeTab',
-            
             'submit #postform': 'submitPost'
         },
         
         
-        initialize: function () {
+        render: function () {
+            var data = {
+                id: HolinessPageVars.id,
+                name: HolinessPageVars.name,
+                imgext: HolinessPageVars.imgext
+            };
+            
+            this.$el.html(this.template(data));
+           
             this.$('#sharebox').wordLimit({
                 counterDiv: '#chars'
             });
+            
+            return this;                
         },
         
         

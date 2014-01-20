@@ -18,7 +18,14 @@ define([
     
     var Post = Backbone.View.extend({
     
-        el: '#user-post',
+        tagName: 'div',
+        
+        
+        className: 'post-page',
+        
+    
+        id: 'user-post',
+        
         
         template: _.template(Template),
         
@@ -90,7 +97,8 @@ define([
         showView: function (id, ts) {
             var self = this,
                 model = self.collection.get(id),
-                data;
+                data,
+                commentsView;
             
             self.ts = ts;
             self.model = new Model(model.toJSON());
@@ -99,21 +107,25 @@ define([
             data.commentsProp = ts;
             data.currentuser = self.user.toJSON();
 
-            self.$el.empty().html(self.template(data));
-            self.$el.removeClass('hide');
+            self.$el.html(self.template(data));
             
             self.model.on('change:plusones',  function (model, plusones) {
                 self.handleChanges(model, plusones);
             });
             
-            self.showComments(id, ts);
+            commentsView = self.showComments(id);
+            
+            self.$('#timeline').empty().append(commentsView.$el);
         },
         
         
-        showComments: function (id, ts) {
-            var comments =  new Comments();
+        showComments: function (id) {
+            var comments =  new Comments(), commentsView;
+            
             comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + this.model.get('posttype') + '&id=' + id;            
-            this.comments = new CommentsView({el: '#myfriendscomments', collection: comments, ts: ts});     
+            commentsView = new CommentsView({collection: comments, model: this.model});
+            
+            return commentsView;
         },
         
         
@@ -144,7 +156,8 @@ define([
             });
                 
             plusonesHtml += '</ul>';
-                
+             
+            console.log(plusonesHtml);
             self.$('#plusones-' + posttype).html(plusonesHtml);
             self.$('#willpray').text(plusones.length - prayed); 
                 
@@ -152,6 +165,8 @@ define([
                 prayedHtml += '</ul>';
                 self.$('#plusones-prayed').html(prayedHtml);
                 self.$('#haveprayed').text(prayed);
+                
+                console.log(prayedHtml);
             } 
         },
         
