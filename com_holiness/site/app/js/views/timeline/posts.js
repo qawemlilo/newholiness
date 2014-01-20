@@ -3,13 +3,23 @@ define([
     "jquery",
     "underscore", 
     "backbone", 
-    "views/timeline/timelineitem"
-], function ($, _, Backbone, TimelineItemView, Me) {
+    "views/timeline/timelineitem",
+    "text!tmpl/timeline/timeline.html"
+], function ($, _, Backbone, TimelineItemView, Template) {
     "use strict";
     
-    var Timeline =  Backbone.View.extend({
+    var Posts =  Backbone.View.extend({
     
-        el: '#timeline-content',
+        tagName: 'div',
+    
+    
+        id: 'timeline-content',
+        
+        
+        className: 'content-display',
+        
+        
+        template: _.template(Template),
         
         
         events: {
@@ -23,12 +33,14 @@ define([
             self.user = opts.user;
             
             self.listenTo(self.collection, "add", self.addOne);
+            self.listenTo(self.collection, "reset", self.viewAll);
+            
             self.$('.dropdown-toggle').dropdown();
         },
         
         
         render: function () {
-            this.$('.timeline-content-items').empty();
+            this.$el.html(this.template({}));
             this.viewAll();
             
             return this;                
@@ -38,15 +50,10 @@ define([
         
         
         addOne: function (model) {
-            var self = this;
-            
-            var view = new TimelineItemView({model: model, user: self.user}),
-                el = view.render();
-            
-            el.$el.hide();
+            var self = this,
+                view = (new TimelineItemView({model: model, user: self.user})).render();
 
-            this.$('.timeline-content-items').append(el.el);
-            el.$el.slideDown('slow');
+            this.$('.timeline-content-items').append(view.$el);
         },
         
         
@@ -70,6 +77,8 @@ define([
             button.button('loading');
 
             self.collection.fetch({
+                remove: false,
+                
                 success: function (collection, response, options) {
                     self.collection.pushCounter();
                     button.button('reset');
@@ -81,5 +90,5 @@ define([
         }
     });
     
-    return Timeline;
+    return Posts;
 });

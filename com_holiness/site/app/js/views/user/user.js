@@ -13,7 +13,13 @@ define([
     
     var UserView = Backbone.View.extend({
     
-        el: '#user-content',
+        tagName: 'div',
+        
+        
+        className: 'content-display',
+        
+    
+        id: 'user-content',
         
         
         events: {
