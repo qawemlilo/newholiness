@@ -31,7 +31,6 @@ define([
         
         
         events: {
-            'submit form': 'submitComment',
             'click button.plusoneButton': 'plusOne',
             'click button.iprayedbutton': 'iHavePrayed'
         },
@@ -115,15 +114,19 @@ define([
             
             commentsView = self.showComments(id);
             
-            self.$('#timeline').empty().append(commentsView.$el);
+            self.$('#timeline').html(commentsView.el);
         },
         
         
         showComments: function (id) {
-            var comments =  new Comments(), commentsView;
+            var comments =  new Comments(), commentsView, self = this;
             
-            comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + this.model.get('posttype') + '&id=' + id;            
-            commentsView = new CommentsView({collection: comments, model: this.model});
+            comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + self.model.get('posttype') + '&id=' + id;            
+            commentsView = new CommentsView({collection: comments, model: self.model});
+            
+            commentsView.collection.on('loaded', function (total) {
+               self.$('#postcomments').text(total);
+            });
             
             return commentsView;
         },
@@ -201,7 +204,7 @@ define([
                 }
             });
             
-           document.forms['form_' + this.ts].reset();
+           document.forms['comment-form'].reset();
         },
         
     

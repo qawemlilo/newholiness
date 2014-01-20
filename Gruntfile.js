@@ -98,6 +98,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   
   grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
-  grunt.registerTask('zipmain', ['jshint', 'exec:test', 'compress:com_holiness']);
+  grunt.registerTask('zipmain', ['jshint', 'compress:com_holiness']);
 };
 

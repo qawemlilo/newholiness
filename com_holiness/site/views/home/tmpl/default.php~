@@ -23,7 +23,7 @@ $doc->addStyleDeclaration('
   .popover {
     width: 250px!important;
   }
-  #commentscontainer .comment {margin-top:12px!important} .popover {width: 250px!important;}
+  #myfriendscomments .comment {margin-top:12px!important} .popover {width: 250px!important;}
   
   div.postbox-cont, #commentscontainer {background: #fff;}
   
