@@ -89,6 +89,10 @@ module.exports = function(grunt) {
         
         clean: {
             cmd: 'find . -type f -name "*~" -exec rm -f {} ;'
+        },
+        
+        rjs: {
+            cmd: 'r.js -o com_holiness/site/app/js/app.build.js'
         }
     }
   });
@@ -125,7 +129,7 @@ module.exports = function(grunt) {
         grunt.log.ok('Copied %s to %s', prod, dest + 'template.php');
       }
       
-      grunt.task.run(['compress:template', 'zip']);
+      grunt.task.run(['compress:template', 'exec:rjs', 'zip']);
   });
 };
 

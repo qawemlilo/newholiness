@@ -108,6 +108,8 @@ define([
             this.charsDiv.html('150');
             
             this.collection.add(model);
+            
+            document.forms['postform'].reset();
         },
         
     

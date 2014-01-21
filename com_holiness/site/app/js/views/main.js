@@ -32,7 +32,7 @@ define([
             
             switch (view) {
                 case 'home': 
-                    var postBox = new PostBox(),
+                    var postBox = new PostBox({collection: self.collections.timeline}),
                         timeLine = new Posts({collection: self.collections.timeline, user: self.user});
                         
                     if (timeLine.collection.length < 1) {   
