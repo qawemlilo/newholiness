@@ -76,6 +76,7 @@ $doc->addScriptDeclaration($script);
   <?php
    echo $this->recentDevotions;
   ?>
+  
   <div class="row-fluid">
     <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
     <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>

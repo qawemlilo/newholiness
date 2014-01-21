@@ -30,7 +30,7 @@ $doc->addScriptDeclaration($script);
   <div class="row-fluid">
     <div class="span3">
       <a href="<?php echo JURI::base() . '#/users/' . $this->devotion->userid; ?>">
-      <img src="<?php echo $src; ?>" style="width:150px; height:150px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" /></a><br>
+      <img src="<?php echo $src; ?>" style="width:100px; height:100px" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='" class="img-polaroid" /></a><br>
       <blockquote>
         <p><?php echo '<a href="' . JURI::base() . '#/users/' . $this->devotion->userid . '">' . ucwords(strtolower($this->devotion->name)); ?></a></p>
         <small><?php echo $this->devotion->church; ?></small>

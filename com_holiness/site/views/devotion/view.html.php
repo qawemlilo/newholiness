@@ -50,7 +50,7 @@ class HolinessViewDevotion extends JView
         $container = '';
         
         if (is_array($devotions) && count($devotions) > 0) {
-            $container = '<div class="row-fluid">';
+            $container = '<div class="row-fluid well">';
             $leftside = '<div class="span6"><ul class="unstyled" style="margin-left: 20px">';
             $rightside = '<div class="span6"><ul class="unstyled">';
             $counter = 0;
