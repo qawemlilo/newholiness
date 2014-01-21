@@ -4,13 +4,13 @@ define(["backbone", "views/main"], function(Backbone, Main) {
     
         routes: {
             '': 'home',
-            'users/:id': 'loadUser',
+            'users/:id': 'loadProfile',
             'post/:id': 'loadPost'
         },
         
         
         initialize: function (app) { 
-            this.views = new Main({
+            this.view = new Main({
                 users: app.collections.users, 
                 user: app.user, 
                 timeline: app.collections.timeline
@@ -19,17 +19,17 @@ define(["backbone", "views/main"], function(Backbone, Main) {
         
         
         home: function () {
-            this.views.renderHome();
+            this.view.render('home');
         },
         
         
-        loadUser: function (id) {
-            this.views.renderProfile(id);
+        loadProfile: function (userid) {
+            this.view.render('profile', userid);
         },
         
         
-        loadPost: function (id) {
-            this.views.renderPost(id);
+        loadPost: function (postid) {
+            this.view.render('post', postid);
         }
     });
     

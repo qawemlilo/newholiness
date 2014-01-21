@@ -1,13 +1,11 @@
 
 define([
-    "jquery",
-    "underscore", 
     "backbone", 
     "views/timeline/postbox",
     "views/timeline/posts",
     "views/timeline/post",
     "views/user/user",
-], function ($, _, Backbone, PostBox, Posts, Post, User) {
+], function (Backbone, PostBox, Posts, Post, User) {
     "use strict";
     
     var Container =  Backbone.View.extend({
@@ -19,7 +17,7 @@ define([
         
         
         initialize: function (opts) {
-            var self = this, user;
+            var self = this;
             
             self.user = opts.user;
             self.collections.users = opts.users;
@@ -27,41 +25,45 @@ define([
         },
         
         
-        
-        renderHome: function () {
-            var postBox = new PostBox(),
-                timeLine = new Posts({collection: this.collections.timeline, user: this.user});
-                
-            if (timeLine.collection.length < 1) {   
-                timeLine.collection.fetch({
-                    remove: false,
-                    success: function (collection, response, options) {
-                        timeLine.collection.pushCounter();
+        render: function (view, itemId) {
+            var self = this;
+            
+            self.$el.empty();
+            
+            switch (view) {
+                case 'home': 
+                    var postBox = new PostBox(),
+                        timeLine = new Posts({collection: self.collections.timeline, user: self.user});
+                        
+                    if (timeLine.collection.length < 1) {   
+                        timeLine.collection.fetch({
+                            remove: false,
+                            success: function (collection, response, options) {
+                                timeLine.collection.pushCounter();
+                            }
+                        });
                     }
-                });
+                    
+                    self.$el.append(postBox.render().el);
+                    self.$el.append(timeLine.render().el);
+                break;
+                
+                
+                case 'post': 
+                    var post = new Post({collection: self.collections.timeline, user: self.user});
+ 
+                    self.$el.append(post.render(itemId).el);
+                break;
+                
+                
+                case 'profile': 
+                    var user = new User({collection: self.collections.users, user: self.user});
+                    
+                    self.$el.append(user.render(itemId).el);
+                break;
             }
             
-            this.$el.empty();
-            this.$el.append(postBox.render().el);
-            this.$el.append(timeLine.render().el);
-        },
-        
-        
-        renderPost: function (id) {
-            var post = new Post({collection: this.collections.timeline, user: this.user});
-            
-            this.$el.empty();
-
-            this.$el.append(post.render(id).el);
-        },
-        
-        
-        renderProfile: function (id) {
-            var user = new User({collection: this.collections.users, user: this.user});
-            
-            this.$el.empty();
-
-            this.$el.append(user.render(id).el);
+            return self;
         }
     });
     

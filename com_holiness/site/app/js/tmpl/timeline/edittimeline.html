@@ -3,9 +3,12 @@
     <textarea rows="2" cols="10" name="post" id="<%= textId %>" class="span12"><%= post %></textarea>
   </div>
   
+  <%  
+    var cLimit = 150 - post.length;
+  %>
   <div class="row-fluid">
     <div class="span6" style="text-align:left">
-      <strong>Characters: <span class="charslimit" id="<%= charsId %>"></span></strong>
+      <strong>Characters: <span class="charslimit" id="<%= charsId %>"><%= cLimit %></span></strong>
     </div>
     <div class="span6" style="text-align:right">
       <button style="padding-right: 20px; padding-left: 20px;" class="btn cancel" type="button">Cancel</button> <button style="padding-right: 20px; padding-left: 20px;" class="btn btn-primary save-timeline" type="submit">Save</button>
