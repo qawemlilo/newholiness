@@ -58,7 +58,7 @@ class HolinessViewDevotion extends JView
         
             foreach ($devotions as $devotion) {
                 $li = '<li>';
-                $li .= '<a href="' . JRoute::_( JURI::base() . '?option=com_devotions&view=devotion&id=' . $devotion->id) . '">';
+                $li .= '<a href="' . JRoute::_( JURI::base() . '?option=com_holiness&view=devotion&id=' . $devotion->id) . '">';
                 $li .= '<i class="icon-file icons-left"></i> ' . $devotion->theme;
                 $li .= '</a></li>'; 
                 
