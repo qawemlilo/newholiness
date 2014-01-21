@@ -89,10 +89,6 @@ module.exports = function(grunt) {
         
         clean: {
             cmd: 'find . -type f -name "*~" -exec rm -f {} ;'
-        },
-        
-        rjs: {
-            cmd: 'r.js -o com_holiness/site/app/js/app.build.js'
         }
     }
   });
@@ -102,7 +98,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   
   grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
-  grunt.registerTask('zip', ['jshint', 'exec:test', 'compress:com_holiness']);
+  grunt.registerTask('zip', ['jshint', 'compress:com_holiness']);
   
   grunt.task.registerTask('build', 'A build task', function(arg) {
       var dev = 'template/js_wright/template_dev.php',
@@ -129,7 +125,7 @@ module.exports = function(grunt) {
         grunt.log.ok('Copied %s to %s', prod, dest + 'template.php');
       }
       
-      grunt.task.run(['compress:template', 'exec:rjs', 'zip']);
+      grunt.task.run(['compress:template', 'zip']);
   });
 };
 

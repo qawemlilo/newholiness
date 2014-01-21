@@ -220,10 +220,10 @@ class HolinessModelDevotion extends JModelItem
     }
     
     
-    function getRecentDevotions($mid, $limit = 10) {
+    function getRecentDevotions($pid, $limit = 10) {
         $db = JFactory::getDBO();
         
-        $query = "SELECT * FROM #__devotions WHERE memberid={$mid} ORDER BY ts DESC LIMIT {$limit}";
+        $query = "SELECT * FROM #__devotions WHERE pastor={$pid} ORDER BY ts DESC LIMIT {$limit}";
         $db->setQuery($query); 
         
         $results = $db->loadObjectList();
