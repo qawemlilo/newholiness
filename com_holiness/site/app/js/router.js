@@ -1,5 +1,5 @@
 
-define(["jquery", "underscore", "backbone", "views/main"], function($, _, Backbone, Controller) {
+define(["backbone", "views/main"], function(Backbone, Main) {
     var Router = Backbone.Router.extend({
     
         routes: {
@@ -10,7 +10,7 @@ define(["jquery", "underscore", "backbone", "views/main"], function($, _, Backbo
         
         
         initialize: function (app) { 
-            this.views = new Controller({
+            this.views = new Main({
                 users: app.collections.users, 
                 user: app.user, 
                 timeline: app.collections.timeline

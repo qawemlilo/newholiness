@@ -98,6 +98,34 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   
   grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
-  grunt.registerTask('zipmain', ['jshint', 'compress:com_holiness']);
+  grunt.registerTask('zip', ['jshint', 'exec:test', 'compress:com_holiness']);
+  
+  grunt.task.registerTask('build', 'A build task', function(arg) {
+      var dev = 'template/js_wright/template_dev.php',
+          prod = 'template/js_wright/template_prod.php',
+          dest = 'template/js_wright/';
+
+      if (arg === 'dev') {
+        grunt.log.writeln('Building development packages');
+        
+        grunt.file.copy(dev, dest + 'custom.php');
+        grunt.log.ok('Copied %s to %s', dev, dest + 'custom.php');
+        
+        grunt.file.copy(dev, dest + 'template.php');
+        grunt.log.ok('Copied %s to %s', dev, dest + 'template.php');        
+      }
+      
+      if (arg === 'production') {
+        grunt.log.writeln('Building production packages');
+        
+        grunt.file.copy(prod, dest + 'custom.php');
+        grunt.log.ok('Copied %s to %s', prod, dest + 'custom.php');
+        
+        grunt.file.copy(prod, dest + 'template.php');
+        grunt.log.ok('Copied %s to %s', prod, dest + 'template.php');
+      }
+      
+      grunt.task.run(['compress:template', 'zip']);
+  });
 };
 

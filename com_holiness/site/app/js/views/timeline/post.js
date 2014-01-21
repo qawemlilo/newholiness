@@ -49,18 +49,18 @@ define([
             
             self.user = opts.user;
             
-            self.collection.once('render', function (uid) {
-                self.render(uid);
+            self.collection.once('render', function (postid) {
+                self.render(postid);
             });
         },
         
         
-        render: function (id) {
+        render: function (postid) {
             var self = this,
                 ts = (new Date()).getTime();
             
-            if (self.collection && self.collection.length > 0 && self.collection.get(id)) {
-                self.showView(id, ts);
+            if (self.collection && self.collection.length > 0 && self.collection.get(postid)) {
+                self.showView(postid, ts);
                 
                 // scroll to top
                 $('html, body').stop().animate({
@@ -70,7 +70,7 @@ define([
             else {
                 self.collection.fetch({
                     success: function () {
-                        self.collection.trigger('render', id);                      
+                        self.collection.trigger('render', postid);                      
                     }            
                 });
             }
@@ -112,8 +112,10 @@ define([
                 self.handleChanges(model, plusones);
             });
             
+            self.getPlusones(function(error){});
             commentsView = self.showComments(id);
             
+            // insert comment into the page
             self.$('#timeline').html(commentsView.el);
         },
         
@@ -121,17 +123,17 @@ define([
         showComments: function (id) {
             var comments =  new Comments(), commentsView, self = this;
             
+            //create a url that points to this post's comments
             comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=' + self.model.get('posttype') + '&id=' + id;            
             commentsView = new CommentsView({collection: comments, model: self.model});
             
+            // once comments have been fetched
             commentsView.collection.on('loaded', function (total) {
-               self.$('#postcomments').text(total);
+               self.$('#postcomments').text(total); // update the comments counter
             });
             
             return commentsView;
         },
-        
-        
         
         
         handleChanges: function (model, plusones) {
@@ -144,7 +146,7 @@ define([
             _.each(plusones, function (plusone) {
                 if (plusone) {
                     if (posttype === 'prayerrequest') {
-                       if(parseInt(plusone.prayed, 10) === 1) {
+                       if (parseInt(plusone.prayed, 10) === 1) {
                           prayed += 1;
                           prayedHtml += '<li><a href="#/users/' + plusone.userid + '">' + plusone.name + '</a> has prayed for you</li>';
                        }
@@ -160,7 +162,6 @@ define([
                 
             plusonesHtml += '</ul>';
              
-            console.log(plusonesHtml);
             self.$('#plusones-' + posttype).html(plusonesHtml);
             self.$('#willpray').text(plusones.length - prayed); 
                 
@@ -168,67 +169,7 @@ define([
                 prayedHtml += '</ul>';
                 self.$('#plusones-prayed').html(prayedHtml);
                 self.$('#haveprayed').text(prayed);
-                
-                console.log(prayedHtml);
             } 
-        },
-        
-        
-        
-        
-        submitComment: function (event) {
-        
-            event.preventDefault();
-            
-            var data = this.formToObject("#form_" + this.ts);
-            var model = new Comment({
-                ts: false, 
-                imgext: HolinessPageVars.imgext, 
-                userid: data.userid, 
-                comment: data.txt, 
-                name: HolinessPageVars.name
-            });
-            
-            data.name = HolinessPageVars.name;
-
-            var view = new CommentView({model: model});
-            
-            $('#myfriendscomments').append(view.render().el);
-            
-            this.send(data, function (error, res) {
-                if(!error) {
-                    noty({text: 'Comment saved!', type: 'success'});
-                }
-                else {
-                    noty({text: 'Comment not saved', type: 'error'});
-                }
-            });
-            
-           document.forms['comment-form'].reset();
-        },
-        
-    
-        formToObject: function (form) {
-            var formObj = {}, arr = $(form).serializeArray();
-        
-            _.each(arr, function (fieldObj) {
-                if (fieldObj.name !== 'submit') {
-                    formObj[fieldObj.name] = fieldObj.value;
-                }
-            });
-        
-            return formObj;
-        },
-        
-        
-        send: function(data, fn) {
-            $.post('index.php?option=com_holiness&task=comments.addcomment', data)
-            .done(function(data){
-                fn(false, data);
-            })
-            .fail(function () {
-               fn(true);
-            });    
         },
         
         

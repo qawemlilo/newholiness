@@ -35,7 +35,7 @@ if ($this->countModules('toolbar')) {
 <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
 <?php if ((!$myUser->guest && $myview == 'home') || $myview == 'devotion') { ?>
-<script type="text/javascript" src="components/com_holiness/app/js/libs/require.js" data-main="components/com_holiness/app/js/main"></script>
+<script type="text/javascript" src="components/com_holiness/build/js/libs/require.js" data-main="components/com_holiness/build/js/main"></script>
 <?php } else {?>
 <script type="text/javascript" src="components/com_holiness/app/js/libs/jquery.js"></script>
 <?php } ?>
@@ -45,14 +45,9 @@ if ($this->countModules('toolbar')) {
     <!-- menu -->
 	<w:nav containerClass="<?php echo $containerClass ?>" rowClass="<?php echo $gridMode;?>" wrapClass="navbar-fixed-top navbar-inverse" type="toolbar" name="toolbar" />
     <?php endif; ?>
-    <div class="<?php echo $containerClass ?>">
-        <!-- header -->
-        <header id="header">
-        	<div class="<?php echo $gridMode; ?> clearfix">
-        		<w:logo name="top" />
-        		<div class="clear"></div>
-        	</div>
-        </header>
+    <div class="<?php echo $containerClass ?>" style="padding-left: 0px; padding-right: 0px;">
+
+
         <?php if ($this->countModules('menu')) : ?>
         <!-- menu -->
    		<w:nav name="menu" />
@@ -75,6 +70,21 @@ if ($this->countModules('toolbar')) {
             <w:module type="<?php echo $gridMode; ?>" name="grid-top2" chrome="wrightflexgrid" />
         </div>
         <?php endif; ?>
+        
+        <?php if ($this->countModules('above-content')) : ?>
+          <!-- above-content -->
+          <div id="above-content">
+            <w:module type="none" name="above-content" chrome="xhtml" />
+          </div>
+        <?php endif; ?>
+        
+        <?php if ($this->countModules('breadcrumbs')) : ?>
+          <!-- breadcrumbs -->
+          <div id="breadcrumbs">
+            <w:module type="single" name="breadcrumbs" chrome="none" />
+          </div>
+        <?php endif; ?>
+                
         <div id="main-content" class="<?php echo $gridMode; ?>">
             <!-- sidebar1 -->
             <aside id="sidebar1">
@@ -82,20 +92,14 @@ if ($this->countModules('toolbar')) {
             </aside>
             <!-- main -->
             <section id="main">
-                <?php if ($this->countModules('above-content')) : ?>
-                <!-- above-content -->
-                <div id="above-content">
-                    <w:module type="none" name="above-content" chrome="xhtml" />
-                </div>
-                <?php endif; ?>
-            	<?php if ($this->countModules('breadcrumbs')) : ?>
-                <!-- breadcrumbs -->
-            	<div id="breadcrumbs">
-            			<w:module type="single" name="breadcrumbs" chrome="none" />
-            	</div>
-            	<?php endif; ?>
             	<!-- component -->
-            	<w:content />
+                
+                <!-- main content -->
+                <div>
+            	  <w:content />
+                </div>
+                
+                
                 <?php if ($this->countModules('below-content')) : ?>
                 <!-- below-content -->
                 <div id="below-content">

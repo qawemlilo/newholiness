@@ -4,7 +4,7 @@ define([
     "underscore", 
     "backbone",
     "models/comment",    
-    "views/devotions/comment",
+    "views/comments/comment",
     "text!tmpl/comments/comments.html",
     "wordlimit"
 ], function ($, _, Backbone, CommentModel, CommentView, Template) {

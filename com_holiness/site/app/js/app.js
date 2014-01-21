@@ -1,5 +1,6 @@
 
 define([
+    "jquery",
     "backbone",
     "models/me",
     "collections/users",
@@ -8,11 +9,10 @@ define([
     "views/navigation/requests",
     "views/navigation/search",
     "views/comments/comments",
-    "views/comments/commentbox",
-    "views/timeline/timeline",
+    "models/post",
     "views/panel/members",
     "router"
-], function(Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, TimelineView, PostBox, MembersView, Router) {
+], function($, Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, Post, MembersView, Router) {
     "use strict";
     
     var App = {
@@ -29,26 +29,24 @@ define([
             
             // if id not defined (which means we are on the home page)
             if (!id) {
-                var timelineCollection =  App.collections.timeline = new TimelineCollection();
-                var timelineView = new TimelineView({collection: timelineCollection, user: App.user});
+                App.collections.timeline = new TimelineCollection();
                 
-                timelineView.collection.fetch({
-                    success: function (collection, response, options) {
-                        timelineView.collection.pushCounter();
-                    }
-                });
+                App.router = new Router(App);
+                Backbone.history.start();
             }
             
             // if id id defined (which means we are on the devotion page)
             else {
-                var commentsCollection =  App.collections.comments = new CommentsCollection();
-                commentsCollection.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=devotion&id=' + id;
-            
-                App.views.comments = new CommentsView({collection: commentsCollection});                
+                var author = $('#authorid').val(), 
+                    post = new Post({id: id, posttype: 'devotion', userid: author, postid: id});
+                
+                App.collections.comments = new CommentsCollection();
+                App.collections.comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=devotion&id=' + id;
+                
+                App.views.comments = new CommentsView({collection: App.collections.comments,  model: post});
+                
+                $('#timeline').html(App.views.comments.el);
             }            
-            
-            App.router = new Router(App);
-            Backbone.history.start();
             
             return this;
         },

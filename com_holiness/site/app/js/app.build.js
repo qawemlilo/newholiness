@@ -3,9 +3,13 @@
     
     mainConfigFile: './main.js',
     
-    dir: "../../dist",
+    baseUrl: "js",
     
-    optimizeCss: "standard",
+    dir: "../../build",
+    
+    optimize: "uglify",
+    
+    generateSourceMaps: false,
 
     modules: [
         {

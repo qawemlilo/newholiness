@@ -31,9 +31,17 @@ define([
         renderHome: function () {
             var postBox = new PostBox(),
                 timeLine = new Posts({collection: this.collections.timeline, user: this.user});
+                
+            if (timeLine.collection.length < 1) {   
+                timeLine.collection.fetch({
+                    remove: false,
+                    success: function (collection, response, options) {
+                        timeLine.collection.pushCounter();
+                    }
+                });
+            }
             
             this.$el.empty();
-
             this.$el.append(postBox.render().el);
             this.$el.append(timeLine.render().el);
         },

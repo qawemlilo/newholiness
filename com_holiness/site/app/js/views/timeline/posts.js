@@ -4,7 +4,10 @@ define([
     "underscore", 
     "backbone", 
     "views/timeline/timelineitem",
-    "text!tmpl/timeline/timeline.html"
+    "text!tmpl/timeline/timeline.html",
+    "noty",
+    "notyTheme",
+    "notyPosition"
 ], function ($, _, Backbone, TimelineItemView, Template) {
     "use strict";
     
@@ -53,7 +56,7 @@ define([
             var self = this,
                 view = (new TimelineItemView({model: model, user: self.user})).render();
 
-            this.$('.timeline-content-items').append(view.$el);
+            this.$('.timeline-content-items').append(view.el);
         },
         
         
@@ -72,9 +75,10 @@ define([
         loadMore: function (event) {
             event.preventDefault();
             
-            var self = this, button = $(event.currentTarget);
+            var self = this, button = $(event.currentTarget), notice;
             
             button.button('loading');
+            notice = noty({text: 'Loading...', timeout: false, type: 'warning'});
 
             self.collection.fetch({
                 remove: false,
@@ -82,9 +86,11 @@ define([
                 success: function (collection, response, options) {
                     self.collection.pushCounter();
                     button.button('reset');
+                    notice.close();
                 },
                 error: function (collection, response, options) {
                     button.button('reset');
+                    notice.close();
                 }
             });
         }

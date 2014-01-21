@@ -3,7 +3,7 @@ define([
     "jquery",
     "underscore", 
     "backbone",
-    "text!tmpl/comment.html",    
+    "text!tmpl/comments/comment.html",    
     "moment",
     "noty",
     "notyTheme",

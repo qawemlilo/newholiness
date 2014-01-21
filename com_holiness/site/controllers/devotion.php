@@ -77,7 +77,6 @@ class HolinessControllerDevotion extends JController
     
     
     
-    
     public function getuser() {
         $model =& $this->getModel('user');
         $name = JRequest::getVar('name', '', 'get', 'string');
@@ -100,6 +99,8 @@ class HolinessControllerDevotion extends JController
             exit();
         }
     }
+    
+    
 
     public function create() {
 		$user = array();
@@ -423,13 +424,13 @@ class HolinessControllerDevotion extends JController
         if (is_object($data)) {
             $comment['userid'] = $user->id;
             $comment['txt'] = $data->txt;
-            $comment['devotionid'] = $data->devotionid;
+            $comment['devotionid'] = $data->postid;
             $comment['name'] = $data->name;
         }
         elseif (is_array($data)) {
             $comment['userid'] = $user->id;
             $comment['txt'] = $data['txt'];
-            $comment['devotionid'] = $data['devotionid'];
+            $comment['devotionid'] = $data['postid'];
             $comment['name'] = $data['name'];
         }
         
