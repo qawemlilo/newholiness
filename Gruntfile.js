@@ -98,7 +98,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   
   grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
-  grunt.registerTask('zip', ['jshint', 'compress:com_holiness']);
+  grunt.registerTask('zip', ['jshint', 'exec:test', 'compress:com_holiness']);
   
   grunt.task.registerTask('build', 'A build task', function(arg) {
       var dev = 'template/js_wright/template_dev.php',

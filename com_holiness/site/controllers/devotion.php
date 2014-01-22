@@ -388,7 +388,7 @@ class HolinessControllerDevotion extends JController
         return true;    
     }
 
-
+    /*
     public function addamen() {
         $model =& $this->getModel('devotion');
         $comment = array();
@@ -442,6 +442,89 @@ class HolinessControllerDevotion extends JController
         }
         
         exit();     
+    }*/
+    
+    
+ 
+    public function download() {
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment;Filename=devotion.doc");
+
+        $id = JRequest::getVar('id', '', 'get', 'int');
+        $model = $this->getModel('devotion');
+        $devotion = $model->getDevotion($id);
+                
+        if($devotion) {
+            $output = "";
+            $date = $this->formatTime($devotion->ts);
+            
+            $output .= "Dear friend, hear the voice of the Lord today: $devotion->scripture \n \n \n";
+            $output .= "Pastor's name: \n$devotion->name \n \n";
+            $output .= "Senior Pastor @ (Church/Ministry): \n$devotion->church \n \n";
+            $output .= "Day: \n$date->day \n \n";
+            $output .= "Date: \n$date->month $date->year \n \n";
+            $output .= "Today's theme: \n$devotion->theme \n \n";
+            $output .= "Today's scripture: \n$devotion->scripture \n \n";
+            $output .= "The scripture reads as follows: \n$devotion->reading \n \n";
+            $output .= "Bible translation used: \n$devotion->bible \n \n";
+            $output .= "Today's devotion: \n$devotion->devotion \n \n";
+            $output .= "Today's confession / prayer: \n$devotion->prayer \n \n \n \n";
+            
+            $output .= "HOLINESS PAGE: http://www.holinesspage.com \n";
+            
+            $output = utf8_encode($output);
+            
+            echo $output;
+        }
+        
+        exit();
+    }
+    
+    
+    private function formatTime($ts) {
+        $mydate =  new DateTime($ts . '');
+        list($day, $month, $year) = explode(',', $mydate->format("l,d M,Y"));
+        
+        $result = new stdClass();
+        $result->day = $day;
+        $result->month = $month;
+        $result->year = $year;
+        
+        return $result;
+    }
+
+    
+    function emaildevotion() {
+        $body = "";
+        $from_name = JRequest::getVar('from_name', '', 'post', 'string');
+        $from_email = JRequest::getVar('from_email', '', 'post', 'string');
+        $to_name = JRequest::getVar('to_name', '', 'post', 'string');
+        $to_email = JRequest::getVar('to_email', '', 'post', 'string');
+        $msg = JRequest::getVar('msg', '', 'post', 'string');
+        $theme = JRequest::getVar('theme', '', 'post', 'string');
+        $url = JRequest::getVar('url', '', 'post', 'string');
+        
+        if(empty($from_name) || empty($from_email) || empty($to_name) || empty($to_email) || empty($msg)) {
+             echo false;
+        }
+        else {
+            $from = array($from_email, $from_name);
+            $subject = "Dear {$to_name}, hear the voice of the Lord today.";
+            
+            $body .= "This devotion was shared with you by: $from_name from the HOLINESS PAGE website." . "\n \n";
+            $body .= $theme . "\n \n";
+            $body .= $msg . "\n \n";
+            $body .= "Please visit this page to read your message: " . $url;
+            
+            $mailsent = $this->sendMail($from, $to_email, $subject, $body);
+           
+            if ($mailsent) {
+                $this->response(200, 'Message sent!');;
+            } else {
+               $this->response(500, 'Message not sent');
+            }
+        }
+        exit();
     }
     
     
@@ -460,6 +543,26 @@ class HolinessControllerDevotion extends JController
         } 
         
         return false; 
+    }
+    
+    
+    private function sendMail($from, $to, $subject, $body, $cc = null) {
+        $mail = JFactory::getMailer();
+        
+        $mail->setSender($from);
+        $mail->addRecipient($to);
+        $mail->setSubject($subject);
+        $mail->setBody($body);
+        
+        if ($cc) {
+            $mail->addBCC($cc);
+        } 
+        
+        if ($mail->Send()) {
+            return true;
+        } else {
+            return false;
+        } 
     } 
 }
 

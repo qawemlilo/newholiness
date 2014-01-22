@@ -6,6 +6,14 @@ $doc =& JFactory::getDocument();
 $doc->addStyleDeclaration('
   #commentscontainer .comment {margin-top:12px!important} .popover {width: 250px!important;}
   #commentscontainer {background-color: #F1F1F1; border: 1px solid #E5E5E5; padding: 10px 10px 10px 10px;}
+  ul.inline > li, ol.inline > li {
+    display: inline-block;
+    *display: inline;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-right:25px;
+    *zoom: 1;
+  }
 ');
 
 $src = JURI::base() . 'media/com_holiness/images/user-' . $this->devotion->userid .'-thumb.' . $this->devotion->imgext;
@@ -81,8 +89,14 @@ $doc->addScriptDeclaration($script);
     <p><strong style="color:#0094CB">Today's devotion:</strong> <?php echo $devotion; ?></p>
     <p><strong style="color:#0094CB">Today's confession / prayer:</strong> <?php echo $this->devotion->prayer; ?></p>
   </div>
-
-
+  
+  <div class="row-fluid" style="margin-top: 10px">
+    <ul class="inline unstyled">
+      <li class="print"><i class="icon-print"></i> <a onclick="javascript: window.print()" href="#">Print out this devotion</a></li>
+      <li class="download"><i class="icon-download-alt"></i>  <a target="_blank" href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=devotion.download&id=' . $devotionid); ?>">Download this devotion</a></li>
+      <li class="email"><i class="icon-envelope"></i> <a title="Email this devotion to a friend" id="emaildevotion" href="#data">Email this devotion to a friend</a></li>
+    </ul>
+  </div>
 
   <div id="timeline" class="row-fluid" style="margin-top:20px">   
   </div>
