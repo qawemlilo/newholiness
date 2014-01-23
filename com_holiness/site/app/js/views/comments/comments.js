@@ -46,10 +46,7 @@ define([
         
         
         render: function (collection) {
-            var fragment, 
-                commentView, 
-                hr, 
-                self = this,
+            var fragment, commentView, hr, self = this,
                 data = {
                     imgext: HolinessPageVars.imgext,
                     userid: HolinessPageVars.id,

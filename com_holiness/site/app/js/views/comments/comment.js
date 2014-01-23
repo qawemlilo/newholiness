@@ -36,15 +36,13 @@ define([
         
         
         render: function () {
-            var template, data = this.model.toJSON();
+            var data = this.model.toJSON();
             
             data.name = $.toUpperFirst(data.name);
             data.ts = this.getMyTime(data.ts);
             data.amens = (data.amens) ? data.amens.split(',').length : false;
-            
-            template = this.template(data);
  
-            this.$el.append(template);
+            this.$el.html(this.template(data));
             
             return this;
         },

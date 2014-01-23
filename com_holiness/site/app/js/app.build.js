@@ -13,11 +13,7 @@
 
     modules: [
         {
-            name: "main",
-
-            include: [
-                "app"
-            ]
+            name: "main"
         }
     ]
 })

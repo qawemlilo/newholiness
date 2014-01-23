@@ -36,6 +36,13 @@ define([
         },
         
         
+        initialize: function (opts) {
+            this.$('#sharebox').wordLimit({
+                counterDiv: '#chars'
+            });
+        },
+        
+        
         render: function () {
             var data = {
                 id: HolinessPageVars.id,
@@ -44,10 +51,6 @@ define([
             };
             
             this.$el.html(this.template(data));
-           
-            this.$('#sharebox').wordLimit({
-                counterDiv: '#chars'
-            });
             
             return this;                
         },
