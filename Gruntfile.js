@@ -99,6 +99,7 @@ module.exports = function(grunt) {
   
   grunt.registerTask('default', ['exec:clean', 'exec:test', 'jshint', 'compress']);
   grunt.registerTask('zip', ['jshint', 'exec:test', 'compress:com_holiness']);
+  grunt.registerTask('ziplinux', ['jshint', 'compress:com_holiness']);
   
   grunt.task.registerTask('build', 'A build task', function(arg) {
       var dev = 'template/js_wright/template_dev.php',
@@ -125,7 +126,7 @@ module.exports = function(grunt) {
         grunt.log.ok('Copied %s to %s', prod, dest + 'template.php');
       }
       
-      grunt.task.run(['compress:template', 'zip']);
+      grunt.task.run(['compress:template', 'ziplinux']);
   });
 };
 

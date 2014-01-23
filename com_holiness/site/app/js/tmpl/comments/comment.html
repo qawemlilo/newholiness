@@ -16,8 +16,19 @@
   <span class="badge badge-info" style="margin-left:10px;">
     <a style="color: #fff;" class="amen-plus" href="#">Amen</a> <% if (amens) { %> +<%= amens %> <% } %>
   </span>
+      <% if (mine) { %>
+      <div class="dropdown pull-right">
+        <a href="#" class="edit-timeline-item dropdown-toggle" data-toggle="dropdown">
+          <i class="icon-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu" style="min-width:90px">
+          <li><a href="#" class="comment-item-edit">Edit</a></li>
+          <li><a href="#" class="comment-item-delete">Delete</a></li>
+        </ul>
+      </div>
+      <% } %>
   <br>
-  <small><%= ts %></small>
-  <br>
-  <%= comment %>
+  <small><%= ts %></small><br>
+  <span class="comment-main"><%= comment %></span>
+  <span class="comment-edit"></span>
 </div>

@@ -105,7 +105,7 @@ class HolinessControllerComments extends JController
 
 
     public function update() {
-        $model =& $this->getModel('comments');
+        $model =& $this->getModel('comment');
         $post = array();
         $data = $this->get_post_data();
         
@@ -132,7 +132,7 @@ class HolinessControllerComments extends JController
 
 
     public function remove() {
-        $model =& $this->getModel('comments');
+        $model =& $this->getModel('comment');
         $post = array();
         $data = $this->get_post_data();
         

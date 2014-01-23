@@ -170,9 +170,9 @@ class HolinessModelUser extends JModelItem
     private function checkParner($userid, $partnerid) {   
         $db =& JFactory::getDBO();
         
-        $query = "SELECT partners.id ";
-        $query .= "FROM #__devotion_partners AS partners ";
-        $query .= "WHERE (partners.userid=$userid AND partners.partnerid=$partnerid) OR (partners.userid=$partnerid AND partners.partnerid=$userid)";
+        $query = "SELECT partner.id ";
+        $query .= "FROM #__devotion_partners AS partner ";
+        $query .= "WHERE (partner.userid=$userid AND partner.partnerid=$partnerid) OR (partner.userid=$partnerid AND partner.partnerid=$userid)";
 
         $db->setQuery($query);
         $result = $db->loadResult();

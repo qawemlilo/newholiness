@@ -84,37 +84,6 @@ class HolinessControllerUser extends JController
             $id = $data['id'];
             $res = $data['res'];
             $partnerid = $data['partnerid'];
-        }
-        
-        
-        if ($res == 'ignore') {
-            if (!$model->removePartner($id)) {
-                $this->response(500, '{"error":"true", "message":"Failed to remove request"}');
-            }
-            else {
-                $this->response(200, json_encode('{"error":"false", "message":"Partner request ignored"}'));
-            }
-        }
-        elseif ($res == 'accept') {
-            
-            if (!$model->updatePartner($id, array('active'=>1))) {
-                $this->response(500, '{"error":"true", "message":"Failed to update request"}');
-            }
-            else {
-                
-                if (!$model->addPartner(array('active'=>1, 'userid'=>$user->id, 'partnerid'=>$partnerid))) {
-                    $this->response(500, '{"error":"true", "message":"Failed to insert new partner"}');
-                }
-                else {
-                    $message = "$user->name has agreed to become your Devotion Partner. Login to http://www.holinesspage.com to be blessed by new your Devotion Partner.";
-                    $this->eMail($partnerid, $user->name, "Holiness Page", $message);
-                    
-                    $this->response(200, json_encode('{"error":"false", "message":"Partner request accepted"}'));
-                }
-            } 
-        }
-        
-        exit();
     }
     
     

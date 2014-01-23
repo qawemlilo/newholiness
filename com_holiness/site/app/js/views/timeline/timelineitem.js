@@ -33,7 +33,7 @@ define([
             "click .edit-timeline-item-edit": "editItem",
             "click .edit-timeline-item-delete": "deleteItem",
             "submit .timelinepost-main-edit form": "saveEdit",
-            "click .timelinepost-main-edit form .cancel": "closeEdit",
+            "click .timelinepost-main-edit form .cancel": "closeEdit"
         },
         
         
@@ -59,7 +59,7 @@ define([
         
         
         render: function () {
-            var data = this.model.toJSON(), template;
+            var data = this.model.toJSON();
                 
             if (!data.id) {
                 data.id = 0; 
@@ -75,9 +75,8 @@ define([
             data.ts = this.timeAgo(data.ts);
             data.label = this.labelColor[data.posttype];
             data.posttype = this.postLabel[data.posttype];
-            template = this.template(data);
             
-            this.$el.append(template);
+            this.$el.append(this.template(data));
 
             return this;                
         },
@@ -104,7 +103,6 @@ define([
             }
             
             this.$el.fadeOut(function () {
-                this.$('.timelinepost-main-edit').children().off();
                 this.$el.empty();
                 this.render();
                 this.$el.fadeIn();
@@ -156,10 +154,16 @@ define([
                 formObj[fieldObj.name] = fieldObj.value;
             }); 
               
-            this.model.set('post', formObj.post);
-            this.model.save();
+            this.model.save({'post': formObj.post}, {
+                success: function(model, data) {
+                    noty({text: 'Post successfully updated!', type: 'success'});
+                },
+                error: function (model, data) {
+                    noty({text: 'Error. Post not updated', type: 'error'});
+                }
+            });
             
-            noty({text: 'Post successfully updated!', type: 'success'});
+            
             
             this.closeEdit();
         },
@@ -179,8 +183,15 @@ define([
             
             .fadeOut(function () {
                 this.$el.off();
-                this.model.destroy();
-                noty({text: 'Post successfully deleted!', type: 'success'});
+                this.model.destroy({
+                    success: function(model, response) {
+                        noty({text: 'Post successfully deleted!', type: 'success'});
+                    },
+                    error: function (model, data) {
+                        noty({text: 'Error. Post not deleted', type: 'error'});
+                    }
+                });
+                
             }.bind(this));
         },
         
