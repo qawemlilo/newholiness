@@ -24,7 +24,7 @@ define(["jquery", "underscore", "backbone", "views/navigation/request", "models/
         fetchRequests: function() {
             var collection = this.collection;
             
-            $.get('index.php?option=com_holiness&task=home.getpartnerrequests')
+            $.get('index.php?option=com_holiness&task=user.getpartnerrequests')
             .done(function(requests) {
                     var html = $('<ul class="unstyled inline">');
                     

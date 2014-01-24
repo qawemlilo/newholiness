@@ -14,7 +14,7 @@ define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
         
         
         url: function () {
-            return 'index.php?option=com_holiness&task=home.handleget&start=' + this.start + '&limit=' + this.limit;
+            return 'index.php?option=com_holiness&task=timeline.fetch&start=' + this.start + '&limit=' + this.limit;
         },
         
         

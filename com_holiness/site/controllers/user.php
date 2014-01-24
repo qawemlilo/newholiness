@@ -17,7 +17,7 @@ class HolinessControllerUser extends JController
         $partners = $model->getParners($user->id);
         
         if ($user->guest) {
-            $this->response(500, json_encode(array('error'=>true, 'message'=>'Unauthorized user'))); 
+            $this->response(500, 'Unauthorized user'); 
         }
         else {
             $me = array(
@@ -29,9 +29,7 @@ class HolinessControllerUser extends JController
                 'partners'=>$partners
             );
             
-            http_response_code($code);
-            header('Content-type: application/json');            
-            echo json_encode($me);
+            $this->response(200, json_encode($me));
         }
         
         exit();
@@ -39,7 +37,7 @@ class HolinessControllerUser extends JController
 
 
     public function addpartner() {
-        $model =& $this->getModel('home');
+        $model =& $this->getModel('user');
         $user =& JFactory::getUser();
         $post = array();
         $data = $this->get_post_data();
@@ -56,7 +54,7 @@ class HolinessControllerUser extends JController
         }
         
         if (!$result = $model->addPartner($post)) {
-            $this->response(500, json_encode(array('error'=>false, 'message'=>'Add Partner request not sent'))); 
+            $this->response(500, 'Add Partner request not sent'); 
         }
         else {
             $message = "$user->name wants to become your Devotion Partner. Login to http://www.holinesspage.com to add $user->name as your Devotion Partner.";
@@ -69,8 +67,28 @@ class HolinessControllerUser extends JController
     }
     
     
+    public function getpartnerrequests() {
+        $db =& JFactory::getDBO();
+        $user =& JFactory::getUser();
+        
+        $query = "SELECT id, userid FROM #__devotion_partners WHERE partnerid={$user->id} AND active=0 ";
+        $db->setQuery($query); 
+
+        $results = $db->loadObjectList();
+        
+        if (!$results) {
+            $this->response(500, 'No requests were found');        
+        }
+        else {
+            $this->response(200, json_encode($results));
+        }
+        
+        exit();
+    }
+    
+    
     public function partnerresponse() {
-        $model =& $this->getModel('home');
+        $model =& $this->getModel('user');
         $user =& JFactory::getUser();
         $arr = array();
         $data = $this->get_post_data();
@@ -89,27 +107,27 @@ class HolinessControllerUser extends JController
         
         if ($res == 'ignore') {
             if (!$model->removePartner($id)) {
-                $this->response(500, '{"error":"true", "message":"Failed to remove request"}');
+                $this->response(500, 'Failed to remove request');
             }
             else {
-                $this->response(200, json_encode('{"error":"false", "message":"Partner request ignored"}'));
+                $this->response(200, "Partner request ignored");
             }
         }
         elseif ($res == 'accept') {
             
             if (!$model->updatePartner($id, array('active'=>1))) {
-                $this->response(500, '{"error":"true", "message":"Failed to update request"}');
+                $this->response(500, 'Failed to update request');
             }
             else {
                 
                 if (!$model->addPartner(array('active'=>1, 'userid'=>$user->id, 'partnerid'=>$partnerid))) {
-                    $this->response(500, '{"error":"true", "message":"Failed to insert new partner"}');
+                    $this->response(500, 'Failed to insert new partner');
                 }
                 else {
                     $message = "$user->name has agreed to become your Devotion Partner. Login to http://www.holinesspage.com to be blessed by new your Devotion Partner.";
                     $this->eMail($partnerid, $user->name, "Holiness Page", $message);
                     
-                    $this->response(200, json_encode('{"error":"false", "message":"Partner request accepted"}'));
+                    $this->response(200, "Partner request accepted");
                 }
             } 
         }
@@ -129,16 +147,10 @@ class HolinessControllerUser extends JController
         $members = $model->getMembers();
         
         if ($members && count($members) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($members);
+            $this->response(200, json_encode($members));
         }
         else {
-            http_response_code(404);
-            header('Content-type: application/json');
-            
-            echo json_encode("[]");
+            $this->response(500, "[]");
         
         }
         
@@ -160,17 +172,10 @@ class HolinessControllerUser extends JController
         $partners = $model->getParners($id);
         
         if ($partners && count($partners) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($partners);
+            $this->response(200, json_encode($partners));
         }
         else {
-            http_response_code(404);
-            header('Content-type: application/json');
-            
-            echo json_encode("[]");
-        
+            $this->response(500, "[]");
         }
         
         exit();
@@ -188,23 +193,14 @@ class HolinessControllerUser extends JController
         $members = $model->getProfiles();
         
         if ($members && count($members) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($members);
+            $this->response(200, json_encode($members));
         }
         else {
-            http_response_code(404);
-            header('Content-type: application/json');
-            
-            echo json_encode("[]");
-        
+            $this->response(500, "[]");
         }
         
-         exit();
+        exit();
     }
-    
-    
     
     
     public function getcomments() {
@@ -215,16 +211,14 @@ class HolinessControllerUser extends JController
         $comments = $model->getComments($id);
         
         if ($comments && count($comments) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($comments);
+            $this->response(200, json_encode($comments));
+        }
+        else {
+            $this->response(500, '[]');
         }
         
-         exit();
-    }
-    
-    
+        exit();
+    } 
     
     
     public function getuser() {
@@ -233,22 +227,16 @@ class HolinessControllerUser extends JController
         $member = $model->getUser($name);
         
         if ($member) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($member);
-            
-            exit();
+            $this->response(200, json_encode($member));
         }
         else {
-            http_response_code(500);
-            header('Content-type: application/json');
-            
-            echo '[]';
-            
-            exit();
+            $this->response(500, '[]');
         }
+        
+        exit();
+        
     }
+    
 
     public function create() {
 		$user = array();
@@ -278,7 +266,9 @@ class HolinessControllerUser extends JController
 		}
         else {   
 	        $this->response(500, 'Error. Account not created.');	
-        }			
+        }
+        
+        exit();
     }
     
     
@@ -310,6 +300,8 @@ class HolinessControllerUser extends JController
         else {
             $this->response(500, 'Profile not created');  
         }
+        
+        exit();
     }
     
     
@@ -361,6 +353,8 @@ class HolinessControllerUser extends JController
         else {
             $this->response(500, 'No changes were made');
         }
+        
+        exit();
     }
     
     
@@ -409,6 +403,8 @@ class HolinessControllerUser extends JController
         else {
             $this->response(200, 'Password updated');
         }
+        
+        exit();
     }
     
     
@@ -441,13 +437,10 @@ class HolinessControllerUser extends JController
     
     
     
-    private function response ($code=200, $msg) {
+    private function response ($code=200, $data) {
         http_response_code($code);
         header('Content-type: application/json');
-        
-        echo '{"code":"' . $code . '","message":"' . $msg . '"}';
-        
-        exit();
+        echo $data;
     }
     
     
@@ -464,6 +457,19 @@ class HolinessControllerUser extends JController
         $icon->saveImage($destinationFolder . 'user-' . $id . '-icon.' . $extension);
     
         return true;    
+    }
+    
+    
+    private function eMail($receiverid, $sendername, $subject, $message) {
+        $user =& JFactory::getUser($receiverid);
+        
+        $body = "Hi {$user->name}, \n\n";
+        $body .= "{$message} \n\n\n";
+        $body .= "Holiness Page";
+        
+        $result = JUtility::sendMail('info@holinesspage.com', 'Holiness Page', $user->email, $subject, $body);
+        
+        return $result;
     }
 }
 

@@ -20,7 +20,7 @@ define(["jquery", "backbone"], function($, Backbone) {
         
         
         send: function(id, fn) {
-            $.post('index.php?option=com_holiness&task=home.addpartner', {partnerid: id})
+            $.post('index.php?option=com_holiness&task=user.addpartner', {partnerid: id})
             .done(function(data){
                 fn(false, data);
             })

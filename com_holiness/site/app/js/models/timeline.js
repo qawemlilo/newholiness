@@ -40,7 +40,7 @@ define(["jquery", "backbone"], function($, Backbone) {
         
         
         deleteItem: function(itemId, model, opts) {
-            $.post('index.php?option=com_holiness&task=home.handledelete', {id: itemId})
+            $.post('index.php?option=com_holiness&task=timeline.remove', {id: itemId})
             .done(function(data){
                 if (opts.success) {
                     opts.success(model, data);
@@ -55,7 +55,7 @@ define(["jquery", "backbone"], function($, Backbone) {
         
         
         saveEdit: function(itemId, model, opts) {
-            $.post('index.php?option=com_holiness&task=home.handleput', {id: itemId, post: model.get('post')})
+            $.post('index.php?option=com_holiness&task=timeline.update', {id: itemId, post: model.get('post')})
             .done(function(data){
                 if (opts.success) {
                     opts.success(model, data);
@@ -69,7 +69,7 @@ define(["jquery", "backbone"], function($, Backbone) {
         },
         
         
-        urlRoot: 'index.php?option=com_holiness&task=home.handlepost'
+        urlRoot: 'index.php?option=com_holiness&task=timeline.post'
     });
       
     return Timeline;

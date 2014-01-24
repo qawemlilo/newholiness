@@ -172,7 +172,7 @@ class HolinessModelUser extends JModelItem
         
         $query = "SELECT partners.id ";
         $query .= "FROM #__devotion_partners AS partners ";
-        $query .= "WHERE (partners.userid=$userid AND partners.partnerid=$partnerid) OR (partners.userid=$partnerid AND partners.partnerid=$userid)";
+        $query .= "WHERE (partners.userid={$userid} AND partners.partnerid={$partnerid}) OR (partners.userid={$partnerid} AND partners.partnerid={$userid})";
 
         $db->setQuery($query);
         $result = $db->loadResult();

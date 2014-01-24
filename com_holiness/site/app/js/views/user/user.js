@@ -91,11 +91,11 @@ define([
             this.model = this.collection.get(id);
                 
             var data = this.model.toJSON();
-            var partners = _.pluck(this.user.partners, 'id');
+            var partners = _.pluck(HolinessPageVars.partners, 'id');
             
             data.value = $.toUpperFirst(data.value);
-            data.mine = (this.user.id === data.id);
-            data.mypartner = ($.inArray(data.id, partners) > -1); 
+            data.mine = (id === data.id);
+            data.mypartner = ($.inArray(id, partners) > -1);            
 
             this.$el.html(this.template(data));
             this.$el.removeClass('hide');

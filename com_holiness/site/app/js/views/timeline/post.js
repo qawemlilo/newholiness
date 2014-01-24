@@ -49,7 +49,7 @@ define([
             
             self.user = opts.user;
             
-            self.collection.once('render', function (postid) {
+            self.listenToOnce(self.collection, 'render', function (postid) {
                 self.render(postid);
             });
         },
@@ -108,7 +108,7 @@ define([
 
             self.$el.html(self.template(data));
             
-            self.model.on('change:plusones',  function (model, plusones) {
+            self.listenTo(self.model, 'change:plusones',  function (model, plusones) {
                 self.handleChanges(model, plusones);
             });
             
