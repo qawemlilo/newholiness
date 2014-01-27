@@ -4,8 +4,8 @@ define(["backbone", "views/main"], function(Backbone, Main) {
     
         routes: {
             '': 'home',
-            'users/:id': 'loadProfile',
-            'post/:id': 'loadPost'
+            'users/:id': 'profile',
+            'post/:id': 'post'
         },
         
         
@@ -23,12 +23,12 @@ define(["backbone", "views/main"], function(Backbone, Main) {
         },
         
         
-        loadProfile: function (userid) {
+        profile: function (userid) {
             this.view.render('profile', userid);
         },
         
         
-        loadPost: function (postid) {
+        post: function (postid) {
             this.view.render('post', postid);
         }
     });

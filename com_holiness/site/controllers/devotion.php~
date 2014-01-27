@@ -9,6 +9,32 @@ jimport('joomla.application.component.controller');
 
 class HolinessControllerDevotion extends JController
 {
+    public function getcomments() {
+        $user =& JFactory::getUser();
+        $model =& $this->getModel('devotion');
+        $id = JRequest::getVar('id', '', 'get', 'int');
+        
+        $comments = $model->getComments($id);
+        
+        if ($comments && count($comments) > 0 && !$user->guest) {
+            http_response_code(200);
+            header('Content-type: application/json');
+            
+            echo json_encode($comments);
+        }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo json_encode("[]");
+        
+        }
+        
+         exit();
+    }
+    
+    
+    
     public function getdevotions() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('devotion');
@@ -50,6 +76,31 @@ class HolinessControllerDevotion extends JController
     }
     
     
+    
+    public function getuser() {
+        $model =& $this->getModel('user');
+        $name = JRequest::getVar('name', '', 'get', 'string');
+        $member = $model->getUser($name);
+        
+        if ($member) {
+            http_response_code(200);
+            header('Content-type: application/json');
+            
+            echo json_encode($member);
+            
+            exit();
+        }
+        else {
+            http_response_code(404);
+            header('Content-type: application/json');
+            
+            echo '[]';
+            
+            exit();
+        }
+    }
+    
+    
 
     public function create() {
 		$user = array();
@@ -80,6 +131,97 @@ class HolinessControllerDevotion extends JController
         else {   
 	        $this->response(500, 'Error. Account not created.');	
         }			
+    }
+    
+    
+    
+    public function createprofile() {
+        //JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+        $model =& $this->getModel('user');
+        $user =& JFactory::getUser();
+        $member = array();
+        $photoFolder = JPATH_SITE . DS . 'media' .  DS . 'com_holiness' . DS . 'images' . DS;
+        
+
+        
+        $photo = JRequest::getVar('photo', null, 'files', 'array');
+        $photofilename = JFile::makeSafe($photo['name']);
+        $ext = strtolower(JFile::getExt($photofilename));
+
+        $member['church'] = JRequest::getVar('church', '', 'post', 'string');
+        $member['userid'] = $user->id;
+        $member['imgext'] = $ext;
+        
+        $saved = $this->savePhoto($photo['tmp_name'], $photoFolder . $photofilename, $ext);
+        
+        if ($saved && $model->create($member)) {
+            $this->resizeImages($photoFolder . $photofilename, $photoFolder, $ext, $user->id);
+            $this->response(200, 'Profile created');    
+        }
+        else {
+            $this->response(500, 'Profile not created');  
+        }
+    }
+    
+    
+    
+    
+    private function savePhoto($src, $path, $extension) {
+        $allowed = array('png', 'jpg', 'gif','jpeg');
+    
+        if (!in_array(strtolower($extension), $allowed)) {
+            return false;
+        }
+       
+        $result = JFile::upload($src, $path);
+        
+        if ($result) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    
+    
+    
+    public function update() {
+        $user =& JFactory::getUser();
+	$fullname = JRequest::getVar('fullname', '', 'post', 'string');
+        $email = JRequest::getVar('email', '', 'post', 'string');
+        $id = JRequest::getVar('id', '', 'post', 'int');
+        
+        
+        if ($email != $user->email || $fullname != $user->name) {
+            if ($email != $user->email) {
+               $user->set('email', $email);
+            }
+            
+            if ($fullname != $user->name) {
+               $user->set('name', $fullname);
+            }
+        
+            if (!$user->save()) {
+                $this->response(500, 'Changes not saved');
+            }
+            else {
+                $this->response(200, 'Changes saved');
+            }
+        }
+        else {
+            $this->response(500, 'No changes were made');
+        }
+    }
+    
+    
+    public function logout() {
+        $application =& JFactory::getApplication();
+        $user =& JFactory::getUser();
+        
+        $application->logout($user->id);
+        $application->redirect(JURI::base());    
     }
     
     
@@ -147,8 +289,76 @@ class HolinessControllerDevotion extends JController
     
     
     
+    public function changepassword() {
+        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        
+        $application =& JFactory::getApplication();
+        $refer = JRoute::_($_SERVER['HTTP_REFERER']);
+        $user =& JFactory::getUser();
+        
+	    $originalPassword = JRequest::getVar('currentpassword', '', 'post', 'string');
+		$p_1 = JRequest::getVar('newpassword', '', 'post', 'string');
+        $p_2 = JRequest::getVar('newpassword2', '', 'post', 'string');
+        $id = JRequest::getVar('userid', 0, 'post', 'int');
+        
+        
+        if ((int)$id != (int)$user->get('id')) {
+            $application->redirect($refer, 'Unauthorised user', 'error');
+        }
+        
+        $password = $user->get('password');
+        $salt = $this->getSalt($password);
+        $currentpassword = $this->makeCrypt($originalPassword, $salt);
+        
+        if ($currentpassword != $password || $p_1 != $p_2) {
+            $application->redirect($refer, 'Password could not be verified', 'error');
+        }
+        
+        $newpassword = $this->makeCrypt($p_1);
+        
+        $user->set('password', $newpassword);
+        
+        if (!$user->save()) {
+            $this->response(500, 'Password not updated');
+        }
+        else {
+            $this->response(200, 'Password updated');
+        }
+    }
+    
+    
+
+    
+    private function getSalt($password) {  
+        $passwordarray = explode(":", $password);
+		
+		if (is_array($passwordarray)) {
+            return $passwordarray[1];
+        }
+        
+        return false;
+    }
+    
+    
+    
+    
     private function makeScripture($book, $chapter, $verse) {
         return $book . ' ' . $chapter . ':' . $verse;
+    }
+    
+    
+    
+    
+    private function makeCrypt($password, $salt = false) {
+    
+		if (!$salt) {
+            $salt = JUserHelper::genRandomPassword(32);
+        }
+        
+        $crypt = JUserHelper::getCryptedPassword($password, $salt);
+        $crypted = $crypt.':'.$salt;
+        
+        return $crypted;
     }
     
     
@@ -161,6 +371,78 @@ class HolinessControllerDevotion extends JController
         
         exit();
     }
+    
+    
+    
+    private function resizeImages($imageUrl, $destinationFolder, $extension, $id) {
+        $thumbnail = new resize($imageUrl);
+        $icon = new resize($imageUrl);
+    
+        $thumbnail->resizeImage(200, 200, 'crop');
+        $thumbnail->saveImage($destinationFolder . 'user-' . $id . '-thumb.' . $extension);
+    
+    
+        $icon->resizeImage(50, 50, 'crop');
+        $icon->saveImage($destinationFolder . 'user-' . $id . '-icon.' . $extension);
+    
+        return true;    
+    }
+
+    /*
+    public function addamen() {
+        $model =& $this->getModel('devotion');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
+        
+        if (is_object($data)) {
+            $userid = $user->id;
+            $commentid = $data->commentid;
+        }
+        elseif (is_array($data)) {
+            $userid = $user->id;
+            $commentid = $data['commentid'];
+        }
+        
+        if (!$model->addAmen($commentid, $userid)) {
+            $this->response(500, 'Amen not saved'); 
+        }
+        else {
+            $this->response(200, 'Amen saved');
+        }
+        
+        exit();     
+    }
+
+
+    public function addcomment() {
+        $model =& $this->getModel('devotion');
+        $comment = array();
+        $data = $this->get_post_data();
+        $user =& JFactory::getUser();
+        
+        if (is_object($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data->txt;
+            $comment['devotionid'] = $data->postid;
+            $comment['name'] = $data->name;
+        }
+        elseif (is_array($data)) {
+            $comment['userid'] = $user->id;
+            $comment['txt'] = $data['txt'];
+            $comment['devotionid'] = $data['postid'];
+            $comment['name'] = $data['name'];
+        }
+        
+        if (!$model->addComment($comment)) {
+            $this->response(500, 'Comment not saved'); 
+        }
+        else {
+            $this->response(200, 'Comment saved');
+        }
+        
+        exit();     
+    }*/
     
     
  
