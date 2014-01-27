@@ -11,8 +11,8 @@ define(["jquery", "underscore", "backbone", "text!tmpl/request.html"], function 
         
         
         events: {
-            'click #acceptrequest': 'acceptRequest',
-            'click #ignorerequest': 'ignoreRequest'
+            'click #acceptrequest': 'respond',
+            'click #ignorerequest': 'respond'
         },
 
 
@@ -28,35 +28,23 @@ define(["jquery", "underscore", "backbone", "text!tmpl/request.html"], function 
         },
         
         
-        acceptRequest: function (event) {
+        respond: function (event) {
             event.preventDefault();
             
-            var currentElem = $(event.currentTarget),
+            var elemId = $(event.currentTarget).attr('id'),
                 partnerid = this.model.get('userid'), 
                 id = this.model.get('id'),
-                self = this;
+                self = this,
+                response = {acceptrequest: 'accept', ignorerequest: 'ignore'};
             
             $("#requestnotices").find("span.noti-indicator").empty().hide();
-            self.model.respond('accept', id, partnerid, function (error, data) {
-                self.$el.off().remove();              
+            
+            self.model.respond(response[elemId], id, partnerid, function (error, data) {
+                self.$el.off()
+                .fadeOut('slow', function () {
+                    self.$el.remove();
+                });                    
             });        
-        },
-
-
-
-        ignoreRequest: function (event) {
-            event.preventDefault();
-            
-            var currentElem = $(event.currentTarget),
-                partnerid = this.model.get('userid'),
-                id = this.model.get('id'),
-                self = this;
-            
-            $("#requestnotices").find("span.noti-indicator").empty().hide();
-            self.model.respond('ignore', id, partnerid, function (error, data) {
-                self.$el.off().remove();              
-            }); 
-                  
         }
     });
     

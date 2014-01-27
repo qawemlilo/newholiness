@@ -11,7 +11,7 @@ define(["jquery", "backbone"], function($, Backbone) {
         
         
         respond: function(res, id, partnerid, fn) {
-            $.post('index.php?option=com_holiness&task=home.partnerresponse', {res: res, id: id, partnerid:partnerid})
+            $.post('index.php?option=com_holiness&task=user.partnerresponse', {res: res, id: id, partnerid:partnerid})
             .done(function(data){
                 fn(false, data);
             })

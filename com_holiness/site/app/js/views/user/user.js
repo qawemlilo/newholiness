@@ -94,8 +94,8 @@ define([
             var partners = _.pluck(HolinessPageVars.partners, 'id');
             
             data.value = $.toUpperFirst(data.value);
-            data.mine = (id === data.id);
-            data.mypartner = ($.inArray(id, partners) > -1);            
+            data.mine = (id === HolinessPageVars.id);
+            data.mypartner = ($.inArray(id, partners) > -1);
 
             this.$el.html(this.template(data));
             this.$el.removeClass('hide');
@@ -137,7 +137,10 @@ define([
             
             self.model.addPartner(function(err, data){
                 if (!err) {
-                    $('button.makedevotionpartner').off().fadeOut().remove();
+                    $('button.makedevotionpartner').removeClass('makedevotionpartner btn-primary').addClass('disabled btn-success').text('Request Sent');
+                }
+                else {
+                    $('button.makedevotionpartner').removeClass('makedevotionpartner btn-primary').addClass('btn-warning disabled').text("There's a bending Request");
                 }
             });
 

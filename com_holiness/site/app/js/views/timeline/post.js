@@ -49,7 +49,7 @@ define([
             
             self.user = opts.user;
             
-            self.listenToOnce(self.collection, 'render', function (postid) {
+            self.listenTo(self.collection, 'render', function (postid) {
                 self.render(postid);
             });
         },
@@ -68,7 +68,11 @@ define([
                 }, 200, 'swing');
             }
             else {
+                self.collection.pushCounter();
+                
                 self.collection.fetch({
+                    remove: false,
+                    
                     success: function () {
                         self.collection.trigger('render', postid);                      
                     }            

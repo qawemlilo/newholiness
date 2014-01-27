@@ -1,5 +1,13 @@
 
-define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], function ($, _, Backbone, Template) {
+define([
+    "jquery", 
+    "underscore", 
+    "backbone", 
+    "text!tmpl/member-side.html",
+    "noty",
+    "notyTheme",
+    "notyPosition"
+], function ($, _, Backbone, Template) {
     "use strict";
     
     $.toUpperFirst = $.toUpperFirst || function(txt) {
@@ -53,6 +61,11 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-side.html"], funct
                     .fadeOut(function () {
                         self.$el.remove();
                     });
+                    
+                    noty({text: 'Request Sent!', type: 'success'});
+                }
+                else {
+                    noty({text: "There's a bending Request", type: 'error'});
                 }
             });
             return false;

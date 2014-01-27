@@ -35,8 +35,8 @@ class HolinessModelUser extends JModelItem
     
     
     public function getMembers() {   
-        $db =& JFactory::getDBO();
-        $user =& JFactory::getUser();
+        $db = JFactory::getDBO();
+        $user = JFactory::getUser();
         
         $id = $user->id;
         
@@ -53,7 +53,7 @@ class HolinessModelUser extends JModelItem
     
     
     public function getComments($id) {   
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         
         $query = "SELECT comment.id, comment.userid, comment.txt AS comment, comment.amens, comment.ts, member.imgext, user.name ";
         $query .= "FROM #__devotion_comments AS comment ";
@@ -72,7 +72,7 @@ class HolinessModelUser extends JModelItem
 
     
     public function getUser($name) {   
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         
         $query = "SELECT member.id, member.userid, member.church, member.imgext, user.name ";
         $query .= "FROM #__hpmembers member ";
@@ -127,30 +127,36 @@ class HolinessModelUser extends JModelItem
     
     
     function addPartner($arr) {
-        $table = $this->getTable('Partners');
-        $partnerid = $this->checkParner($arr['userid'], $arr['partnerid']);
+        $userid = (int)$arr['userid'];
+        $partnerid = (int)$arr['partnerid'];
         
-        if ($partnerid) {
+        if (!$partnerid || !$userid) {
             return false;
         }
         
-        if (is_array($arr) && count($arr) > 0) {
-            if (!$table->bind($arr)) {
-                return false;
-            }
-            if (!$table->store($arr)) {
-                return false;
-            }
-                
-            return $table;
+        $partnerShipId = $this->checkPartner($userid, $partnerid);
+        
+        if ($partnerShipId) {
+            return false;
         }
         
-        return false;
+        $row = $this->getTable('Partners');
+        
+        if (!$row->bind($arr)) {
+            return false;
+        }
+        if (!$row->store($arr)) {
+            return false;
+        }
+        
+        $result = array ('id'=>$row->id, 'userid'=>$row->userid, 'partnerid'=>$row->partnerid);
+                
+        return $result;
     }
     
     
     function getParners($id) {
-        $db =& JFactory::getDBO();
+        $db = JFactory::getDBO();
         
         $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
         $query .= "FROM #__hpmembers AS member  ";
@@ -167,12 +173,13 @@ class HolinessModelUser extends JModelItem
     
     
     
-    private function checkParner($userid, $partnerid) {   
-        $db =& JFactory::getDBO();
+    private function checkPartner($userid, $partnerid) {   
+        $db = JFactory::getDBO();
         
         $query = "SELECT partners.id ";
         $query .= "FROM #__devotion_partners AS partners ";
-        $query .= "WHERE (partners.userid={$userid} AND partners.partnerid={$partnerid}) OR (partners.userid={$partnerid} AND partners.partnerid={$userid})";
+        $query .= "WHERE (partners.userid={$userid} AND partners.partnerid={$partnerid} AND partners.active=0) OR (partners.userid={$partnerid} AND partners.partnerid={$userid}) AND partners.active=0 ";
+        $query .= "LIMIT 1";
 
         $db->setQuery($query);
         $result = $db->loadResult();

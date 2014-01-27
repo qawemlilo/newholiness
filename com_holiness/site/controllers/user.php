@@ -37,8 +37,8 @@ class HolinessControllerUser extends JController
 
 
     public function addpartner() {
-        $model =& $this->getModel('user');
-        $user =& JFactory::getUser();
+        $model = $this->getModel('user');
+        $user = JFactory::getUser();
         $post = array();
         $data = $this->get_post_data();
         
@@ -88,8 +88,8 @@ class HolinessControllerUser extends JController
     
     
     public function partnerresponse() {
-        $model =& $this->getModel('user');
-        $user =& JFactory::getUser();
+        $model = $this->getModel('user');
+        $user = JFactory::getUser();
         $arr = array();
         $data = $this->get_post_data();
         
@@ -114,21 +114,16 @@ class HolinessControllerUser extends JController
             }
         }
         elseif ($res == 'accept') {
-            
             if (!$model->updatePartner($id, array('active'=>1))) {
                 $this->response(500, 'Failed to update request');
             }
             else {
-                
-                if (!$model->addPartner(array('active'=>1, 'userid'=>$user->id, 'partnerid'=>$partnerid))) {
-                    $this->response(500, 'Failed to insert new partner');
-                }
-                else {
-                    $message = "$user->name has agreed to become your Devotion Partner. Login to http://www.holinesspage.com to be blessed by new your Devotion Partner.";
-                    $this->eMail($partnerid, $user->name, "Holiness Page", $message);
-                    
-                    $this->response(200, "Partner request accepted");
-                }
+                $model->addPartner(array(
+                    'active'=>1, 
+                    'userid'=>$user->id, 
+                    'partnerid'=>$partnerid
+                ));
+                $this->response(200, "Partner added");
             } 
         }
         
@@ -470,6 +465,24 @@ class HolinessControllerUser extends JController
         $result = JUtility::sendMail('info@holinesspage.com', 'Holiness Page', $user->email, $subject, $body);
         
         return $result;
+    }
+    
+    
+    
+    private function get_post_data() { 
+        if ($input = file_get_contents("php://input")) { 
+
+            if ($json_post = json_decode($input,true)) { 
+                return $json_post; 
+            }
+            else { 
+                parse_str($input, $variables); 
+                
+                return $variables; 
+            } 
+        } 
+        
+        return false; 
     }
 }
 
