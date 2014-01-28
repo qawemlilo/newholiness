@@ -25,6 +25,7 @@ class HolinessViewDevotion extends JView
         }
         
         $this->profile = $model->getProfile($user->id);
+        $this->user = $user;
         $this->globvars = $this->getGlobalVars($me, $partners);
         
         parent::display($tpl);
@@ -50,7 +51,7 @@ class HolinessViewDevotion extends JView
         $container = '';
         
         if (is_array($devotions) && count($devotions) > 0) {
-            $container = '<div class="row-fluid well">';
+            $container = '<div class="well"><div class="row-fluid">';
             $leftside = '<div class="span6"><ul class="unstyled" style="margin-left: 20px">';
             $rightside = '<div class="span6"><ul class="unstyled">';
             $counter = 0;
@@ -75,7 +76,7 @@ class HolinessViewDevotion extends JView
             $leftside .= '</ul></div>';
             $rightside .= '</ul></div>';
             
-            $container .= $leftside . $rightside . '</div>';
+            $container .= $leftside . $rightside . '</div></div>';
         }
         
         return $container;        

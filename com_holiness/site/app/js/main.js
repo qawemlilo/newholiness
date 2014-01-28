@@ -1,5 +1,7 @@
 requirejs.config({
     baseUrl: 'components/com_holiness/app/js',
+    
+    waitSeconds: 20,
    
     paths: {
         jquery: 'libs/jquery',

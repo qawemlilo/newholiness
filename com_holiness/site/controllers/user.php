@@ -195,24 +195,6 @@ class HolinessControllerUser extends JController
         }
         
         exit();
-    }
-    
-    
-    public function getcomments() {
-        $user =& JFactory::getUser();
-        $model =& $this->getModel('user');
-        $id = JRequest::getVar('id', '', 'get', 'int');
-        
-        $comments = $model->getComments($id);
-        
-        if ($comments && count($comments) > 0 && !$user->guest) {
-            $this->response(200, json_encode($comments));
-        }
-        else {
-            $this->response(500, '[]');
-        }
-        
-        exit();
     } 
     
     
@@ -444,7 +426,7 @@ class HolinessControllerUser extends JController
         $thumbnail = new resize($imageUrl);
         $icon = new resize($imageUrl);
     
-        $thumbnail->resizeImage(200, 200, 'crop');
+        $thumbnail->resizeImage(150, 150, 'crop');
         $thumbnail->saveImage($destinationFolder . 'user-' . $id . '-thumb.' . $extension);
     
     
@@ -452,6 +434,45 @@ class HolinessControllerUser extends JController
         $icon->saveImage($destinationFolder . 'user-' . $id . '-icon.' . $extension);
     
         return true;    
+    }
+    
+    
+    
+    private function resizeImage($imageUrl, $destinationFolder, $extension, $id) {
+    
+        // Instantiate our JImage object
+        $image = new JImage($imageUrl);
+        
+        // Get the file's properties
+        $properties = JImage::getImageFileProperties($imageUrl);
+        
+        // Resize the file as a new object
+        $thumbnail = $image->resize(150, 150, true);
+        $icon = $image->resize(50, 50, true);
+        
+        // Determine the MIME of the original file to get the proper type for output
+        $mime = $properties->mime;
+        
+        switch ($mime) {
+            case 'image/jpeg':
+                $type = IMAGETYPE_JPEG;
+            break;
+            
+            case 'image/png':
+                $type = IMAGETYPE_PNG;
+            break;
+          
+            case 'image/gif':
+                $type = IMAGETYPE_GIF;
+            break;
+            
+            default:
+                $type = IMAGETYPE_JPEG;    
+        }
+        
+        // Store the resized image to a new file
+        $thumbnail->toFile($destinationFolder . 'user-' . $id . '-thumb.' . $extension, $type);
+        $icon->toFile($destinationFolder . 'user-' . $id . '-icon.' . $extension, $type);
     }
     
     

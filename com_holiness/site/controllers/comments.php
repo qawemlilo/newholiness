@@ -88,7 +88,9 @@ class HolinessControllerComments extends JController
             $author = (int)$data['author'];
         }
         
-        if ($comment['postid'] && $comment['txt'] && $comment['post_type'] && !$model->addComment($comment)) {
+        $commentId = $model->addComment($comment);
+        
+        if ($comment['postid'] && $comment['txt'] && $comment['post_type'] && !$commentId) {
             $this->response(500, 'Comment not saved'); 
         }
         else {
@@ -97,7 +99,7 @@ class HolinessControllerComments extends JController
                 $this->eMail($author, $user->name, "Holiness Page", $message);
             }
             
-            $this->response(200, 'Comment saved');                
+            $this->response(200, $commentId);                
         }
         
         exit();     
@@ -177,7 +179,7 @@ class HolinessControllerComments extends JController
         http_response_code($code);
         header('Content-type: application/json');
         
-        echo '{"code":"' . $code . '","message":"' . $msg . '"}';
+        echo $msg;
         
         exit();
     }

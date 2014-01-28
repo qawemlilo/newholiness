@@ -21,25 +21,41 @@ define([
         template: _.template(Template),
         
         
+        hasLoaded: false,
+        
+        
         events: {
             'submit #comment-form': 'submitComment'
         },
         
         
         initialize: function (opts) {
-            var self = this;
-                       
-            self.collection.fetch({
-                success: function (collection, response, options) {
-                    self.render(collection);
-                    self.collection.trigger('loaded', collection.length);                 
-                },
-                error: function (collection, response, options) {
-                    self.render(collection);                 
-                }
-            });
+            var self = this, 
+                loadingGif = new Image(),
+                el = document.getElementById('timeline');
             
-            self.$el.html('<p style="text-align: center"><img src="components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></p>');
+            // preload image
+            loadingGif.src = "components/com_holiness/assets/images/loading.gif";
+            
+            function handler() {
+                if (!self.isElementInViewport(el) || self.hasLoaded) {
+                    return false;
+                }
+                
+                self.fetchComments();
+            }
+            
+            // immediately check if end of article is in viewport
+            if (el) {
+                if (self.isElementInViewport(el) && !self.hasLoaded) {
+                    self.fetchComments();
+                }
+                
+                $(window).on('scroll', handler);
+            }
+            else {
+                self.fetchComments();
+            }
             
             return self;
         },
@@ -100,9 +116,10 @@ define([
             
             self.$('.comments-list').append(view.render().el);
             
-            self.send(data, function (error, res) {
+            self.send(data, function (error, id) {
                 if(!error) {
                     noty({text: 'Comment saved!', type: 'success'});
+                    model.set({id: id});
                 }
                 else {
                     noty({text: 'Comment not saved!', type: 'error'});
@@ -110,6 +127,27 @@ define([
             });
             
            document.forms['comment-form'].reset();
+        },
+        
+    
+        fetchComments: function () {
+            var self = this;
+            
+            // show loading gif
+            self.$el.html('<p style="text-align: center"><img src="components/com_holiness/assets/images/loading.gif" style="width:80px; height:12px;" /></p>');
+            
+            // fetch comments from server
+            self.collection.fetch({
+                success: function (collection, response, options) {
+                    self.render(collection);
+                    self.collection.trigger('loaded', collection.length);
+                    self.hasLoaded = true;                        
+                },
+                error: function (collection, response, options) {
+                    self.render(collection);
+                    self.hasLoaded = true;
+                }
+            });
         },
         
     
@@ -134,7 +172,19 @@ define([
             .fail(function () {
                fn(true);
             });    
-        }       
+        },
+        
+
+        isElementInViewport: function (el) {
+            var rect = el.getBoundingClientRect();
+        
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= $(window).height() &&
+                rect.right <= $(window).width() 
+            );
+        }        
     });
     
     return CommentsView;

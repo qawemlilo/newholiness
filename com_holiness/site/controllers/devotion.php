@@ -154,10 +154,11 @@ class HolinessControllerDevotion extends JController
     
     
     private function response ($code=200, $msg) {
+        $arr = array('message'=>$msg);
         http_response_code($code);
         header('Content-type: application/json');
         
-        echo '{"code":"' . $code . '","message":"' . $msg . '"}';
+        echo json_encode($arr);
         
         exit();
     }
@@ -229,12 +230,12 @@ class HolinessControllerDevotion extends JController
             $from = array($from_email, $from_name);
             $subject = "Dear {$to_name}, hear the voice of the Lord today.";
             
-            $body .= "This devotion was shared with you by: $from_name from the HOLINESS PAGE website." . "\n \n";
-            $body .= $theme . "\n \n";
-            $body .= $msg . "\n \n";
+            $body .= "This devotion was shared with you by $from_name from the HOLINESS PAGE website. " ;
+            $body .= $theme . ".\n";
+            $body .= $msg . ".\n";
             $body .= "Please visit this page to read your message: " . $url;
             
-            $mailsent = $this->sendMail($from, $to_email, $subject, $body);
+            $mailsent = $this->sendMail($from, $to_email, $to_name, $subject, $body);
            
             if ($mailsent) {
                 $this->response(200, 'Message sent!');;
@@ -264,24 +265,15 @@ class HolinessControllerDevotion extends JController
     }
     
     
-    private function sendMail($from, $to, $subject, $body, $cc = null) {
-        $mail = JFactory::getMailer();
+    private function sendMail($from, $to, $to_name, $subject, $message) {
+        $body = "Hi {$to_name}, \n\n";
+        $body .= "{$message} \n\n\n";
+        $body .= "Holiness Page";
         
-        $mail->setSender($from);
-        $mail->addRecipient($to);
-        $mail->setSubject($subject);
-        $mail->setBody($body);
+        $result = JUtility::sendMail($from, 'Holiness Page', $to, $subject, $body);
         
-        if ($cc) {
-            $mail->addBCC($cc);
-        } 
-        
-        if ($mail->Send()) {
-            return true;
-        } else {
-            return false;
-        } 
-    } 
+        return $result;
+    }
 }
 
 
