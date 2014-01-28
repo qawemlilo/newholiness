@@ -2,7 +2,7 @@
 define(["jquery", "underscore", "backbone", "views/navigation/request", "models/request", "bootstrap"], function($, _, Backbone, RequestView, RequestModel) {
     "use strict";
     
-    var Notifications = Backbone.View.extend({
+    var Requests = Backbone.View.extend({
 
         el: '#mainNavigation',
         
@@ -69,5 +69,5 @@ define(["jquery", "underscore", "backbone", "views/navigation/request", "models/
         }
     });
     
-    return Notifications;
+    return Requests;
 });

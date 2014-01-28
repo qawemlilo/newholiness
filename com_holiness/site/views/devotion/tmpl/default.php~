@@ -45,7 +45,7 @@ $doc->addScriptDeclaration($script);
       </blockquote>
     </div>
     <div class="span9">
-        <h2 style="margin-top: 0px"><?php echo ucwords($this->devotion->theme); ?></h2>
+        <h3 style="margin-top: 0px"><?php echo ucwords($this->devotion->theme); ?></h3>
         <div class="row-fluid" style="margin: 10px 0px 10px 0px; padding-top: 0px;">
           <div class="span3"><small><?php echo $date->format("l d M Y"); ?></small></div>
           <div class="span9">

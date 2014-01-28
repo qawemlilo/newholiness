@@ -98,23 +98,7 @@ class HolinessModelPosts extends JModelItem
     
     
     
-    public function getPostComments($id) {   
-        $db =& JFactory::getDBO();
-        
-        $query = "SELECT plusone.id, plusone.postid, plusone.userid, plusone.post_type, plusone.ts ";
-        $query .= "FROM #__hp_plusone AS plusone ";
-        $query .= "WHERE plusone.flag=0 AND plusone.userid!=$id AND (plusone.postid IN (SELECT id FROM #__hp_timeline WHERE userid=$id)) ";
-        $query .= "ORDER BY plusone.ts DESC";
-
-        $db->setQuery($query);
-        $result = $db->loadObjectList();
-        
-        return $result;
-    }
-    
-    
-    
-    public function getDevotionComments($id) {   
+    public function getNewComments($id) {   
         $db =& JFactory::getDBO();
         
         $query = "SELECT plusone.id, plusone.postid, plusone.userid, plusone.post_type, plusone.ts ";

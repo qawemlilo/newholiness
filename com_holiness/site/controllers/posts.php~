@@ -42,9 +42,11 @@ class HolinessControllerPosts extends JController
     
     
       
-    public function getnotifications() {
+    public function getplusones() {
         $user =& JFactory::getUser();
         $model =& $this->getModel('posts');
+        $id = JRequest::getVar('id', '', 'get', 'int');
+        $type = JRequest::getVar('tp', '', 'get', 'string');
         
         if ($type == 'prayerrequest') {
             $plusones = $model->getWillprays($id);
