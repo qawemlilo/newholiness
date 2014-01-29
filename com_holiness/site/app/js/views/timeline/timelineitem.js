@@ -41,6 +41,8 @@ define([
             var self = this;
             
             self.user = opts.user;
+            
+            self.render();
         },
         
         
@@ -77,6 +79,8 @@ define([
             data.posttype = this.postLabel[data.posttype];
             
             this.$el.append(this.template(data));
+            
+            this.delegateEvents();
 
             return this;                
         },

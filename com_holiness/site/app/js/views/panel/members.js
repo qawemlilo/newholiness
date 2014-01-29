@@ -51,7 +51,7 @@ define(["jquery", "underscore", "backbone", "views/panel/member"], function ($, 
                     model: model
                 });
                 
-                fragment.appendChild(userView.render().el);
+                fragment.appendChild(userView.el);
             });
             
             self.$el.html(fragment);

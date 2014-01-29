@@ -170,20 +170,11 @@ define([
         plusOneAmen: function (event) {
             event.preventDefault();
             
-            var data = {
-                commentid: this.model.get('id')
-            },
-            
-            self = this,
-            
-            amens = this.model.get('amens');
+            var self = this, strarr, amens = self.model.get('amens');
             
             if (amens) {
-                var cleanstr = amens.toString(),
-                    strarr = cleanstr.split(',');
-
+                strarr = amens.toString().split(',');
                 strarr.push(HolinessPageVars.id + '');
-                
                 amens = strarr;
             }
             else {
@@ -191,15 +182,15 @@ define([
             }
 
             amens = amens.join(',');
+            self.model.set({'amens': amens});
             
-            this.model.set({'amens': amens});
-            
-            $.post('index.php?option=com_holiness&task=comments.addamen', data)
-            .done(function(data){
-                noty({text: 'Amen saved!', type: 'success'});  
-            })
-            .fail(function () {
-                noty({text: 'Amen not saved!', type: 'error'});  
+            self.model.saveAmen(function (error, data) {
+                if (error) {
+                    noty({text: 'Amen not saved!', type: 'error'}); 
+                }
+                else {
+                    noty({text: 'Amen saved!', type: 'success'});
+                }
             }); 
             
             self.$el.fadeOut(function () {

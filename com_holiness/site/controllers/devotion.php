@@ -17,16 +17,10 @@ class HolinessControllerDevotion extends JController
         $devotions = $model->getDevotions($id);
         
         if ($devotions && count($devotions) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($devotions);
+            $this->response(200, $devotions);
         }
         else {
-            http_response_code(404);
-            header('Content-type: application/json');
-            
-            echo json_encode("[]");
+            $this->response(500, "[]");
         
         }
         
@@ -75,11 +69,13 @@ class HolinessControllerDevotion extends JController
 		
 
         if ($instance->save()) {      
-	        $this->response(200, 'Account created, please login.');
+	        $this->response(200, array('message'=>'Account created, please login.'));
 		}
         else {   
-	        $this->response(500, 'Error. Account not created.');	
-        }			
+	        $this->response(500, array('message'=>'Error. Account not created.'));	
+        }
+        
+        exit();        
     }
     
     
@@ -149,18 +145,6 @@ class HolinessControllerDevotion extends JController
     
     private function makeScripture($book, $chapter, $verse) {
         return $book . ' ' . $chapter . ':' . $verse;
-    }
-    
-    
-    
-    private function response ($code=200, $msg) {
-        $arr = array('message'=>$msg);
-        http_response_code($code);
-        header('Content-type: application/json');
-        
-        echo json_encode($arr);
-        
-        exit();
     }
     
     
@@ -238,11 +222,12 @@ class HolinessControllerDevotion extends JController
             $mailsent = $this->sendMail($from, $to_email, $to_name, $subject, $body);
            
             if ($mailsent) {
-                $this->response(200, 'Message sent!');;
+                $this->response(200, array('message'=>'Message sent!'));
             } else {
-               $this->response(500, 'Message not sent');
+               $this->response(500, array('message'=>'Message not sent'));
             }
         }
+        
         exit();
     }
     
@@ -273,6 +258,15 @@ class HolinessControllerDevotion extends JController
         $result = JUtility::sendMail($from, 'Holiness Page', $to, $subject, $body);
         
         return $result;
+    }
+    
+    
+    
+    private function response ($code=200, $msg) {
+        http_response_code($code);
+        header('Content-type: application/json');
+        
+        echo json_encode($msg);
     }
 }
 

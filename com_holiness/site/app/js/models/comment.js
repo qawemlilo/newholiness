@@ -67,6 +67,17 @@ define(["jquery","backbone"], function($, Backbone) {
                     opts.error(model, 'Error');
                 }
             });    
+        },
+        
+        
+        saveAmen: function(fn) {
+            $.post('index.php?option=com_holiness&task=comments.addamen', {commentid: this.get('id')}).done(function(data) {
+                fn(false, data);
+                console.log('Saving amen successful');
+            }).fail(function () {
+                fn(true);
+                console.log('Saving amen failed');
+            });    
         }
     });
       

@@ -54,8 +54,8 @@ define([
         
         addOne: function (model) {
             var self = this,
-                view = (new TimelineItemView({model: model, user: self.user})).render();
-
+                view = new TimelineItemView({model: model, user: self.user});
+            
             this.$('.timeline-content-items').append(view.el);
         },
         

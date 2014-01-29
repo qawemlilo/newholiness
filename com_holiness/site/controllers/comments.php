@@ -18,20 +18,14 @@ class HolinessControllerComments extends JController
         $comments = $model->getComments($id, $type);
         
         if ($comments && count($comments) > 0 && !$user->guest) {
-            http_response_code(200);
-            header('Content-type: application/json');
-            
-            echo json_encode($comments);
+            $this->response(200, json_encode($comments));
         }
         else {
-            http_response_code(404);
-            header('Content-type: application/json');
-            
-            echo json_encode("[]");
+            $this->response(500, json_encode(array('message'=>'empty')));
         
         }
         
-         exit();
+        exit();
     }
     
     
@@ -53,10 +47,10 @@ class HolinessControllerComments extends JController
         }
         
         if (!$model->addAmen($commentid, $userid)) {
-            $this->response(500, 'Amen not saved'); 
+            $this->response(500, json_encode(array('message'=>'Amen not saved'))); 
         }
         else {
-            $this->response(200, 'Amen saved');
+            $this->response(200, json_encode(array('message'=>'Amen saved')));
         }
         
         exit();     
@@ -91,7 +85,7 @@ class HolinessControllerComments extends JController
         $commentId = $model->addComment($comment);
         
         if ($comment['postid'] && $comment['txt'] && $comment['post_type'] && !$commentId) {
-            $this->response(500, 'Comment not saved'); 
+            $this->response(500, json_encode(array('message'=>'Comment not saved'))); 
         }
         else {
             if ($user->id != $author) {
@@ -178,10 +172,7 @@ class HolinessControllerComments extends JController
     private function response ($code=200, $msg) {
         http_response_code($code);
         header('Content-type: application/json');
-        
         echo $msg;
-        
-        exit();
     }
     
     

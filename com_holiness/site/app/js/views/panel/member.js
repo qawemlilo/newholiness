@@ -34,6 +34,11 @@ define([
         },
 
         
+        initialize: function () {
+            this.render();
+        },
+
+        
         render: function () {
             var template, data = this.model.toJSON();
             
@@ -43,7 +48,7 @@ define([
  
             this.$el.append(template);
             
-            this.model.set({viewed: true});
+            this.delegateEvents();
             
             return this;
         },
