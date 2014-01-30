@@ -25,7 +25,7 @@ class HolinessModelComments extends JModelItem
         $query .= "INNER JOIN #__users AS user ";
         $query .= "ON member.userid=user.id ";
         $query .= "WHERE comment.postid=$id AND comment.post_type='{$type}' ";
-        $query .= "ORDER BY ts ASC";
+        $query .= "ORDER BY ts DESC";
 
         $db->setQuery($query);
         $result = $db->loadObjectList();

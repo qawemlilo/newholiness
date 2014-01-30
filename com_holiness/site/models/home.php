@@ -203,6 +203,46 @@ class HolinessModelHome extends JModelItem
         $result = $db->loadObjectList();
         
         return $result;
-    }    
+    }
+
+    
+    
+
+    public function getPosts() {   
+        $user =& JFactory::getUser();
+        $db =& JFactory::getDBO();
+        $id = $user->id;
+        $start = 0; 
+        $limit = 10;
+        
+        $query = "SELECT timeline.id, timeline.userid, members.imgext, members.id AS memberid, users.name, timeline.post_type AS posttype, timeline.post, UNIX_TIMESTAMP(timeline.ts) AS ts ";
+        $query .= "FROM #__hp_timeline AS timeline ";
+        $query .= "INNER JOIN #__users AS users ";
+        $query .= "ON timeline.userid = users.id ";
+        $query .= "INNER JOIN #__hpmembers AS members ";
+        $query .= "ON timeline.userid = members.userid ";
+        $query .= "WHERE timeline.userid=$id OR timeline.userid IN (SELECT partnerid FROM #__devotion_partners AS partners WHERE partners.userid=$id AND partners.active=1) ";
+        $query .= "ORDER BY ts DESC";
+
+        $db->setQuery($query, $start, $limit);
+        $result = $db->loadAssocList();
+        
+        return $result;
+    }
+    
+    
+    public function getMembers() {   
+        $db = JFactory::getDBO();
+        
+        $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
+        $query .= "FROM #__hpmembers AS member ";
+        $query .= "INNER JOIN #__users AS user ";
+        $query .= "ON member.userid=user.id ";
+        $db->setQuery($query); 
+
+        $result = $db->loadAssocList();
+        
+        return $result;
+    }   
 }
 

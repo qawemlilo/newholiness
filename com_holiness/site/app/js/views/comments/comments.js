@@ -25,6 +25,7 @@ define([
         
         
         events: {
+            'keypress #comment-form textarea': 'submitOnEnter',
             'submit #comment-form': 'submitComment'
         },
         
@@ -99,9 +100,20 @@ define([
         
         
         
-        submitComment: function (event) {
+        submitOnEnter: function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                this.submitComment();
+            }
+        },      
         
-            event.preventDefault();
+        
+        
+        submitComment: function (event) {
+            
+            if (event) {
+                event.preventDefault();
+            }
             
             var self = this,
                 data = self.formToObject(),
@@ -114,7 +126,9 @@ define([
                 }),
                 view = new CommentView({model: model});
             
-            self.$('.comments-list').append(view.render().el);
+            view.$el.hide();
+            self.$('.comments-list').prepend(view.render().$el);
+            view.$el.slideDown('slow');
             
             self.send(data, function (error, id) {
                 if(!error) {

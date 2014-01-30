@@ -9,27 +9,28 @@ define([
     "views/navigation/requests",
     "views/navigation/search",
     "views/comments/comments",
+    "views/devotion/email",
     "models/post",
     "views/panel/members",
     "router"
-], function($, Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, Post, MembersView, Router) {
+], function($, Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, emailDevotion, Post, MembersView, Router) {
     "use strict";
     
     var App = {
         init: function (id) {
             // Collections
-            var usersCollection = App.collections.users = new UsersCollection();
+            var usersCollection = new UsersCollection(window.window.hp_members);
+            App.collections.users = usersCollection;
             
-            usersCollection.fetch();
-            
-            App.user = new Me(HolinessPageVars);
+            App.user = new Me(window.HolinessPageVars);
             App.views.nav = new Nav({collection: usersCollection});
             App.views.search = new Search({collection: usersCollection, user: App.user}); 
             App.views.members = new MembersView({collection: usersCollection});
             
             // if id not defined (which means we are on the home page)
             if (!id) {
-                App.collections.timeline = new TimelineCollection();
+                App.collections.timeline = new TimelineCollection(window.hp_timelime);
+                App.collections.timeline.pushCounter();
                 
                 App.router = new Router(App);
                 Backbone.history.start();
@@ -46,67 +47,9 @@ define([
                 App.views.comments = new CommentsView({collection: App.collections.comments,  model: post});
                 
                 $('#timeline').html(App.views.comments.el);
-            }
-
-            $('#myModal').modal({
-                keyboard: false,
-                show: false
-            });
-            
-            
-            function handleForm(event, opts) {
-                var self = opts.form,
-                    progress = $('form .' + opts.progress),
-                    response = $('form .' + opts.response);
-                    
-                progress.slideDown(function () {
-                    $.post(opts.action, $(self).serialize() + '&t=' + (new Date().getTime()) , 'text')
-                    
-                    .done(function(res) {
-                        if (typeof res === 'object') {
-                            res = res.message;
-                        }
-                        
-                        progress.slideUp(function () {
-                            response.addClass('alert-success').html($('<strong>' + res + '</strong>')).slideDown('slow');
-                        });
-                          
-                        window.setTimeout(function () { 
-                            response.slideUp(function () {
-                                response.removeClass('alert-success');
-                            }); 
-                        }, 10 * 1000);
-                    })
-                    
-                    .fail(function(res) {
-                        if (typeof res === 'object') {
-                            res = res.message;
-                        }
-                        
-                        progress.slideUp(function () {
-                            response.addClass('alert-error').html($('<strong>' + res + '</strong>')).slideDown('slow');
-                        });
-                          
-                        window.setTimeout(function () { 
-                            response.slideUp(function () {
-                                response.removeClass('alert-error');
-                            }); 
-                        }, 10 * 1000);
-                    });
-                });
-                    
-                return false;
-            }
-            
-            
-            $('#chgform').on('submit', function (event) {
-                return handleForm(event, {
-                    form: this,
-                    progress: 'passprogress',
-                    response: 'passresponse',
-                    action: $(this).attr('action')
-                });
-            });            
+                
+                emailDevotion();
+            }            
             
             return this;
         },

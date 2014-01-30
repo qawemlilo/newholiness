@@ -4,7 +4,8 @@
   "description": "Christian social network",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "r.js -o com_holiness/site/app/js/app.build.js"
   },
   "repository": {
     "type": "git",

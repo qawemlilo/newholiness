@@ -24,10 +24,12 @@ $currentUser =& JFactory::getUser();
 
 
 $HolinessPage = json_encode($this->globvars);
+$members = json_encode($this->members);
 
 $script = "
 (function(window) {
-    window.HolinessPageVars = {$HolinessPage};
+window.HolinessPageVars = {$HolinessPage};
+window.hp_members = {$members};
 })(window);
 ";
 $doc->addScriptDeclaration($script);

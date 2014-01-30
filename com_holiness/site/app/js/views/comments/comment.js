@@ -34,7 +34,8 @@ define([
             "click .comment-item-edit": "editItem",
             "click .comment-item-delete": "deleteItem",
             "submit .comment-edit form": "saveEdit",
-            "click .comment-edit form .cancel": "closeEdit"
+            "click .comment-edit form .cancel": "closeEdit",
+            "keypress .comment-edit form textarea": "submitOnEnter"
         },
          
 
@@ -139,6 +140,15 @@ define([
             });
             
             this.closeEdit();
+        },      
+        
+        
+        
+        submitOnEnter: function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                this.$('.comment-edit form').submit();
+            }
         },
         
         

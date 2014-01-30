@@ -36,9 +36,6 @@ class HolinessModelUser extends JModelItem
     
     public function getMembers() {   
         $db = JFactory::getDBO();
-        $user = JFactory::getUser();
-        
-        $id = $user->id;
         
         $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
         $query .= "FROM #__hpmembers AS member ";

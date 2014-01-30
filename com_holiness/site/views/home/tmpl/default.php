@@ -36,10 +36,14 @@ $doc->addStyleDeclaration('
 
 
 $HolinessPage = json_encode($this->globvars);
+$timelime = json_encode($this->timelime);
+$members = json_encode($this->members);
 
 $script = "
 (function(window) {
-    window.HolinessPageVars = {$HolinessPage};
+ window.HolinessPageVars = {$HolinessPage};
+ window.hp_timelime = {$timelime};
+ window.hp_members = {$members};
 })(window);
 ";
 $doc->addScriptDeclaration($script);

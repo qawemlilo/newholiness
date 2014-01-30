@@ -4,7 +4,7 @@ define([
     "views/timeline/postbox",
     "views/timeline/posts",
     "views/timeline/post",
-    "views/user/user",
+    "views/user/user"
 ], function (Backbone, PostBox, Posts, Post, User) {
     "use strict";
     
@@ -32,17 +32,8 @@ define([
             
             switch (view) {
                 case 'home': 
-                    var postBox = new PostBox({collection: self.collections.timeline}),
-                        timeLine = new Posts({collection: self.collections.timeline, user: self.user});
-                        
-                    if (timeLine.collection.length < 1) {   
-                        timeLine.collection.fetch({
-                            remove: false,
-                            success: function (collection, response, options) {
-                                timeLine.collection.pushCounter();
-                            }
-                        });
-                    }
+                    var timeLine = new Posts({collection: self.collections.timeline, user: self.user}),
+                        postBox = new PostBox({posts: timeLine});
                     
                     self.$el.append(postBox.render().el);
                     self.$el.append(timeLine.render().el);

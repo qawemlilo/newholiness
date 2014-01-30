@@ -36,7 +36,6 @@ define([
             self.user = opts.user;
             
             self.listenTo(self.collection, "add", self.addOne);
-            self.listenTo(self.collection, "reset", self.viewAll);
             
             self.$('.dropdown-toggle').dropdown();
         },
@@ -52,11 +51,26 @@ define([
         
         
         
+        addNew: function (model) {
+         
+            var self = this, view;
+            
+            self.collection.add(model, {silent: true});
+
+            view = new TimelineItemView({model: model, user: self.user});
+            view.$el.hide();
+            self.$('.timeline-content-items').prepend(view.$el);
+            view.$el.slideDown('slow');
+        },
+        
+        
+        
+        
         addOne: function (model) {
             var self = this,
                 view = new TimelineItemView({model: model, user: self.user});
             
-            this.$('.timeline-content-items').append(view.el);
+            self.$('.timeline-content-items').append(view.$el);
         },
         
         

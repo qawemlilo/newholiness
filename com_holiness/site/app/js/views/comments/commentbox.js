@@ -37,7 +37,9 @@ define([
 
             var view = new View({model: model});
             
-            $('#commentscontainer').append(view.render().el);
+            view.$el.hide();
+            $('#commentscontainer').prepend(view.render().$el);
+            view.$el.slideDown('slow');
             
             this.send(data, function (error, res) {
                 if(!error) {

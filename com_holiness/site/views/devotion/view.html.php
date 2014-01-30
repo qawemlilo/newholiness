@@ -16,6 +16,7 @@ class HolinessViewDevotion extends JView
         
         $me = $model->getMe($user->id);
         $partners = $model->getParners($user->id);
+        $members = $model->getMembers();
         
         if ($id || !$layout == 'new') {
             $this->devotion = $model->getDevotion($id);
@@ -25,6 +26,7 @@ class HolinessViewDevotion extends JView
         }
         
         $this->profile = $model->getProfile($user->id);
+        $this->members = $members;
         $this->user = $user;
         $this->globvars = $this->getGlobalVars($me, $partners);
         

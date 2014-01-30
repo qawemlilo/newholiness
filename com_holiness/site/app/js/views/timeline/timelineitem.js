@@ -33,7 +33,8 @@ define([
             "click .edit-timeline-item-edit": "editItem",
             "click .edit-timeline-item-delete": "deleteItem",
             "submit .timelinepost-main-edit form": "saveEdit",
-            "click .timelinepost-main-edit form .cancel": "closeEdit"
+            "click .timelinepost-main-edit form .cancel": "closeEdit",
+            'keypress .timelinepost-main-edit form textarea': 'submitOnEnter'
         },
         
         
@@ -139,6 +140,15 @@ define([
             });
             
 
+        },      
+        
+        
+        
+        submitOnEnter: function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                this.$('.timelinepost-main-edit form').submit();
+            }
         },
         
         

@@ -6,7 +6,10 @@ define([
     "models/timeline",
     "text!tmpl/timeline/postbox.html",
     "moment",
-    "wordlimit"
+    "wordlimit",
+    "noty",
+    "notyTheme",
+    "notyPosition"
 ], function ($, _, Backbone, TimelineItem, Template) {
     "use strict";
 
@@ -24,12 +27,6 @@ define([
         template: _.template(Template),
         
         
-        sharebox: $('#sharebox'),
-        
-        
-        charsDiv: $('#chars'),
-        
-        
         events: {
             'click .post-actions a': 'changeTab',
             'submit #postform': 'submitPost'
@@ -37,9 +34,7 @@ define([
         
         
         initialize: function (opts) {
-            this.$('#sharebox').wordLimit({
-                counterDiv: '#chars'
-            });
+            this.postsView = opts.posts;
         },
         
         
@@ -51,6 +46,10 @@ define([
             };
             
             this.$el.html(this.template(data));
+            
+            this.$('#sharebox').wordLimit({
+                counterDiv: '#chars'
+            });
             
             return this;                
         },
@@ -86,8 +85,8 @@ define([
                 marginLeft: marginleft
             }, 500, function () {
                 $('#sharetype').val(tab);
-                self.sharebox.val('').attr('placeholder', plcHolder).focus();
-                self.charsDiv.html('150');
+                self.$('#sharebox').val('').attr('placeholder', plcHolder).focus();
+                self. $('#chars').html('150');
             });  
         },
         
@@ -98,19 +97,25 @@ define([
         
             event.preventDefault();
             
-            var data = this.formToObject();
+            var self = this, data = self.formToObject(), model;
 
             data.posttype = data.posttype.toLowerCase().replace(/ /g, '');
             
+            model = new TimelineItem(data);
             
-            var model = new TimelineItem(data);
+            model.save(null, {
+                success: function(model, data) {
+                    model.set(data.id);
+                    self.postsView.addNew(model);
+                    noty({text: 'Your post has been shared succefully!', type: 'success'});
+                },
+                error: function () {
+                    noty({text: 'Error. Post not saved', type: 'error'});
+                }
+            });
             
-            model.save();
-            
-            this.sharebox.val('');
-            this.charsDiv.html('150');
-            
-            this.collection.add(model);
+            self.$('#sharebox').val('');
+            self.$('#chars').html('150');
             
             document.forms['postform'].reset();
         },

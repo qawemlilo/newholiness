@@ -230,5 +230,20 @@ class HolinessModelDevotion extends JModelItem
 
         return $results;
     }
+    
+    
+    public function getMembers() {   
+        $db = JFactory::getDBO();
+        
+        $query = "SELECT member.id AS memberid, member.church, member.imgext, user.id, user.name AS value ";
+        $query .= "FROM #__hpmembers AS member ";
+        $query .= "INNER JOIN #__users AS user ";
+        $query .= "ON member.userid=user.id ";
+        $db->setQuery($query); 
+
+       $result = $db->loadAssocList();
+        
+        return $result;
+    }
 }
 
