@@ -64,11 +64,11 @@ $doc->addStyleDeclaration('body {background-color: #F1F1F1; background-image: ur
         
         
         <div class="controls">
-          <input type="text" placeholder="Email Address"  name="username" id="username2" class="span12">
+          <input type="text" placeholder="Email Address"  name="username" id="username2" class="span12" required="" >
         </div>
             
         <div class="controls">
-          <input type="password" placeholder="Password" class="span12" autocomplete="off" value="" id="jform_password1" name="password">
+          <input type="password" placeholder="Password" class="span12" autocomplete="off" value="" id="jform_password1" name="password" required="">
         </div>
          <p>&nbsp;</p>
          

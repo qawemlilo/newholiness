@@ -1,11 +1,12 @@
 
 define([
+    "jquery",
     "backbone", 
     "views/timeline/postbox",
     "views/timeline/posts",
     "views/timeline/post",
     "views/user/user"
-], function (Backbone, PostBox, Posts, Post, User) {
+], function ($, Backbone, PostBox, Posts, Post, User) {
     "use strict";
     
     var Container =  Backbone.View.extend({
@@ -22,6 +23,12 @@ define([
             self.user = opts.user;
             self.collections.users = opts.users;
             self.collections.timeline = opts.timeline;
+            
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                    self.timeline.loadMore();
+                }
+            });
         },
         
         
@@ -34,7 +41,8 @@ define([
                 case 'home': 
                     var timeLine = new Posts({collection: self.collections.timeline, user: self.user}),
                         postBox = new PostBox({posts: timeLine});
-                    
+                        
+                    self.timeline = timeLine;
                     self.$el.append(postBox.render().el);
                     self.$el.append(timeLine.render().el);
                 break;

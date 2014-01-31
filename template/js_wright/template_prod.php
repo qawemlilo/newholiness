@@ -39,6 +39,21 @@ if ($this->countModules('toolbar')) {
 <?php } else {?>
 <script type="text/javascript" src="components/com_holiness/app/js/libs/jquery.js"></script>
 <?php } ?>
+
+<?php if ($myUser->guest) { ?>
+<style type="text/css">
+#main {
+    min-height: 100px!important;
+}
+#main-content {
+  height: auto!important;
+}
+#footer {
+  position: absolute;
+  bottom: 0px;
+}
+</style>
+<?php } ?>
 </head>
 <body<?php if ($bodyclass != "") :?> class="<?php echo $bodyclass?>"<?php endif; ?>>
     <?php if ($this->countModules('toolbar')) : ?>

@@ -19,6 +19,9 @@ define([
         id: 'timeline-content',
         
         
+        loading: false,
+        
+        
         className: 'content-display',
         
         
@@ -55,7 +58,7 @@ define([
          
             var self = this, view;
             
-            self.collection.add(model, {silent: true});
+            self.collection.add(model, {silent: true, at: 0});
 
             view = new TimelineItemView({model: model, user: self.user});
             view.$el.hide();
@@ -69,7 +72,7 @@ define([
         addOne: function (model) {
             var self = this,
                 view = new TimelineItemView({model: model, user: self.user});
-            
+                
             self.$('.timeline-content-items').append(view.$el);
         },
         
@@ -78,7 +81,7 @@ define([
         
         viewAll: function () {
             var self = this;
-        
+            
             self.collection.forEach(function (postModel) { 
                 self.addOne(postModel);
             });
@@ -87,9 +90,20 @@ define([
         
         
         loadMore: function (event) {
-            event.preventDefault();
             
-            var self = this, button = $(event.currentTarget), notice;
+            if (event) {
+                event.preventDefault();
+            }
+            
+            var self = this, button, notice;
+            
+            if (self.loading) {
+                return;
+            }
+            
+            self.loading =  true;
+            
+            button = $('.timeline-content-button button');
             
             button.button('loading');
             notice = noty({text: 'Loading...', timeout: false, type: 'warning'});
@@ -101,10 +115,12 @@ define([
                     self.collection.pushCounter();
                     button.button('reset');
                     notice.close();
+                    self.loading =  false;
                 },
                 error: function (collection, response, options) {
                     button.button('reset');
                     notice.close();
+                    self.loading =  false;
                 }
             });
         }
