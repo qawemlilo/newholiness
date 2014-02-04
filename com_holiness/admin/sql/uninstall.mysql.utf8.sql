@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS `#__hpmembers`, `#__devotions`;
+DROP TABLE IF EXISTS `#__hpmembers`, `#__devotions`, `#__hp_comments`, `#__hp_plusone`, `#__hp_prayerrequest`, `#__hp_timeline`, `#__devotion_comments`, `#__devotion_partners`;
