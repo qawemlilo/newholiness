@@ -1,0 +1,220 @@
+body {
+  font:14px/1.2 'Lato',"Helvetica Neue",Helvetica,Arial,sans-serif;
+  line-height: 20px;
+  color: #404040;
+}
+
+::selection, ::-moz-selection {
+  background: #F1F1F1!important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato',sans-serif;
+  color: #0094CB;
+  margin-top: 20px;
+}
+
+legend {
+  color: #0099ff;
+}
+
+.page-header, .page-header h1, .page-header h2, .page-header h3, .page-header h4, .page-header h5, .page-header h6 {
+  margin-top: 0px!important;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.3em;
+  font-weight: 200;
+}
+
+
+#main-content {
+  margin-top: 60px;
+  background-color: #F1F1F1;
+}
+
+
+#main {
+  min-height: 960px;/*
+  border-left: 1px solid #E5E5E5;
+  border-right: 1px solid #E5E5E5;*/
+  padding: 20px;
+  margin-left: 0%!important;
+  width: 51.777948717948715%;
+}
+
+#sidebar1 {
+  margin-left: 1.28%!important;
+}
+
+#sidebar2 {
+  margin-left: 0%!important;
+}
+
+.btn [class^="icon-"], .nav [class^="icon-"], .btn [class*=" icon-"], .nav [class*=" icon-"] {
+  line-height: 1.1em!important;
+}
+
+#main-content .module {
+  padding-top: 20px;
+}
+
+#main-content .module .moduletable {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #E5E5E5!important;
+}
+
+#main-content .module .moduletable h3 {
+  margin-top: 0px;
+  color: #414141;
+  border-bottom: 1px solid #F1F1F1;
+}
+
+
+.btn-primary {
+  background-color: #0074cc;
+  background-image: -moz-linear-gradient(top, #00aaff, #006699);
+  background-image: -ms-linear-gradient(top, #00aaff, #006699);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#00aaff), to(#006699));
+  background-image: -webkit-linear-gradient(top, #00aaff, #006699);
+  background-image: -o-linear-gradient(top, #00aaff, #006699);
+  background-image: linear-gradient(top, #00aaff, #006699);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00aaff', endColorstr='#006699', GradientType=0);
+  border-color: #006699 #006699 #003580;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: #006699;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #0099e6 \9;
+}
+
+
+/*
+   Header bar
+*/
+
+.navbar-inverse .navbar-inner {
+  background: #0094cb;
+  box-shadow: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#0094cb', endColorstr = '#0088bb');
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = '#0094cb', endColorstr = '#0088bb')";
+  background-image: -moz-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -ms-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -o-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#0094cb), to(#0088bb));
+  background-image: -webkit-linear-gradient(top, #0094cb, #0088bb);
+  background-image: linear-gradient(top, #0094cb, #0088bb);
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-bottom-color: #0094cb;
+  border-top-color: #0094cb;
+}
+
+.moduletable, .module {
+  margin-bottom: 0px;
+}
+
+
+.navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover, .navbar-inverse .nav .active > a:focus {
+  background-color: #39AADE;
+  font-weight: bold;
+}
+
+/*
+  < Increse nav bar height
+*/
+.navbar-inner {
+  min-height: 40px;
+}
+
+.navbar .nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#toppannel > ul.nav >  li > a, #toppannel > ul.nav-pills > li > a {
+ color: #ddd!important;
+}
+
+#toppannel > ul.nav  > li  > a:hover, #toppannel > ul.nav-pills > li  >a:hover {
+ color: #0088cc!important;
+}
+
+/*
+  timeline
+*/
+.tab-content  #showdevotions ul, .tab-content #showpartners ul {
+  margin-left:10px;
+}
+#postbox .row-fluid a.active {
+  color:#414141!important;
+} 
+
+
+#timeline .timeline-item, #timeline-content .timeline-item {
+  border: 1px solid #E5E5E5!important;
+  margin: 10px 0px 10px 0px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+#timeline .timeline-item  span.badge, #timeline-content .timeline-item  span.badge {
+-moz-border-radius: 0px!important;
+-webkit-border-radius: 0px!important;
+border-radius: 0px!important;
+}
+
+/*
+  Increse nav bar height >
+*/
+
+#footer {
+  background-color: #0094cb;
+  background-image: -moz-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -ms-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -o-linear-gradient(top, #0094cb, #0088bb);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#0094cb), to(#0088bb));
+  background-image: -webkit-linear-gradient(top, #0094cb, #0088bb);
+  background-image: linear-gradient(top, #0094cb, #0088bb);
+  border-bottom-color: #0094cb;
+  border-top-color: #0094cb;
+  padding-top: 10px;
+  text-align: center;
+}
+
+#toolbar a, #footer a {
+  color: #fff;
+}
+
+
+#footer ul, #footer ul li{
+  display: inline;
+}
+
+#footer ul li{
+  margin-right: 40px;
+}
+
+#footer a {
+  color: #fff;
+  font-size: 12px;
+}
+
+#footer ul li  a:hover {
+  color: #fefefe;
+}

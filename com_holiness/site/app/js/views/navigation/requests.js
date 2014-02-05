@@ -33,23 +33,25 @@ define(["jquery", "underscore", "backbone", "views/navigation/request", "models/
                         
                         user = collection.get(request.userid);
                         
-                        model = new RequestModel({
-                            id: request.id, 
-                            imgext: user.get('imgext'),
-                            userid: user.get('id'),
-                            name: user.get('value')
-                        });
-                        
-                        view = new RequestView({
-                            model: new RequestModel({
+                        if(user) {
+                            model = new RequestModel({
                                 id: request.id, 
                                 imgext: user.get('imgext'),
                                 userid: user.get('id'),
                                 name: user.get('value')
-                            })
-                        });
-                        
-                        html.append(view.render().el);
+                            });
+                            
+                            view = new RequestView({
+                                model: new RequestModel({
+                                    id: request.id, 
+                                    imgext: user.get('imgext'),
+                                    userid: user.get('id'),
+                                    name: user.get('value')
+                                })
+                            });
+                            
+                            html.append(view.render().el);
+                        }
                     });
                     
                     }

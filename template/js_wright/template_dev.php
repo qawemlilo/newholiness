@@ -50,6 +50,7 @@ if ($this->countModules('toolbar')) {
 #footer {
   position: absolute;
   bottom: 0px;
+  width:100%;
 }
 </style>
 <?php } ?>

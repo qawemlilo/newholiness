@@ -35,10 +35,11 @@ if ($this->countModules('toolbar')) {
 <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 
 <?php if ((!$myUser->guest && $myview == 'home') || $myview == 'devotion') { ?>
-<script type="text/javascript" src="components/com_holiness/app/js/libs/require.js" data-main="components/com_holiness/app/js/main"></script>
+<script type="text/javascript" src="components/com_holiness/build/js/libs/require.js" data-main="components/com_holiness/build/js/main"></script>
 <?php } else {?>
 <script type="text/javascript" src="components/com_holiness/app/js/libs/jquery.js"></script>
 <?php } ?>
+
 <?php if ($myUser->guest) { ?>
 <style type="text/css">
 #main {
@@ -50,6 +51,7 @@ if ($this->countModules('toolbar')) {
 #footer {
   position: absolute;
   bottom: 0px;
+  width:100%;
 }
 </style>
 <?php } ?>

@@ -170,7 +170,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($partners));
         }
         else {
-            $this->response(500, json_encode(array('message'=>"No data")));
+            $this->response(500, json_encode(array('message'=>'No data')));
         }
         
         exit();
@@ -191,7 +191,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($members));
         }
         else {
-            $this->response(500, json_encode(array('message'=>"No data")));
+            $this->response(500, json_encode(array('message'=>'No data')));
         }
         
         exit();
