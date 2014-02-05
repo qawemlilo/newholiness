@@ -13,12 +13,8 @@ define(["jquery", "underscore", "backbone", "views/navigation/request", "models/
         initialize: function () {
             var self = this;
             
-            self.collection.on('complete', function () {
-                self.fetchRequests();
-            });
+            self.fetchRequests();
         },
-        
-        
         
         
         fetchRequests: function() {

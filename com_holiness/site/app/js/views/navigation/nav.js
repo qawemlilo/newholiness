@@ -19,9 +19,7 @@ define(["jquery", "underscore", "backbone", "bootstrap"], function($, _, Backbon
         initialize: function () {
             var self = this;
             
-            self.collection.on('complete', function () {
-                self.fetchRequests();
-            });
+            self.fetchRequests();
         },
 
 

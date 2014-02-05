@@ -19,9 +19,9 @@ define([
     var App = {
         init: function (id) {
             // Collections
-            var usersCollection = new UsersCollection(window.window.hp_members);
+            var usersCollection = new UsersCollection(window.hp_members);
             App.collections.users = usersCollection;
-            
+
             App.user = new Me(window.HolinessPageVars);
             App.views.nav = new Nav({collection: usersCollection});
             App.views.search = new Search({collection: usersCollection, user: App.user}); 

@@ -17,7 +17,7 @@ class HolinessControllerUser extends JController
         $partners = $model->getParners($user->id);
         
         if ($user->guest) {
-            $this->response(500, 'Unauthorized user'); 
+            $this->response(500, json_encode(array('message'=>'Unauthorized user'))); 
         }
         else {
             $me = array(
@@ -54,7 +54,7 @@ class HolinessControllerUser extends JController
         }
         
         if (!$result = $model->addPartner($post)) {
-            $this->response(500, 'Add Partner request not sent'); 
+            $this->response(500, json_encode(array('message'=>'Add Partner request not sent'))); 
         }
         else {
             $message = "$user->name wants to become your Devotion Partner. Login to http://www.holinesspage.com to add $user->name as your Devotion Partner.";
@@ -77,7 +77,7 @@ class HolinessControllerUser extends JController
         $results = $db->loadObjectList();
         
         if (!$results) {
-            $this->response(500, 'No requests were found');        
+            $this->response(500, json_encode(array('message'=>'No requests were found')));        
         }
         else {
             $this->response(200, json_encode($results));
@@ -107,15 +107,15 @@ class HolinessControllerUser extends JController
         
         if ($res == 'ignore') {
             if (!$model->removePartner($id)) {
-                $this->response(500, 'Failed to remove request');
+                $this->response(500, json_encode(array('message'=>'Failed to remove request')));
             }
             else {
-                $this->response(200, "Partner request ignored");
+                $this->response(200, json_encode(array('message'=>"Partner request ignored")));
             }
         }
         elseif ($res == 'accept') {
             if (!$model->updatePartner($id, array('active'=>1))) {
-                $this->response(500, 'Failed to update request');
+                $this->response(500, json_encode(array('message'=>'Failed to update request')));
             }
             else {
                 $model->addPartner(array(
@@ -123,7 +123,7 @@ class HolinessControllerUser extends JController
                     'userid'=>$user->id, 
                     'partnerid'=>$partnerid
                 ));
-                $this->response(200, "Partner added");
+                $this->response(200, json_encode(array('message'=>'Partner added')));
             } 
         }
         
@@ -145,7 +145,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($members));
         }
         else {
-            $this->response(500, "[]");
+            $this->response(500, json_encode(array('message'=>"No data")));
         
         }
         
@@ -170,7 +170,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($partners));
         }
         else {
-            $this->response(500, "[]");
+            $this->response(500, json_encode(array('message'=>"No data")));
         }
         
         exit();
@@ -191,7 +191,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($members));
         }
         else {
-            $this->response(500, "[]");
+            $this->response(500, json_encode(array('message'=>"No data")));
         }
         
         exit();
@@ -207,7 +207,7 @@ class HolinessControllerUser extends JController
             $this->response(200, json_encode($member));
         }
         else {
-            $this->response(500, '[]');
+            $this->response(500, json_encode(array('message'=>'No data')));
         }
         
         exit();
@@ -239,10 +239,10 @@ class HolinessControllerUser extends JController
 		
 
         if ($instance->save()) {      
-	        $this->response(200, 'Account created, please login.');
+	        $this->response(200, json_encode(array('message'=>'Account created, please login.')));
 		}
         else {   
-	        $this->response(500, 'Error. Account not created.');	
+	        $this->response(500, json_encode(array('message'=>$instance->getError())));	
         }
         
         exit();
@@ -272,10 +272,10 @@ class HolinessControllerUser extends JController
         
         if ($saved && $model->create($member)) {
             $this->resizeImages($photoFolder . $photofilename, $photoFolder, $ext, $user->id);
-            $this->response(200, 'Profile created');    
+            $this->response(200, json_encode(array('message'=>'Profile created')));    
         }
         else {
-            $this->response(500, 'Profile not created');  
+            $this->response(500, json_encode(array('message'=>'Profile not created')));  
         }
         
         exit();
@@ -321,14 +321,14 @@ class HolinessControllerUser extends JController
             }
         
             if (!$user->save()) {
-                $this->response(500, 'Changes not saved');
+                $this->response(500, json_encode(array('message'=>'Changes not saved')));
             }
             else {
-                $this->response(200, 'Changes saved');
+                $this->response(200, json_encode(array('message'=>'Changes saved')));
             }
         }
         else {
-            $this->response(500, 'No changes were made');
+            $this->response(500, json_encode(array('message'=>'No changes were made')));
         }
         
         exit();
@@ -375,10 +375,10 @@ class HolinessControllerUser extends JController
         $user->set('password', $newpassword);
         
         if (!$user->save()) {
-            $this->response(500, 'Password not updated');
+            $this->response(500, json_encode(array('message'=>'Password not updated')));
         }
         else {
-            $this->response(200, 'Password updated');
+            $this->response(200, json_encode(array('message'=>'Password updated')));
         }
         
         exit();

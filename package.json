@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "r.js -o com_holiness/site/app/js/app.build.js"
+    "build": "node ./node_modules/requirejs/bin/r.js -o com_holiness/site/app/js/app.build.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-exec": "git+ssh://git@github.com:qawemlilo/grunt-exec.git#v0.4.3",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "requirejs": "~2.1.10"
   }
 }

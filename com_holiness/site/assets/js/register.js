@@ -82,8 +82,9 @@ jQuery.noConflict();
                     showResult(data.message, true); 
                     regform.trigger('reset');                    
                 })
-                .fail(function (data) {
-                    showResult('Error. Account not created.', false);
+                .fail(function (xhr) {
+                    var data = JSON.parse(xhr.responseText);
+                    showResult(data.message, false);
                 });
             });
             

@@ -11,11 +11,8 @@ define(["jquery", "underscore", "backbone", "text!tmpl/member-search.html", "typ
             var self = this;
             
             self.user = opts.user;
-            
-            self.collection.once('complete', function () {
-                var suggestions = self.collection.toJSON();
-                self.activateSearch(suggestions);
-            });
+
+            self.activateSearch(self.collection.toJSON());
         },
 
 

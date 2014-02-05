@@ -5,7 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 ?>
 <div class="row-fluid">
-    <form class="form-horizontal"  id="upload" name="upload" method="post" action="index.php?option=com_holiness&task=user.createprofile" enctype="multipart/form-data" style="border: 5px solid #E5E5E5">
+    <form class="form-horizontal"  id="upload" name="upload" method="post" action="index.php?option=com_holiness&task=user.createprofile" enctype="multipart/form-data" style="border: 5px solid #E5E5E5;background: #fff">
       <fieldset>
         <legend style="width:98%; padding-left: 2%; border-bottom-width: 2px; line-height: normal; padding-top: 10px; padding-bottom: 10px; color:#0094CB">Please complete your profile</legend>
 
