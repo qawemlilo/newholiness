@@ -216,13 +216,14 @@ class HolinessControllerUser extends JController
     
 
     public function create() {
+        $application = JFactory::getApplication();
 		$user = array();
 	    $user['fullname'] = JRequest::getVar('fullname', '', 'post', 'string');
 		$user['email'] = JRequest::getVar('email', '', 'post', 'string');
-		$user['username'] = JRequest::getVar('username', '', 'post', 'string');
-		$password = JRequest::getVar('password', '', 'post', 'string');
+		$user['username'] = $this->genRandomPassword();
+		$passwrd = JRequest::getVar('password', '', 'post', 'string');
         
-        $password = $this->makeCrypt($password);
+        $password = $this->makeCrypt($passwrd);
 		
 		$instance = JUser::getInstance();		
 		$config = JComponentHelper::getParams('com_users');
@@ -238,7 +239,14 @@ class HolinessControllerUser extends JController
 		$instance->set('groups', array($defaultUserGroup));
 		
 
-        if ($instance->save()) {      
+        if ($instance->save()) {
+            $credentials = array();
+            $credentials['username'] = $user['username'];
+            $credentials['password'] = $passwrd;
+            
+            //perform the login action
+            $application->login($credentials);
+            
 	        $this->response(200, json_encode(array('message'=>'Account created, please login.')));
 		}
         else {   
@@ -504,6 +512,24 @@ class HolinessControllerUser extends JController
         } 
         
         return false; 
+    }
+    
+    
+    function genRandomPassword($length = 16) {
+        $salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $len = strlen($salt);
+        $makepass = '';
+     
+        $stat = @stat(__FILE__);
+        if(empty($stat) || !is_array($stat)) $stat = array(php_uname());
+     
+        mt_srand(crc32(microtime() . implode('|', $stat)));
+     
+        for ($i = 0; $i < $length; $i ++) {
+            $makepass .= $salt[mt_rand(0, $len -1)];
+        }
+     
+        return $makepass;
     }
 }
 

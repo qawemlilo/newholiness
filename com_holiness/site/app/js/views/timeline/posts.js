@@ -48,6 +48,11 @@ define([
             this.$el.html(this.template({}));
             this.viewAll();
             
+            // if has fetched all items from the server hide loading button
+            if (this.collection.isComplete()) {
+                this.$('.timeline-content-button').hide();    
+            }
+            
             return this;                
         },
         
@@ -97,7 +102,8 @@ define([
             
             var self = this, button, notice;
             
-            if (self.loading) {
+            // if its still loading or has fetched all items from the server
+            if (self.loading || self.collection.isComplete()) {
                 return;
             }
             
@@ -117,7 +123,10 @@ define([
                     notice.close();
                     self.loading =  false;
                 },
+                
                 error: function (collection, response, options) {
+                    self.collection.isComplete(true);
+                    self.$('.timeline-content-button').hide(); 
                     button.button('reset');
                     notice.close();
                     self.loading =  false;

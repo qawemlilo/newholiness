@@ -10,10 +10,11 @@ define([
     "views/navigation/search",
     "views/comments/comments",
     "views/devotion/email",
+    "views/devotion/devotion",
     "models/post",
     "views/panel/members",
     "router"
-], function($, Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, emailDevotion, Post, MembersView, Router) {
+], function($, Backbone, Me, UsersCollection, TimelineCollection, CommentsCollection, Nav, Search, CommentsView, emailDevotion, Devotion, Post, MembersView, Router) {
     "use strict";
     
     var App = {
@@ -32,6 +33,10 @@ define([
                 App.collections.timeline = new TimelineCollection(window.hp_timelime);
                 App.collections.timeline.pushCounter();
                 
+                if (App.collections.timeline.length < 10) {
+                    App.collections.timeline.isComplete(true);
+                }
+                
                 App.router = new Router(App);
                 Backbone.history.start();
             }
@@ -39,7 +44,8 @@ define([
             // if id id defined (which means we are on the devotion page)
             else {
                 var author = $('#authorid').val(), 
-                    post = new Post({id: id, posttype: 'devotion', userid: author, postid: id});
+                    post = new Post({id: id, posttype: 'devotion', userid: author, postid: id}),
+                    devotion = new Devotion({id: author, collection: usersCollection});
                 
                 App.collections.comments = new CommentsCollection();
                 App.collections.comments.url = 'index.php?option=com_holiness&task=comments.getcomments&tp=devotion&id=' + id;

@@ -1,12 +1,13 @@
 
 define([
     "jquery",
+    "underscore",
     "backbone", 
     "views/timeline/postbox",
     "views/timeline/posts",
     "views/timeline/post",
     "views/user/user"
-], function ($, Backbone, PostBox, Posts, Post, User) {
+], function ($, _, Backbone, PostBox, Posts, Post, User) {
     "use strict";
     
     var Container =  Backbone.View.extend({
@@ -21,17 +22,22 @@ define([
         
         
         initialize: function (opts) {
-            var self = this;
+            var self = this, loadMore;
             
             self.user = opts.user;
             self.collections.users = opts.users;
             self.collections.timeline = opts.timeline;
             
-            $(window).on('scroll', function () {
+            loadMore = function () {
                 if ($(window).scrollTop() + $(window).height() > $(document).height() - 100 && self.view === 'home') {
-                    self.timeline.loadMore();
+                    // if has not fetched all items from the server
+                    if (!self.collections.timeline.isComplete()) {
+                        self.timeline.loadMore();
+                    }
                 }
-            });
+            };
+            
+            $(window).on('scroll', loadMore);
         },
         
         

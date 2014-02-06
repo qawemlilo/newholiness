@@ -24,10 +24,6 @@ $doc->addStyleDeclaration('body {background-color: #F1F1F1; background-image: ur
         <div class="controls controls-row">
             <input type="text" placeholder="Full Name" id="fullname" name="fullname" class="span12" required="">
         </div>
-    
-        <div class="controls controls-row">
-          <input type="text" placeholder="Username" class="span12" id="username" name="username" required="">
-        </div>
             
         <div class="controls">
           <input type="text" placeholder="Email Address"  name="email" id="email" class="span12" required="">

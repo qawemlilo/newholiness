@@ -46,12 +46,12 @@ $doc->addScriptDeclaration($script);
         <small><?php echo $this->devotion->church; ?></small>
       </blockquote>
     </div>
-    <div class="span9">
+    <div class="span9" id="devbuttons">
         <h2 style="margin-top: 0px"><?php echo ucwords($this->devotion->theme); ?></h2>
         <div class="row-fluid" style="margin: 10px 0px 10px 0px; padding-top: 0px;">
           <div class="span3"><small><?php echo $date->format("l d M Y"); ?></small></div>
           <div class="span9">
-            <button class="btn btn-primary" id="addDevotionAuthor" style="margin-right:10px;">Make Devotion Parther</button>
+            <button class="btn btn-primary" id="adddevotionauthor" style="margin-right:10px;">Make Devotion Parther</button>
             
             <a class="btn btn-warning" href="<?php echo JURI::base() ; ?>index.php?option=com_holiness&view=devotion&layout=new"><i class="icon-edit"></i> Share a new Devotion</a>
             <?php 

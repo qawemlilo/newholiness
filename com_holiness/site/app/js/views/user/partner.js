@@ -3,7 +3,10 @@ define([
     "jquery",
     "underscore", 
     "backbone",
-    "text!tmpl/partner.html"
+    "text!tmpl/partner.html",
+    "noty",
+    "notyTheme",
+    "notyPosition"
 ], function ($, _, Backbone, Template) {
     "use strict";
     
@@ -48,8 +51,13 @@ define([
             var self = this;
             
             self.model.addPartner(function(err, data){
+                self.$('button.add-partner').off().addClass('btn-primary disabled');
+                
                 if (!err) {
-                    self.$('button.add-partner').off().fadeOut().remove();
+                    noty({text: 'Your request has been sent!', type: 'success'});
+                }
+                else {
+                    noty({text: 'You have already sent that user a request', type: 'error'});
                 }
             });
 

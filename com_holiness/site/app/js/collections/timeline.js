@@ -6,6 +6,8 @@ define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
         
         model: TimelineItem,
         
+        complete: false,
+        
         
         limit: 10,
         
@@ -20,6 +22,15 @@ define(["backbone", "models/timeline"], function(Backbone, TimelineItem) {
         
         pushCounter: function () {
             this.start += this.limit;
+        },
+        
+        
+        isComplete: function (flag) {
+            if (flag) {
+                this.complete = flag;
+            }
+            
+            return this.complete;
         }
     });
       

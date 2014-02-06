@@ -79,8 +79,11 @@ jQuery.noConflict();
             showLoading(function () {
                 $.post('index.php', regform.serialize())
                 .done(function (data) {
+                    regform.trigger('reset');
                     showResult(data.message, true); 
-                    regform.trigger('reset');                    
+                    window.setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);                    
                 })
                 .fail(function (xhr) {
                     var data = JSON.parse(xhr.responseText);
