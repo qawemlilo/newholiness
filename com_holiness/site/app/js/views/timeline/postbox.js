@@ -76,9 +76,9 @@ define([
                plcHolder = 'Become the mouthpiece of God to your Devotion Partners! Prophecy...';
             }
             
-            if (tab === 'Revelation') {
+            if (tab === 'Motivation') {
                marginleft = '38%';
-               plcHolder = 'Share with your Devotion Partners that Revelation you just received in your Spirit!';
+               plcHolder = 'Share with your Devotion Partners your Motivation!';
             }
         
             self.$('#pointer').animate({

@@ -314,8 +314,8 @@ class HolinessControllerUser extends JController
     
     public function update() {
         $user =& JFactory::getUser();
-	$fullname = JRequest::getVar('fullname', '', 'post', 'string');
-	$email = JRequest::getVar('email', '', 'post', 'string');
+	    $fullname = JRequest::getVar('fullname', '', 'post', 'string');
+		$email = JRequest::getVar('email', '', 'post', 'string');
         $id = JRequest::getVar('id', '', 'post', 'int');
         
         
@@ -340,39 +340,6 @@ class HolinessControllerUser extends JController
         }
         
         exit();
-    }
-    
-    
-    
-    
-    public function updateuser() {
-        $application =& JFactory::getApplication();
-        $refer = JRoute::_($_SERVER['HTTP_REFERER']);
-        $user =& JFactory::getUser();
-	$fullname = JRequest::getVar('fullname', '', 'post', 'string');
-	$email = JRequest::getVar('email', '', 'post', 'string');
-        $id = JRequest::getVar('id', '', 'post', 'int');
-        
-        
-        if ($email != $user->email || $fullname != $user->name) {
-            if ($email != $user->email) {
-               $user->set('email', $email);
-            }
-            
-            if ($fullname != $user->name) {
-               $user->set('name', $fullname);
-            }
-        
-            if (!$user->save()) {
-                 $application->redirect($refer, 'Changes not saved', 'error');
-            }
-            else {
-                $application->redirect($refer, 'Your details have been updated!', 'success');
-            }
-        }
-        else {
-            $application->redirect($refer, 'No changes were made');
-        }
     }
     
     

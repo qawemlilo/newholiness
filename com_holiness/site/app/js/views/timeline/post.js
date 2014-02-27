@@ -40,7 +40,7 @@ define([
             'prayerrequest': 'promises to pray for you',
             'testimony': 'praises God for your testimony',
             'prophecy': 'is part of this move of God',
-            'revelation': 'declares this revelation to be powerful'
+            'revelation': 'is truly inspired by this motivation'
         },
         
         
