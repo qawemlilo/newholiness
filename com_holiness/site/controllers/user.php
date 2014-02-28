@@ -314,8 +314,8 @@ class HolinessControllerUser extends JController
     
     public function update() {
         $user =& JFactory::getUser();
-	$fullname = JRequest::getVar('fullname', '', 'post', 'string');
-	$email = JRequest::getVar('email', '', 'post', 'string');
+	    $fullname = JRequest::getVar('fullname', '', 'post', 'string');
+	    $email = JRequest::getVar('email', '', 'post', 'string');
         $id = JRequest::getVar('id', '', 'post', 'int');
         
         
@@ -346,13 +346,37 @@ class HolinessControllerUser extends JController
     
     
     public function updateuser() {
+        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        
+        $member =& $this->getModel('user');
         $application =& JFactory::getApplication();
         $refer = JRoute::_($_SERVER['HTTP_REFERER']);
         $user =& JFactory::getUser();
-	$fullname = JRequest::getVar('fullname', '', 'post', 'string');
-	$email = JRequest::getVar('email', '', 'post', 'string');
+	    $fullname = JRequest::getVar('fullname', '', 'post', 'string');
+	    $email = JRequest::getVar('email', '', 'post', 'string');
+        $church = JRequest::getVar('church', '', 'post', 'string');
+		$originalPassword = JRequest::getVar('currentpassword', '', 'post', 'string');
+        $newPassword = JRequest::getVar('newpassword', '', 'post', 'string');
         $id = JRequest::getVar('id', '', 'post', 'int');
+        $memberid = JRequest::getVar('memberid', '', 'post', 'int');
         
+        if ($id != $user->get('id')) {
+            $application->redirect($refer, 'Unauthorised user', 'error');
+            
+            return;
+        }
+
+        if ($originalPassword && $newPassword) {
+            if (!$this->changePassword($originalPassword, $newPassword)){
+                $application->redirect($refer, 'Failed to verify password', 'error');
+                return;
+            }
+        }
+
+        if(!$member->update($memberid, array('church'=>$church))) {
+            $application->redirect($refer, 'Church could not be updated', 'error');
+            return;
+        }        
         
         if ($email != $user->email || $fullname != $user->name) {
             if ($email != $user->email) {
@@ -364,15 +388,11 @@ class HolinessControllerUser extends JController
             }
         
             if (!$user->save()) {
-                 $application->redirect($refer, 'Changes not saved', 'error');
-            }
-            else {
-                $application->redirect($refer, 'Your details have been updated!', 'success');
+                $application->redirect($refer, 'Changes not saved', 'error');
             }
         }
-        else {
-            $application->redirect($refer, 'No changes were made');
-        }
+        
+        $application->redirect($refer, 'Your details have been updated!', 'success');
     }
     
     
@@ -386,43 +406,27 @@ class HolinessControllerUser extends JController
     
     
     
-    public function changepassword() {
-        JRequest::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-        
-        $application =& JFactory::getApplication();
-        $refer = JRoute::_($_SERVER['HTTP_REFERER']);
+    private function changePassword($originalPassword, $newPassword) {
         $user =& JFactory::getUser();
-        
-	    $originalPassword = JRequest::getVar('currentpassword', '', 'post', 'string');
-		$p_1 = JRequest::getVar('newpassword', '', 'post', 'string');
-        $p_2 = JRequest::getVar('newpassword2', '', 'post', 'string');
-        $id = JRequest::getVar('userid', 0, 'post', 'int');
-        
-        
-        if ((int)$id != (int)$user->get('id')) {
-            $application->redirect($refer, 'Unauthorised user', 'error');
-        }
         
         $password = $user->get('password');
         $salt = $this->getSalt($password);
         $currentpassword = $this->makeCrypt($originalPassword, $salt);
         
-        if ($currentpassword != $password || $p_1 != $p_2) {
-            $application->redirect($refer, 'Password could not be verified', 'error');
+        if ($currentpassword != $password) {
+            return false;
         }
         
-        $newpassword = $this->makeCrypt($p_1);
+        $newpassword = $this->makeCrypt($newPassword);
         
         $user->set('password', $newpassword);
         
         if (!$user->save()) {
-            $this->response(500, json_encode(array('message'=>'Password not updated')));
+            return false;
         }
         else {
-            $this->response(200, json_encode(array('message'=>'Password updated')));
+            return true;
         }
-        
-        exit();
     }
     
     

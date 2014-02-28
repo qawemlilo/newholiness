@@ -34,6 +34,27 @@ class HolinessModelUser extends JModelItem
     }
     
     
+    
+    public function update($id, $arr) {
+        $table = $this->getTable();
+        $user = JFactory::getUser();
+        
+        if (!$table->load($id)) {
+            return false;
+        }
+        
+        if (!$table->bind($arr)) {
+            return false;
+        }
+        
+        if (!$table->store($arr)) {
+            return false;
+        }
+                
+        return true;
+    }
+    
+    
     public function getMembers() {   
         $db = JFactory::getDBO();
         
@@ -44,6 +65,27 @@ class HolinessModelUser extends JModelItem
         $db->setQuery($query); 
 
        $result = $db->loadObjectList();
+        
+        return $result;
+    }
+    
+    
+
+
+    
+    public function getMember() {   
+        $db = JFactory::getDBO();
+        $user = JFactory::getUser();
+        
+        $query = "SELECT member.church, member.imgext, user.id, user.name, user.email ";
+        $query .= "FROM #__hpmembers AS member ";
+        $query .= "INNER JOIN #__users AS user ";
+        $query .= "ON member.userid=user.id ";
+        $query .= "WHERE member.userid=$user->id";
+        
+        $db->setQuery($query); 
+
+		$result = $db->loadObjectList();
         
         return $result;
     }

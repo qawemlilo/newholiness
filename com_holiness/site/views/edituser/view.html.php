@@ -9,6 +9,7 @@ jimport('joomla.application.component.view');
 class HolinessViewEdituser extends JView
 {
     function display($tpl = null) {
+        $this->user = $this->get('Member');
 
         parent::display($tpl);    
     }

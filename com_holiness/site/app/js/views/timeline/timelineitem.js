@@ -50,7 +50,7 @@ define([
         postLabel: {
             'prayerrequest': 'Prayer Request',
             'prophecy': 'Prophecy',
-            'revelation': 'Revelation',
+            'revelation': 'Motivation',
             'testimony': 'Testimony'
         },
         
