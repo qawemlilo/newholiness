@@ -51,6 +51,7 @@ define([
             'prayerrequest': 'Prayer Request',
             'prophecy': 'Prophecy',
             'revelation': 'Motivation',
+            'motivation': 'Motivation',
             'testimony': 'Testimony'
         },
         
