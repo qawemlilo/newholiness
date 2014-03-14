@@ -7,6 +7,8 @@ $document->addStyleDeclaration(
 'input, textarea, .uneditable-input {
   width: 400px;
 }');
+
+$user = JFactory::getUser();
 ?>
 
 <div class="row-fluid affix" style="padding: 10px 0px 10px 0px; background-color: #0094cb; border-bottom: 1px solid #E5E5E5; box-shadow: 1px 0px 5px #333; z-index:9999">
@@ -36,6 +38,13 @@ $document->addStyleDeclaration(
        <li><a href="#">Home</a></li>
        <li>
        <div class="btn-group pull-left" style="padding-top: 3px; margin-left: 10px">
+         <?php if($user->get('isRoot')) {
+         ?>
+         <a class="btn btn-primary" href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-lock"></i></span> Logout</a>
+         <?php 
+            }
+            else {
+         ?>
          <img title="<?php echo $user->name; ?>" style="width:28px; height: 28px" alt="<?php echo $user->name; ?>" <?php echo $src; ?> />
 
          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
@@ -46,6 +55,9 @@ $document->addStyleDeclaration(
           <li class="divider"></li>
           <li><a href="<?php echo JRoute::_(JURI::base() . '?option=com_holiness&task=user.logout'); ?>"><span style="color: #0094CB; margin-right: 10px;"><i class="icon-lock"></i></span> Logout</a></li>
          </ul>
+         <?php 
+            }
+         ?>
        </div>
        </li>
     </ul>

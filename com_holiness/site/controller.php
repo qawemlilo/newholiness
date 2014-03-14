@@ -14,15 +14,21 @@ class HolinessController extends JController
         
         $hasProfile = $model->hasProfile();
         
+        // if the user is not logged in, show them the registration/login page.
+        if ($user->guest) {
+            JRequest::setVar('view', 'user');
+            JRequest::setVar('layout', 'register');
+        }
+        
         // if the user is registered and does not have a profile
         // take them to the profile competion page
         if (!$hasProfile && !$hack && !$user->guest) {
             $application->redirect('index.php?option=com_holiness&view=user&hk=1');
         }
         
-        // if the user is not logged in, show them the registration/login page.
-        elseif ($user->guest) {
-            JRequest::setVar('view', 'user');
-            JRequest::setVar('layout', 'register');
+        
+        // admin
+        if ($user->get('isRoot') && $view != 'admin' ) {
+            $application->redirect('index.php?option=com_holiness&view=admin');
         }
                 parent::display();    }}
